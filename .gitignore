@@ -1,0 +1,9 @@
+*.py[ocd]
+__pycache__
+.coverage
+.cache
+
+.deploy_cfg
+
+.project
+.pydevproject
