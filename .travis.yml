@@ -5,10 +5,11 @@ python:
   - "3.6"
 # command to install dependencies
 install:
+  - pip install -U pip
   - pip install -r travis-requirements.txt
 # command to run tests
 script:
-  - run_tests.sh
+  - ./run_tests.sh all
 notifications:
   webhooks:
     urls:
