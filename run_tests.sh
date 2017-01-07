@@ -36,8 +36,10 @@ if [ "$1" == "all" ]; then
   TESTS="$ALL_TESTS"
 elif [ "$1" == "base" ]; then
   TESTS="$BASE_TESTS"
+elif [ "$1" == "ext" ]; then
+  TESTS="$ROBOTPY_EXT_TESTS"
 else
-  echo "Usage: run_tests.sh all|base"
+  echo "Usage: run_tests.sh all|base|ext"
   exit 1
 fi
 
@@ -63,7 +65,11 @@ fi
 for t in ${TESTS}; do
   pushd $t > /dev/null
   pwd
-  python3 robot.py test --builtin
+  if ! python3 robot.py test --builtin "${@:2}"; then
+    EC=$?
+    echo "Test in $(pwd) failed"
+    exit 1
+  fi
   popd > /dev/null
 done
 
