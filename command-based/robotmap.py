@@ -10,4 +10,4 @@ class PortsList:
 
 
 singlemotor = PortsList()
-singlemotor.motorCanID = 1
+singlemotor.motorID = 1

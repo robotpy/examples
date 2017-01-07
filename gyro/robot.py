@@ -25,10 +25,10 @@ class MyRobot(wpilib.SampleRobot):
         #gyro value of 360 is set to correspond to one full revolution
         self.voltsPerDegreePerSecond = .0128
               
-        self.myRobot = wpilib.RobotDrive(wpilib.CANTalon(self.leftMotorChannel), 
-                                         wpilib.CANTalon(self.leftRearMotorChannel), 
-                                         wpilib.CANTalon(self.rightMotorChannel), 
-                                         wpilib.CANTalon(self.rightRearMotorChannel))
+        self.myRobot = wpilib.RobotDrive(wpilib.Talon(self.leftMotorChannel), 
+                                         wpilib.Talon(self.leftRearMotorChannel), 
+                                         wpilib.Talon(self.rightMotorChannel), 
+                                         wpilib.Talon(self.rightRearMotorChannel))
         
         self.gyro = wpilib.AnalogGyro(gyroChannel)
         self.joystick = wpilib.Joystick(self.joystickChannel)
