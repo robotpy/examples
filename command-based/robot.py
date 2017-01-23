@@ -4,6 +4,7 @@ import wpilib
 from commandbased import CommandBasedRobot
 
 import subsystems
+import oi
 from commands.autonomous import AutonomousProgram
 
 
@@ -24,6 +25,12 @@ class ExampleBot(CommandBasedRobot):
 
         subsystems.init()
         self.autonomousProgram = AutonomousProgram()
+
+        '''
+        Since OI instantiates commands and commands need access to subsystems,
+        OI must be initialized after subsystems.
+        '''
+        oi.init()
 
 
     def autonomousInit(self):

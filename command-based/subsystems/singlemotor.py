@@ -1,7 +1,6 @@
-
 import wpilib
 from wpilib.command.subsystem import Subsystem
-
+from ctre import CANTalon
 
 from commands.followjoystick import FollowJoystick
 import robotmap
@@ -16,7 +15,7 @@ class SingleMotor(Subsystem):
 
         super().__init__('SingleMotor')
 
-        self.motor = wpilib.Talon(robotmap.singlemotor.motorID)
+        self.motor = CANTalon(robotmap.singlemotor.motorCanID)
 
 
     def setSpeed(self, speed):
