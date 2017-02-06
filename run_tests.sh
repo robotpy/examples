@@ -3,6 +3,7 @@
 cd "$(dirname $0)"
 
 BASE_TESTS="
+  arcade-drive
   gearsbot
   getting-started
   gyro
