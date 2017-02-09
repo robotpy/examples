@@ -4,6 +4,8 @@ cd "$(dirname $0)"
 
 BASE_TESTS="
   arcade-drive
+  cscore-intermediate-vision
+  cscore-quick-vision
   gearsbot
   getting-started
   gyro
