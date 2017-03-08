@@ -1,0 +1,18 @@
+{
+  "pyfrc": {
+  
+      "robot": {
+          "w": 3,
+          "h": 2,
+          "starting_x": 25,
+          "starting_y": 18,
+          "starting_angle": 180
+      },
+
+      "field": {
+          "w": 27,
+          "h": 27,
+          "px_per_ft": 17
+      }
+  }
+}
