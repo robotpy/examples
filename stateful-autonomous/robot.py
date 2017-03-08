@@ -5,6 +5,13 @@ import wpilib
 from robotpy_ext.autonomous import AutonomousModeSelector
 
 class MyRobot(wpilib.IterativeRobot):
+    '''
+        This shows using the AutonomousModeSelector to automatically choose
+        autonomous modes.
+        
+        If you find this useful, you may want to consider using the Magicbot
+        framework, as it already has this integrated into it.
+    '''
     
     def robotInit(self):
         
