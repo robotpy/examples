@@ -67,7 +67,7 @@ class MyRobot(wpilib.IterativeRobot):
         
         # if trigger is pressed, then center the robot to the camera target
         if self.stick.getTrigger():
-            # hacky PID for example only! On a real robot, this won't work
+            
             found, timestamp, offset = self.target
             turnSpeed = 0.0
             
