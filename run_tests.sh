@@ -15,7 +15,7 @@ BASE_TESTS="
   pacgoat
   physics/src
   physics-4wheel/src
-  physics-camsim
+  physics-camsim/src
   physics-mecanum/src
   physics-spi/src
   sample/src
