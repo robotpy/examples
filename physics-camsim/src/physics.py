@@ -37,15 +37,15 @@ class PhysicsEngine(object):
         
         targets = [
                 # right
-                VisionSim.Target(16, 12, 250, 0),
+                VisionSim.Target(15, 13, 250, 0),
                 # middle
-                VisionSim.Target(18.5, 16, 295, 65),
+                VisionSim.Target(16.5, 15.5, 295, 65),
                 # left
-                VisionSim.Target(16, 20, 0, 110)
+                VisionSim.Target(15, 18, 0, 110)
             ]
             
-        self.vision = VisionSim(targets, 61.0,
-                                    1.5, 15, 15)
+        self.vision = VisionSim(targets, 61.0, 1.5, 15, 15,
+                                physics_controller=physics_controller)
         
     def update_sim(self, hal_data, now, tm_diff):
         '''
