@@ -28,6 +28,7 @@ ROBOTPY_EXT_TESTS="
   navx-rotate-to-angle
   navx-rotate-to-angle-arcade
   magicbot-simple
+  magicbot-camsim/src
   stateful-autonomous
 "
 
