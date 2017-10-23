@@ -53,7 +53,7 @@ EVERY_TESTS=$(for i in ${EVERY_TESTS}; do
   echo ./$i/robot.py
 done | sort)
 
-FOUND_TESTS=$(find -name robot.py | sort)
+FOUND_TESTS=$(find . -name robot.py | sort)
 
 if [ "$EVERY_TESTS" != "$FOUND_TESTS" ]; then
   echo "Specified:"
@@ -62,8 +62,10 @@ if [ "$EVERY_TESTS" != "$FOUND_TESTS" ]; then
   echo "Found:"
   echo "$FOUND_TESTS"
   echo
-  echo "ERROR: Not every robot.py file is in the list of tests!"
-  exit 1
+  if [ -z "$FORCE_ANYWAYS" ]; then
+    echo "ERROR: Not every robot.py file is in the list of tests!"
+    exit 1
+  fi
 fi
 
 for t in ${TESTS}; do
