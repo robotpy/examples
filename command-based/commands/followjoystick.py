@@ -1,5 +1,6 @@
 from wpilib.command import Command
 
+import oi
 import subsystems
 
 class FollowJoystick(Command):
@@ -15,4 +16,4 @@ class FollowJoystick(Command):
 
 
     def execute(self):
-        subsystems.motor.setSpeed(subsystems.oi.joystick.getY())
+        subsystems.motor.setSpeed(oi.joystick.getY())

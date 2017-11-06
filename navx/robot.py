@@ -44,6 +44,7 @@ class MyRobot(wpilib.SampleRobot):
                 self.sd.putNumber('Yaw', self.navx.getYaw())
                 self.sd.putNumber('Roll', self.navx.getRoll())
                 self.sd.putNumber('Analog', self.analog.getVoltage())
+                self.sd.putNumber('Timestamp', self.navx.getLastSensorTimestamp())
                 
             wpilib.Timer.delay(0.010)
 

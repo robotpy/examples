@@ -13,7 +13,8 @@ class MyRobot(wpilib.SampleRobot):
     rearRightChannel = 0
 
     # The channel on the driver station that the joystick is connected to
-    joystickChannel = 0
+    lStickChannel = 0
+    rStickChannel = 1
 
     def robotInit(self):
         '''Robot initialization function'''
@@ -35,7 +36,8 @@ class MyRobot(wpilib.SampleRobot):
 
         self.drive.setExpiration(0.1)
 
-        self.stick = wpilib.Joystick(self.joystickChannel)
+        self.lstick = wpilib.Joystick(self.lStickChannel)
+        self.rstick = wpilib.Joystick(self.rStickChannel)
 
         # Position gets automatically updated as robot moves
         self.gyro = wpilib.AnalogGyro(1)

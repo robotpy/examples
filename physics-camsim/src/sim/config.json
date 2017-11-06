@@ -1,0 +1,16 @@
+{
+  "pyfrc": {
+  
+      "robot": {
+          "w": 3,
+          "h": 2,
+          "starting_x": 25,
+          "starting_y": 17,
+          "starting_angle": 180
+      },
+
+      "field": {
+          "season": 2017
+      }
+  }
+}
