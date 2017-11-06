@@ -18,7 +18,15 @@ class MyRobot(wpilib.SampleRobot):
         '''Robot initialization function'''
         
         # object that handles basic drive operations
-        self.myRobot = wpilib.RobotDrive(0, 1)
+        self.frontLeftMotor = wpilib.Talon(0)
+        self.rearLeftMotor = wpilib.Talon(1)
+        self.frontRightMotor = wpilib.Talon(2)
+        self.rearRightMotor = wpilib.Talon(3)
+
+        self.left = wpilib.SpeedControllerGroup(self.frontLeftMotor, self.rearLeftMotor)
+        self.right = wpilib.SpeedControllerGroup(self.frontRightMotor, self.rearRightMotor)
+
+        self.myRobot = wpilib.DifferentialDrive(self.left, self.right)
         self.myRobot.setExpiration(0.1)
         
         # joysticks 1 & 2 on the driver station
@@ -31,7 +39,7 @@ class MyRobot(wpilib.SampleRobot):
         self.myRobot.setSafetyEnabled(True)
         
         while self.isOperatorControl() and self.isEnabled():
-            self.myRobot.tankDrive(self.leftStick, self.rightStick)
+            self.myRobot.tankDrive(self.leftStick.getY()*-1, self.rightStick.getY()*-1)
             wpilib.Timer.delay(0.005) # wait for a motor update time
             
 if __name__ == '__main__':
