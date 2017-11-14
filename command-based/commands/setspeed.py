@@ -1,7 +1,5 @@
 from wpilib.command import TimedCommand
 
-import subsystems
-
 class SetSpeed(TimedCommand):
     '''
     Spins the motor at the given power for a given number of seconds, then
@@ -12,11 +10,11 @@ class SetSpeed(TimedCommand):
         super().__init__('Set Speed %d' % power, timeoutInSeconds)
 
         self.power = power
-        self.requires(subsystems.motor)
+        self.requires(self.getRobot().motor)
 
     def initialize(self):
-        subsystems.motor.setSpeed(self.power)
+        self.getRobot().motor.setSpeed(self.power)
 
 
     def end(self):
-        subsystems.motor.setSpeed(0)
+        self.getRobot().motor.setSpeed(0)
