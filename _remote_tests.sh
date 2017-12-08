@@ -10,4 +10,6 @@ else
     cd examples
 fi
 
+git rev-parse HEAD
+
 exec ./run_tests.sh "$@"
