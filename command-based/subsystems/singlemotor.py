@@ -2,11 +2,10 @@ import wpilib
 from wpilib.command.subsystem import Subsystem
 
 from commands.followjoystick import FollowJoystick
-import robotmap
 
 class SingleMotor(Subsystem):
     '''
-    This example subsystem controls a single CAN Talon SRX in PercentVBus mode.
+    This example subsystem controls a single Talon in PercentVBus mode.
     '''
 
     def __init__(self):
@@ -14,7 +13,7 @@ class SingleMotor(Subsystem):
 
         super().__init__('SingleMotor')
 
-        self.motor = wpilib.Talon(robotmap.singlemotor.motorID)
+        self.motor = wpilib.Talon(1)
 
 
     def setSpeed(self, speed):

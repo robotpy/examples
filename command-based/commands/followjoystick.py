@@ -1,8 +1,5 @@
 from wpilib.command import Command
 
-import oi
-import subsystems
-
 class FollowJoystick(Command):
     '''
     This command will read the joystick's y axis and use that value to control
@@ -12,8 +9,8 @@ class FollowJoystick(Command):
     def __init__(self):
         super().__init__('Follow Joystick')
 
-        self.requires(subsystems.motor)
+        self.requires(self.getRobot().motor)
 
 
     def execute(self):
-        subsystems.motor.setSpeed(oi.joystick.getY())
+        self.getRobot().motor.setSpeed(self.getRobot().joystick.getY())

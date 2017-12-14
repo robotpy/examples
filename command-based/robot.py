@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 import wpilib
+from wpilib.command import Command
 from commandbased import CommandBasedRobot
 
-import subsystems
+from subsystems import singlemotor
 import oi
 from commands.autonomous import AutonomousProgram
 
@@ -23,14 +24,16 @@ class ExampleBot(CommandBasedRobot):
         you will need to access later.
         '''
 
-        subsystems.init()
+        Command.getRobot = lambda x=0: self
+        self.motor = singlemotor.SingleMotor()
+
         self.autonomousProgram = AutonomousProgram()
 
         '''
         Since OI instantiates commands and commands need access to subsystems,
         OI must be initialized after subsystems.
         '''
-        oi.init()
+        self.joystick = oi.getJoystick()
 
 
     def autonomousInit(self):
