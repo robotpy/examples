@@ -13,7 +13,7 @@
 
 
 import wpilib
-
+from wpilib.drive import DifferentialDrive
 
 class MyRobot(wpilib.SampleRobot):
     '''Main robot class'''
