@@ -6,6 +6,7 @@
 '''
 
 import wpilib
+from wpilib.drive import DifferentialDrive
 
 class MyRobot(wpilib.IterativeRobot):
     
@@ -21,7 +22,7 @@ class MyRobot(wpilib.IterativeRobot):
         self.left = wpilib.SpeedControllerGroup(self.frontLeftMotor, self.rearLeftMotor)
         self.right = wpilib.SpeedControllerGroup(self.frontRightMotor, self.rearRightMotor)
 
-        self.myRobot = wpilib.DifferentialDrive(self.left, self.right)
+        self.myRobot = DifferentialDrive(self.left, self.right)
         self.myRobot.setExpiration(0.1)
         
         # joysticks 1 & 2 on the driver station

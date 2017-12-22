@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import wpilib
+from wpilib.drive import DifferentialDrive
 
 
 class MyRobot(wpilib.SampleRobot):
@@ -30,7 +31,7 @@ class MyRobot(wpilib.SampleRobot):
                                                 wpilib.Talon(self.leftRearMotorChannel))
         self.right = wpilib.SpeedControllerGroup(wpilib.Talon(self.rightMotorChannel),
                                                  wpilib.Talon(self.rightRearMotorChannel))
-        self.myRobot = wpilib.DifferentialDrive(self.left, self.right)
+        self.myRobot = DifferentialDrive(self.left, self.right)
 
         self.gyro = wpilib.AnalogGyro(gyroChannel)
         self.joystick = wpilib.Joystick(self.joystickChannel)

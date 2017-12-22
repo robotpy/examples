@@ -5,7 +5,7 @@
 '''
 
 import wpilib
-
+from wpilib.drive import MecanumDrive
 
 class MyRobot(wpilib.SampleRobot):
     # Channels on the roboRIO that the motor controllers are plugged in to
@@ -30,7 +30,7 @@ class MyRobot(wpilib.SampleRobot):
         # you may need to change or remove this to match your robot
         self.rearLeftMotor.setInverted(True)
 
-        self.drive = wpilib.MecanumDrive(self.frontLeftMotor,
+        self.drive = MecanumDrive(self.frontLeftMotor,
                                          self.rearLeftMotor,
                                          self.frontRightMotor,
                                          self.rearRightMotor)
