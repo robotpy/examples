@@ -20,6 +20,7 @@ BASE_TESTS="
   physics-spi/src
   sample/src
   tank-drive
+  timed/src
 "
 
 ROBOTPY_EXT_TESTS="
