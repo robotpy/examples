@@ -77,6 +77,7 @@ class MyRobot(wpilib.SampleRobot):
         turnController.setContinuous(True)
         
         self.turnController = turnController
+        self.rotateToAngleRate = 0
         
         # Add the PID Controller to the Test-mode dashboard, allowing manual  */
         # tuning of the Turn Controller's P, I and D coefficients.            */
