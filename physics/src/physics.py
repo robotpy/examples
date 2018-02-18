@@ -30,8 +30,6 @@ class PhysicsEngine(object):
         
         self.physics_controller = physics_controller
         self.position = 0
-        
-        self.physics_controller.add_analog_gyro_channel(1)
             
     def update_sim(self, hal_data, now, tm_diff):
         '''
