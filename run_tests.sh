@@ -32,7 +32,9 @@ ROBOTPY_EXT_TESTS="
   stateful-autonomous
 "
 
-IGNORED_TESTS=
+IGNORED_TESTS="
+  physics-pathfinder
+"
 
 ALL_TESTS="${BASE_TESTS} ${ROBOTPY_EXT_TESTS}"
 EVERY_TESTS="${ALL_TESTS} ${IGNORED_TESTS}"
