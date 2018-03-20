@@ -81,8 +81,8 @@ class MyRobot(wpilib.TimedRobot):
             renderer = get_user_renderer()
             if renderer:
                 renderer.draw_pathfinder_trajectory(left, color='#0000ff', offset=(-1,0))
-                renderer.draw_pathfinder_trajectory(modifier.source, color='#00ff00')
-                renderer.draw_pathfinder_trajectory(left, color='#0000ff', offset=(1,0))
+                renderer.draw_pathfinder_trajectory(modifier.source, color='#00ff00', show_dt=1.0, dt_offset=0.0)
+                renderer.draw_pathfinder_trajectory(right, color='#0000ff', offset=(1,0))
         
     def autonomousPeriodic(self):
         
