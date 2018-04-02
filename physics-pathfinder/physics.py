@@ -64,4 +64,4 @@ class PhysicsEngine(object):
         self.r_distance += self.drivetrain.r_speed * tm_diff
         
         hal_data['encoder'][0]['count'] = int(self.l_distance * self.kEncoder)
-        hal_data['encoder'][1]['count'] = int(self.l_distance * self.kEncoder)
+        hal_data['encoder'][1]['count'] = int(self.r_distance * self.kEncoder)
