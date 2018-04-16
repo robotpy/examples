@@ -4,12 +4,9 @@
 # The idea here is you provide a simulation object that overrides specific
 # pieces of WPILib, and modifies motors/sensors accordingly depending on the
 # state of the simulation. An example of this would be measuring a motor
-# moving for a set period of time, and then changing a limit switch to turn 
+# moving for a set period of time, and then changing a limit switch to turn
 # on after that period of time. This can help you do more complex simulations
 # of your robot code without too much extra effort.
-#
-# NOTE: THIS API IS ALPHA AND WILL MOST LIKELY CHANGE!
-#       ... if you have better ideas on how to implement, submit a patch!
 #
 
 from pyfrc.physics import drivetrains

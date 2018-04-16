@@ -8,9 +8,7 @@
 # on after that period of time. This can help you do more complex simulations
 # of your robot code without too much extra effort.
 #
-# NOTE: THIS API IS ALPHA AND WILL MOST LIKELY CHANGE!
-#       ... if you have better ideas on how to implement, submit a patch!
-#
+
 
 import math
 from pyfrc.physics import drivetrains
