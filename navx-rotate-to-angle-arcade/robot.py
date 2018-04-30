@@ -36,7 +36,7 @@ class MyRobot(wpilib.SampleRobot):
     
     if wpilib.RobotBase.isSimulation():
         # These PID parameters are used in simulation
-        kP = 0.06
+        kP = 0.02
         kI = 0.00
         kD = 0.00
         kF = 0.00
@@ -135,7 +135,7 @@ class MyRobot(wpilib.SampleRobot):
             # calculated rotation rate depending upon whether
             # "rotate to angle" is active.
             #
-            # This works better for mecanum drive robots, but this 
+            # This works better for mecanum drive robots, but this
             # illustrates one way you could implement this using
             # a 4 wheel drive robot
             

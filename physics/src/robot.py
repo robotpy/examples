@@ -40,7 +40,7 @@ class MyRobot(wpilib.SampleRobot):
         while self.isAutonomous() and self.isEnabled():
             
             if timer.get() < 2.0:
-                self.robot_drive.arcadeDrive(-1.0, -.3)
+                self.robot_drive.arcadeDrive(-1.0, .3)
             else:
                 self.robot_drive.arcadeDrive(0, 0)
             
@@ -75,4 +75,3 @@ if __name__ == '__main__':
     
     wpilib.run(MyRobot,
                physics_enabled=True)
-

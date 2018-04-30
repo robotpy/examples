@@ -22,24 +22,18 @@ class PhysicsEngine(object):
         self.physics_controller = physics_controller
         
         # Change these parameters to fit your robot!
-        motor_cfg = motor_cfgs.MOTOR_CFG_CIM
-        robot_mass = 110*units.lbs
-        
         bumper_width = 3.25*units.inch
-        robot_wheelbase = 22*units.inch
-        robot_width = 23*units.inch + bumper_width*2
-        robot_length = 32*units.inch + bumper_width*2
         
-        wheel_diameter = 6*units.inch
-        drivetrain_gear_ratio = 10.71
-        motors_per_side = 2
-        
-        self.drivetrain = tankmodel.TankModel.theory(motor_cfg,
-                                                     robot_mass, drivetrain_gear_ratio, motors_per_side,
-                                                     robot_wheelbase,
-                                                     robot_width,
-                                                     robot_length,
-                                                     wheel_diameter)
+        self.drivetrain = tankmodel.TankModel.theory(
+            motor_cfgs.MOTOR_CFG_CIM,           # motor configuration
+            110*units.lbs,                      # robot mass
+            10.71,                              # drivetrain gear ratio
+            2,                                  # motors per side
+            22*units.inch,                      # robot wheelbase
+            23*units.inch + bumper_width*2,     # robot width
+            32*units.inch + bumper_width*2,     # robot length
+            6*units.inch                        # wheel diameter
+        )
 
     def update_sim(self, hal_data, now, tm_diff):
         '''
