@@ -11,7 +11,9 @@
 
 
 import math
-from pyfrc.physics import drivetrains
+
+from pyfrc.physics import motor_cfgs, tankmodel
+from pyfrc.physics.units import units
 
 
 class PhysicsEngine(object):
@@ -30,8 +32,19 @@ class PhysicsEngine(object):
         self.physics_controller = physics_controller
         self.position = 0
         
-        # speed should be same as robot.MAX_VELOCITY
-        self.drivetrain = drivetrains.TwoMotorDrivetrain(speed=5)
+        # Change these parameters to fit your robot!
+        bumper_width = 3.25*units.inch
+        
+        self.drivetrain = tankmodel.TankModel.theory(
+            motor_cfgs.MOTOR_CFG_CIM,           # motor configuration
+            110*units.lbs,                      # robot mass
+            10.71,                              # drivetrain gear ratio
+            2,                                  # motors per side
+            22*units.inch,                      # robot wheelbase
+            23*units.inch + bumper_width*2,     # robot width
+            32*units.inch + bumper_width*2,     # robot length
+            6*units.inch                        # wheel diameter
+        )
         
         # Precompute the encoder constant
         # -> encoder counts per revolution / wheel circumference
@@ -54,12 +67,12 @@ class PhysicsEngine(object):
         l_motor = hal_data['pwm'][1]['value']
         r_motor = hal_data['pwm'][2]['value']
         
-        speed, rotation = self.drivetrain.get_vector(l_motor, r_motor)
-        self.physics_controller.drive(speed, rotation, tm_diff)
+        x, y, angle = self.drivetrain.get_distance(l_motor, r_motor, tm_diff)
+        self.physics_controller.distance_drive(x, y, angle)
         
         # Update encoders
-        self.l_distance += self.drivetrain.l_speed * tm_diff
-        self.r_distance += self.drivetrain.r_speed * tm_diff
+        self.l_distance += self.drivetrain.l_velocity * tm_diff
+        self.r_distance += self.drivetrain.r_velocity * tm_diff
         
         hal_data['encoder'][0]['count'] = int(self.l_distance * self.kEncoder)
         hal_data['encoder'][1]['count'] = int(self.r_distance * self.kEncoder)

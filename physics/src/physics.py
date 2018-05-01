@@ -10,7 +10,8 @@
 #
 
 
-from pyfrc.physics import drivetrains
+from pyfrc.physics import motor_cfgs, tankmodel
+from pyfrc.physics.units import units
 
 
 class PhysicsEngine(object):
@@ -28,6 +29,20 @@ class PhysicsEngine(object):
         
         self.physics_controller = physics_controller
         self.position = 0
+        
+        # Change these parameters to fit your robot!
+        bumper_width = 3.25*units.inch
+        
+        self.drivetrain = tankmodel.TankModel.theory(
+            motor_cfgs.MOTOR_CFG_CIM,       # motor configuration
+            110*units.lbs,                  # robot mass
+            10.71,                          # drivetrain gear ratio
+            2,                              # motors per side
+            22*units.inch,                  # robot wheelbase
+            23*units.inch + bumper_width*2, # robot width
+            32*units.inch + bumper_width*2, # robot length
+            6*units.inch                    # wheel diameter
+        )
             
     def update_sim(self, hal_data, now, tm_diff):
         '''
@@ -43,8 +58,8 @@ class PhysicsEngine(object):
         l_motor = hal_data['pwm'][1]['value']
         r_motor = hal_data['pwm'][2]['value']
         
-        speed, rotation = drivetrains.two_motor_drivetrain(l_motor, r_motor)
-        self.physics_controller.drive(speed, rotation, tm_diff)
+        x, y, angle = self.drivetrain.get_distance(l_motor, r_motor, tm_diff)
+        self.physics_controller.distance_drive(x, y, angle)
         
         
         # update position (use tm_diff so the rate is constant)
@@ -61,7 +76,7 @@ class PhysicsEngine(object):
             
         else:
             switch1 = False
-            switch2 = False 
+            switch2 = False
         
         # set values here
         hal_data['dio'][1]['value'] = switch1
