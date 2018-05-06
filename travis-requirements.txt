@@ -7,3 +7,4 @@ git+git://github.com/robotpy/robotpy-installer.git
 git+git://github.com/robotpy/pyfrc.git
 
 pynetconsole
+pint
