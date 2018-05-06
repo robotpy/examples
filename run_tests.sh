@@ -16,7 +16,6 @@ BASE_TESTS="
   physics/src
   physics-4wheel/src
   physics-camsim/src
-  physics-drive-characterization
   physics-mecanum/src
   physics-spi/src
   sample/src
