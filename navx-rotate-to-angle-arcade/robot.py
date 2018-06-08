@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import wpilib
-from robotpy_ext.common_drivers.navx import AHRS
+from navx import AHRS
 
 class MyRobot(wpilib.SampleRobot):
     """This is a demo program showing the use of the navX MXP to implement
