@@ -25,18 +25,21 @@ BASE_TESTS="
 
 ROBOTPY_EXT_TESTS="
   command-based
+  magicbot-simple
+  stateful-autonomous
+"
+
+NAVX_TESTS="
   navx
   navx-rotate-to-angle
   navx-rotate-to-angle-arcade
-  magicbot-simple
-  stateful-autonomous
 "
 
 IGNORED_TESTS="
   physics-pathfinder
 "
 
-ALL_TESTS="${BASE_TESTS} ${ROBOTPY_EXT_TESTS}"
+ALL_TESTS="${BASE_TESTS} ${ROBOTPY_EXT_TESTS} ${NAVX_TESTS}"
 EVERY_TESTS="${ALL_TESTS} ${IGNORED_TESTS}"
 
 if [ "$1" == "all" ]; then
@@ -45,8 +48,10 @@ elif [ "$1" == "base" ]; then
   TESTS="$BASE_TESTS"
 elif [ "$1" == "ext" ]; then
   TESTS="$ROBOTPY_EXT_TESTS"
+elif [ "$1" == "navx" ]; then
+  TESTS="$NAVX_TESTS"
 else
-  echo "Usage: run_tests.sh all|base|ext"
+  echo "Usage: run_tests.sh all|base|ext|navx"
   exit 1
 fi
 
