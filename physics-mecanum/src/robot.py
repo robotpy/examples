@@ -5,7 +5,7 @@ from wpilib.drive import MecanumDrive
 
 
 class MyRobot(wpilib.SampleRobot):
-    '''Main robot class'''
+    """Main robot class"""
 
     # Channels on the roboRIO that the motor controllers are plugged in to
     frontLeftChannel = 2
@@ -18,7 +18,7 @@ class MyRobot(wpilib.SampleRobot):
     rStickChannel = 1
 
     def robotInit(self):
-        '''Robot initialization function'''
+        """Robot initialization function"""
         self.frontLeftMotor = wpilib.Talon(self.frontLeftChannel)
         self.rearLeftMotor = wpilib.Talon(self.rearLeftChannel)
         self.frontRightMotor = wpilib.Talon(self.frontRightChannel)
@@ -30,10 +30,12 @@ class MyRobot(wpilib.SampleRobot):
         # you may need to change or remove this to match your robot
         self.rearLeftMotor.setInverted(True)
 
-        self.drive = MecanumDrive(self.frontLeftMotor,
-                                         self.rearLeftMotor,
-                                         self.frontRightMotor,
-                                         self.rearRightMotor)
+        self.drive = MecanumDrive(
+            self.frontLeftMotor,
+            self.rearLeftMotor,
+            self.frontRightMotor,
+            self.rearRightMotor,
+        )
 
         self.drive.setExpiration(0.1)
 
@@ -44,12 +46,12 @@ class MyRobot(wpilib.SampleRobot):
         self.gyro = wpilib.AnalogGyro(1)
 
     def disabled(self):
-        '''Called when the robot is disabled'''
+        """Called when the robot is disabled"""
         while self.isDisabled():
             wpilib.Timer.delay(0.01)
 
     def autonomous(self):
-        '''Called when autonomous mode is enabled'''
+        """Called when autonomous mode is enabled"""
 
         timer = wpilib.Timer()
         timer.start()
@@ -64,14 +66,15 @@ class MyRobot(wpilib.SampleRobot):
             wpilib.Timer.delay(0.01)
 
     def operatorControl(self):
-        '''Called when operation control mode is enabled'''
+        """Called when operation control mode is enabled"""
 
         while self.isOperatorControl() and self.isEnabled():
-            self.drive.driveCartesian(self.lstick.getX(), self.lstick.getY(), self.rstick.getX(), 0)
+            self.drive.driveCartesian(
+                self.lstick.getX(), self.lstick.getY(), self.rstick.getX(), 0
+            )
 
             wpilib.Timer.delay(0.04)
 
 
-if __name__ == '__main__':
-    wpilib.run(MyRobot,
-               physics_enabled=True)
+if __name__ == "__main__":
+    wpilib.run(MyRobot, physics_enabled=True)

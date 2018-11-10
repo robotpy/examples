@@ -1,6 +1,7 @@
 import wpilib
 from wpilib.command import Subsystem
 
+
 class Pneumatics(Subsystem):
     """
     The Pneumatics subsystem contains the compressor and a pressure sensor.
@@ -13,13 +14,14 @@ class Pneumatics(Subsystem):
     def __init__(self, robot):
         super().__init__()
         self.robot = robot
-        
+
         self.pressureSensor = wpilib.AnalogInput(3)
         if robot.isReal():
             self.compressor = wpilib.Compressor()
 
-        wpilib.LiveWindow.addSensor("Pneumatics", "Pressure Sensor", self.pressureSensor)
-        
+        wpilib.LiveWindow.addSensor(
+            "Pneumatics", "Pressure Sensor", self.pressureSensor
+        )
 
     def initDefaultCommand(self):
         """No default command."""
@@ -30,7 +32,7 @@ class Pneumatics(Subsystem):
         stops as it goes above and below maximum pressure."""
         if self.robot.isReal():
             self.compressor.start()
-        
+
     def isPressurized(self):
         """:return Whether or not the system is fully pressurized"""
         if self.robot.isReal():

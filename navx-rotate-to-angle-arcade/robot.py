@@ -3,6 +3,7 @@
 import wpilib
 from navx import AHRS
 
+
 class MyRobot(wpilib.SampleRobot):
     """This is a demo program showing the use of the navX MXP to implement
     a "rotate to angle" feature. This demo works in the pyfrc simulator.
@@ -30,10 +31,10 @@ class MyRobot(wpilib.SampleRobot):
     # SmartDashboard in Test mode has support for helping you tune    */
     # controllers by displaying a form where you can enter new P, I,  */
     # and D constants and test the mechanism.                         */
-    
+
     # Often, you will find it useful to have different parameters in
     # simulation than what you use on the real robot
-    
+
     if wpilib.RobotBase.isSimulation():
         # These PID parameters are used in simulation
         kP = 0.02
@@ -46,39 +47,42 @@ class MyRobot(wpilib.SampleRobot):
         kI = 0.00
         kD = 0.00
         kF = 0.00
-    
+
     kToleranceDegrees = 2.0
-        
+
     def robotInit(self):
         # Channels for the wheels
-        frontLeftChannel    = 2
-        rearLeftChannel     = 3
-        frontRightChannel   = 1
-        rearRightChannel    = 0
-        
-        self.myRobot = wpilib.RobotDrive(frontLeftChannel, rearLeftChannel,
-                                         frontRightChannel, rearRightChannel)
+        frontLeftChannel = 2
+        rearLeftChannel = 3
+        frontRightChannel = 1
+        rearRightChannel = 0
+
+        self.myRobot = wpilib.RobotDrive(
+            frontLeftChannel, rearLeftChannel, frontRightChannel, rearRightChannel
+        )
         self.myRobot.setExpiration(0.1)
         self.stick = wpilib.Joystick(0)
-        
+
         #
         # Communicate w/navX MXP via the MXP SPI Bus.
         # - Alternatively, use the i2c bus.
         # See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details
         #
-        
+
         self.ahrs = AHRS.create_spi()
-        #self.ahrs = AHRS.create_i2c()
-        
-        turnController = wpilib.PIDController(self.kP, self.kI, self.kD, self.kF, self.ahrs, output=self)
-        turnController.setInputRange(-180.0,  180.0)
+        # self.ahrs = AHRS.create_i2c()
+
+        turnController = wpilib.PIDController(
+            self.kP, self.kI, self.kD, self.kF, self.ahrs, output=self
+        )
+        turnController.setInputRange(-180.0, 180.0)
         turnController.setOutputRange(-1.0, 1.0)
         turnController.setAbsoluteTolerance(self.kToleranceDegrees)
         turnController.setContinuous(True)
-        
+
         self.turnController = turnController
         self.rotateToAngleRate = 0
-        
+
         # Add the PID Controller to the Test-mode dashboard, allowing manual  */
         # tuning of the Turn Controller's P, I and D coefficients.            */
         # Typically, only the P value needs to be modified.                   */
@@ -96,20 +100,20 @@ class MyRobot(wpilib.SampleRobot):
         be used while driving to implement "straight-line
         driving".
         """
-        
+
         tm = wpilib.Timer()
         tm.start()
-        
+
         self.myRobot.setSafetyEnabled(True)
         while self.isOperatorControl() and self.isEnabled():
-            
+
             if tm.hasPeriodPassed(1.0):
                 print("NavX Gyro", self.ahrs.getYaw(), self.ahrs.getAngle())
-            
+
             rotateToAngle = False
             if self.stick.getRawButton(1):
                 self.ahrs.reset()
-            
+
             if self.stick.getRawButton(2):
                 self.turnController.setSetpoint(0.0)
                 rotateToAngle = True
@@ -122,14 +126,14 @@ class MyRobot(wpilib.SampleRobot):
             elif self.stick.getRawButton(5):
                 self.turnController.setSetpoint(-90.0)
                 rotateToAngle = True
-            
+
             if rotateToAngle:
                 self.turnController.enable()
                 currentRotationRate = self.rotateToAngleRate
             else:
                 self.turnController.disable()
                 currentRotationRate = self.stick.getX()
-            
+
             # Use the joystick Y axis for forward movement,
             # and either the X axis for rotation or the current
             # calculated rotation rate depending upon whether
@@ -138,16 +142,17 @@ class MyRobot(wpilib.SampleRobot):
             # This works better for mecanum drive robots, but this
             # illustrates one way you could implement this using
             # a 4 wheel drive robot
-            
+
             self.myRobot.arcadeDrive(self.stick.getY(), currentRotationRate)
-            
-            wpilib.Timer.delay(0.005) # wait for a motor update time
-        
+
+            wpilib.Timer.delay(0.005)  # wait for a motor update time
+
     def pidWrite(self, output):
         """This function is invoked periodically by the PID Controller,
         based upon navX MXP yaw angle input and PID Coefficients.
         """
         self.rotateToAngleRate = output
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     wpilib.run(MyRobot)

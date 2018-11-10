@@ -19,39 +19,39 @@
 # object is created each time
 #
 
+
 def test_autonomous(control, fake_time, robot):
-    
+
     # run autonomous mode for 10 seconds
     control.set_autonomous(enabled=True)
     control.run_test(lambda tm: tm < 15)
-    
+
     # make sure autonomous mode ran for 15 seconds
     assert int(fake_time.get()) == 15
 
 
 def test_disabled(control, fake_time, robot):
-    
+
     # run disabled mode for 5 seconds
     control.set_autonomous(enabled=False)
     control.run_test(lambda tm: tm < 5)
-    
+
     # make sure disabled mode ran for 5 seconds
     assert int(fake_time.get()) == 5
 
 
 def test_operator_control(control, robot, hal_data):
-    
     class TestController:
-        '''This object is only used for this test'''
-    
+        """This object is only used for this test"""
+
         step_count = 0
-        
+
         # Use two values because we're never quite sure when the value will
         # be changed by the robot... there's probably a better way to do this
         expected_value = 0
-        
+
         def on_step(self, tm):
-            '''
+            """
                 Continue operator control for 1000 simulation steps. Each step
                 represents roughly 20ms of fake time.
                 
@@ -66,31 +66,30 @@ def test_operator_control(control, robot, hal_data):
                 value.
                 
                 :param tm: The current robot time in seconds
-            '''
+            """
             self.step_count += 1
-            
-            pwm_val = hal_data['pwm'][8]['value']
+
+            pwm_val = hal_data["pwm"][8]["value"]
             if pwm_val is not None:
-                
+
                 # motor value is equal to the previous value of the stick
                 # -> Note that the PWM value isn't exact, because it was converted to
                 #    a raw PWM value and then back to -1 to 1
                 assert abs(pwm_val - self.expected_value) < 0.1
-                
+
                 # We do this so that we only check the value when it changes
-                hal_data['pwm'][8]['value'] = None
-            
+                hal_data["pwm"][8]["value"] = None
+
                 # set the stick value based on time
-                
+
                 self.expected_value = (tm % 2.0) - 1.0
                 print("Set value", self.expected_value)
-                hal_data['joysticks'][1]['axes'][1] = self.expected_value
-            
+                hal_data["joysticks"][1]["axes"][1] = self.expected_value
+
             return not self.step_count == 1000
-    
+
     # Initialize
-    hal_data['pwm'][8]['value'] = None
-    
+    hal_data["pwm"][8]["value"] = None
+
     control.set_operator_control(enabled=True)
     control.run_test(TestController)
-

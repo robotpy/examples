@@ -5,11 +5,11 @@ from wpilib.drive import DifferentialDrive
 
 
 class MyRobot(wpilib.SampleRobot):
-    '''This is a demo program showing how to use Gyro control with the
-    RobotDrive class.'''
+    """This is a demo program showing how to use Gyro control with the
+    RobotDrive class."""
 
     def robotInit(self):
-        '''Robot initialization function'''
+        """Robot initialization function"""
         gyroChannel = 0  # analog input
 
         self.joystickChannel = 0  # usb number in DriverStation
@@ -25,29 +25,34 @@ class MyRobot(wpilib.SampleRobot):
 
         # gyro calibration constant, may need to be adjusted
         # gyro value of 360 is set to correspond to one full revolution
-        self.voltsPerDegreePerSecond = .0128
+        self.voltsPerDegreePerSecond = 0.0128
 
-        self.left = wpilib.SpeedControllerGroup(wpilib.Talon(self.leftMotorChannel),
-                                                wpilib.Talon(self.leftRearMotorChannel))
-        self.right = wpilib.SpeedControllerGroup(wpilib.Talon(self.rightMotorChannel),
-                                                 wpilib.Talon(self.rightRearMotorChannel))
+        self.left = wpilib.SpeedControllerGroup(
+            wpilib.Talon(self.leftMotorChannel), wpilib.Talon(self.leftRearMotorChannel)
+        )
+        self.right = wpilib.SpeedControllerGroup(
+            wpilib.Talon(self.rightMotorChannel),
+            wpilib.Talon(self.rightRearMotorChannel),
+        )
         self.myRobot = DifferentialDrive(self.left, self.right)
 
         self.gyro = wpilib.AnalogGyro(gyroChannel)
         self.joystick = wpilib.Joystick(self.joystickChannel)
 
     def autonomous(self):
-        '''Runs during Autonomous'''
+        """Runs during Autonomous"""
         pass
 
     def operatorControl(self):
-        '''
+        """
         Sets the gyro sensitivity and drives the robot when the joystick is pushed. The
         motor speed is set from the joystick while the RobotDrive turning value is assigned
         from the error between the setpoint and the gyro angle.
-        '''
+        """
 
-        self.gyro.setSensitivity(self.voltsPerDegreePerSecond)  # calibrates gyro values to equal degrees
+        self.gyro.setSensitivity(
+            self.voltsPerDegreePerSecond
+        )  # calibrates gyro values to equal degrees
         while self.isOperatorControl() and self.isEnabled():
             turningValue = (self.angleSetpoint - self.gyro.getAngle()) * self.pGain
             if self.joystick.getY() <= 0:
@@ -59,7 +64,7 @@ class MyRobot(wpilib.SampleRobot):
             wpilib.Timer.delay(0.005)
 
     def test(self):
-        '''Runs during test mode'''
+        """Runs during test mode"""
         pass
 
 

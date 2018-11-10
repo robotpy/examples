@@ -1,5 +1,5 @@
-
 from wpilib.command import Command
+
 
 class CloseClaw(Command):
     """Close the claw.

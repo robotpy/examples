@@ -1,4 +1,3 @@
-
 from wpilib.command import CommandGroup
 
 from commands.close_claw import CloseClaw

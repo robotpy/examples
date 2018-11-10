@@ -1,4 +1,3 @@
-
 from wpilib.command import CommandGroup
 
 from commands.set_collection_speed import SetCollectionSpeed
@@ -15,7 +14,7 @@ class Collect(CommandGroup):
 
     def __init__(self, robot):
         super().__init__()
-        
+
         self.addSequential(SetCollectionSpeed(robot, Collector.FORWARD))
         self.addParallel(CloseClaw(robot))
         self.addSequential(SetPivotSetpoint(robot, Pivot.COLLECT))

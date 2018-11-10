@@ -1,16 +1,16 @@
-
 from wpilib.command import Command
+
 
 class DriveForward(Command):
     """
     This command drives the robot over a given distance with simple proportional
     control. This command will drive a given distance limiting to a maximum speed.
     """
-    
-    TOLERANCE = .1
-    KP = -1.0/5.0
 
-    def __init__(self, robot, dist=10, max_speed=.5):
+    TOLERANCE = 0.1
+    KP = -1.0 / 5.0
+
+    def __init__(self, robot, dist=10, max_speed=0.5):
         """The constructor"""
         super().__init__()
         # Signal that we require ExampleSubsystem
@@ -29,11 +29,14 @@ class DriveForward(Command):
         """Called repeatedly when this Command is scheduled to run"""
         self.error = self.distance - self.robot.drivetrain.getRightEncoder().get()
         if self.driveForwardSpeed * self.KP * self.error >= self.driveForwardSpeed:
-            self.robot.drivetrain.tankDriveManual(self.driveForwardSpeed,
-                                                  self.driveForwardSpeed)
+            self.robot.drivetrain.tankDriveManual(
+                self.driveForwardSpeed, self.driveForwardSpeed
+            )
         else:
-            self.robot.drivetrain.tankDriveManual(self.driveForwardSpeed * self.KP * self.error,
-                                                  self.driveForwardSpeed * self.KP * self.error)
+            self.robot.drivetrain.tankDriveManual(
+                self.driveForwardSpeed * self.KP * self.error,
+                self.driveForwardSpeed * self.KP * self.error,
+            )
 
     def isFinished(self):
         """Make this return true when this Command no longer needs to run execute()"""
