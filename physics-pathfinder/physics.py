@@ -1,9 +1,28 @@
+#
+# See the documentation for more details on how this works
+#
+# The idea here is you provide a simulation object that overrides specific
+# pieces of WPILib, and modifies motors/sensors accordingly depending on the
+# state of the simulation. An example of this would be measuring a motor
+# moving for a set period of time, and then changing a limit switch to turn
+# on after that period of time. This can help you do more complex simulations
+# of your robot code without too much extra effort.
+#
+
+
+import math
 
 from pyfrc.physics import motor_cfgs, tankmodel
 from pyfrc.physics.units import units
 
+
 class PhysicsEngine(object):
-  
+    '''
+        Simulates a motor moving something that strikes two limit switches,
+        one on each end of the track. Obviously, this is not particularly
+        realistic, but it's good enough to illustrate the point
+    '''
+    
     def __init__(self, physics_controller):
         '''
             :param physics_controller: `pyfrc.physics.core.PhysicsInterface` object
@@ -12,9 +31,6 @@ class PhysicsEngine(object):
         
         self.physics_controller = physics_controller
         self.position = 0
-        
-        self.physics_controller.add_device_gyro_channel('navxmxp_i2c_1_angle')
-        self.physics_controller.add_device_gyro_channel('navxmxp_spi_4_angle')
         
         # Change these parameters to fit your robot!
         bumper_width = 3.25*units.inch
@@ -29,6 +45,13 @@ class PhysicsEngine(object):
             32*units.inch + bumper_width*2,     # robot length
             6*units.inch                        # wheel diameter
         )
+        
+        # Precompute the encoder constant
+        # -> encoder counts per revolution / wheel circumference
+        self.kEncoder = 360 / (0.5 * math.pi)
+        
+        self.l_distance = 0
+        self.r_distance = 0
             
     def update_sim(self, hal_data, now, tm_diff):
         '''
@@ -41,11 +64,15 @@ class PhysicsEngine(object):
         '''
         
         # Simulate the drivetrain
-        lf_motor = hal_data['pwm'][2]['value']
-        #lr_motor = hal_data['pwm'][3]['value']
-        rf_motor = hal_data['pwm'][1]['value']
-        #rr_motor = hal_data['pwm'][0]['value']
+        l_motor = hal_data['pwm'][1]['value']
+        r_motor = hal_data['pwm'][2]['value']
         
-        x, y, angle = self.drivetrain.get_distance(lf_motor, rf_motor, tm_diff)
+        x, y, angle = self.drivetrain.get_distance(l_motor, r_motor, tm_diff)
         self.physics_controller.distance_drive(x, y, angle)
         
+        # Update encoders
+        self.l_distance += self.drivetrain.l_velocity * tm_diff
+        self.r_distance += self.drivetrain.r_velocity * tm_diff
+        
+        hal_data['encoder'][0]['count'] = int(self.l_distance * self.kEncoder)
+        hal_data['encoder'][1]['count'] = int(self.r_distance * self.kEncoder)

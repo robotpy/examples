@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import wpilib
-from robotpy_ext.common_drivers.navx import AHRS
+from navx import AHRS
 
 class MyRobot(wpilib.SampleRobot):
     """This is a demo program showing the use of the navX MXP to implement
@@ -77,6 +77,7 @@ class MyRobot(wpilib.SampleRobot):
         turnController.setContinuous(True)
         
         self.turnController = turnController
+        self.rotateToAngleRate = 0
         
         # Add the PID Controller to the Test-mode dashboard, allowing manual  */
         # tuning of the Turn Controller's P, I and D coefficients.            */

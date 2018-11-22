@@ -2,7 +2,7 @@
 
 import wpilib
 
-from robotpy_ext.common_drivers import navx
+import navx
 
 def run():
     raise ValueError()
