@@ -15,11 +15,9 @@ from subsystems.pneumatics import Pneumatics
 from subsystems.shooter import Shooter
 
 
-
-
 class Robot(wpilib.IterativeRobot):
     """This is the main class for running the PacGoat code."""
-    
+
     def robotInit(self):
         """
         This function is run when the robot is first started up and should be
@@ -45,12 +43,12 @@ class Robot(wpilib.IterativeRobot):
         # news. Don't move it.
         self.oi = OI(self)
 
-        #instantiate the command used for the autonomous period
+        # instantiate the command used for the autonomous period
         self.autoChooser = wpilib.SendableChooser()
         self.autoChooser.addDefault("Drive and Shoot", DriveAndShootAutonomous(self))
         self.autoChooser.addObject("Drive Forward", DriveForward(self))
         wpilib.SmartDashboard.putData("Auto Mode", self.autoChooser)
-        
+
         self.autonomousCommand = None
 
         # Pressurize the pneumatics
@@ -67,10 +65,10 @@ class Robot(wpilib.IterativeRobot):
 
     def teleopInit(self):
         """This function is called at the beginning of operator control."""
-        #This makes sure that the autonomous stops running when
-        #teleop starts running. If you want the autonomous to
-        #continue until interrupted by another command, remove
-        #this line or comment it out.
+        # This makes sure that the autonomous stops running when
+        # teleop starts running. If you want the autonomous to
+        # continue until interrupted by another command, remove
+        # this line or comment it out.
         if self.autonomousCommand is not None:
             self.autonomousCommand.cancel()
 
@@ -93,8 +91,13 @@ class Robot(wpilib.IterativeRobot):
     def log(self):
         self.pneumatics.writePressure()
         wpilib.SmartDashboard.putNumber("Pivot Pot Value", self.pivot.getAngle())
-        wpilib.SmartDashboard.putNumber("Left Distance", self.drivetrain.getLeftEncoder().getDistance())
-        wpilib.SmartDashboard.putNumber("Right Distance", self.drivetrain.getRightEncoder().getDistance())
+        wpilib.SmartDashboard.putNumber(
+            "Left Distance", self.drivetrain.getLeftEncoder().getDistance()
+        )
+        wpilib.SmartDashboard.putNumber(
+            "Right Distance", self.drivetrain.getRightEncoder().getDistance()
+        )
+
 
 if __name__ == "__main__":
     wpilib.run(Robot)

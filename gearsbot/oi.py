@@ -1,4 +1,3 @@
-
 import wpilib
 
 from wpilib import SmartDashboard
@@ -15,25 +14,25 @@ from commands.set_distance_to_box import SetDistanceToBox
 from commands.set_elevator_setpoint import SetElevatorSetpoint
 from commands.set_wrist_setpoint import SetWristSetpoint
 
+
 class OI:
-    
     def __init__(self, robot):
-        
+
         self.joy = wpilib.Joystick(0)
-        
+
         # Put Some buttons on the SmartDashboard
-        SmartDashboard.putData("Elevator Bottom", SetElevatorSetpoint(robot, 0));
-        SmartDashboard.putData("Elevator Platform", SetElevatorSetpoint(robot, 0.2));
-        SmartDashboard.putData("Elevator Top", SetElevatorSetpoint(robot, 0.3));
-        
-        SmartDashboard.putData("Wrist Horizontal", SetWristSetpoint(robot, 0));
-        SmartDashboard.putData("Raise Wrist", SetWristSetpoint(robot, -45));
-        
-        SmartDashboard.putData("Open Claw", OpenClaw(robot));
-        SmartDashboard.putData("Close Claw", CloseClaw(robot));
-        
-        SmartDashboard.putData("Deliver Soda", Autonomous(robot));
-        
+        SmartDashboard.putData("Elevator Bottom", SetElevatorSetpoint(robot, 0))
+        SmartDashboard.putData("Elevator Platform", SetElevatorSetpoint(robot, 0.2))
+        SmartDashboard.putData("Elevator Top", SetElevatorSetpoint(robot, 0.3))
+
+        SmartDashboard.putData("Wrist Horizontal", SetWristSetpoint(robot, 0))
+        SmartDashboard.putData("Raise Wrist", SetWristSetpoint(robot, -45))
+
+        SmartDashboard.putData("Open Claw", OpenClaw(robot))
+        SmartDashboard.putData("Close Claw", CloseClaw(robot))
+
+        SmartDashboard.putData("Deliver Soda", Autonomous(robot))
+
         # Create some buttons
         d_up = JoystickButton(self.joy, 5)
         d_right = JoystickButton(self.joy, 6)
@@ -49,12 +48,11 @@ class OI:
         d_down.whenPressed(SetElevatorSetpoint(robot, -0.2))
         d_right.whenPressed(CloseClaw(robot))
         d_left.whenPressed(OpenClaw(robot))
-        
+
         r1.whenPressed(PrepareToPickup(robot))
         r2.whenPressed(Pickup(robot))
         l1.whenPressed(Place(robot))
         l2.whenPressed(Autonomous(robot))
-    
+
     def getJoystick(self):
         return self.joy
-        

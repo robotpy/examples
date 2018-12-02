@@ -1,4 +1,3 @@
-
 import wpilib
 from wpilib.command import Subsystem
 
@@ -25,7 +24,9 @@ class Collector(Subsystem):
         # Put everything to the LiveWindow for testing.
         wpilib.LiveWindow.addActuator("Collector", "Roller Motor", self.rollerMotor)
         wpilib.LiveWindow.addSensor("Collector", "Ball Detector", self.ballDetector)
-        wpilib.LiveWindow.addSensor("Collector", "Claw Open Detector", self.openDetector)
+        wpilib.LiveWindow.addSensor(
+            "Collector", "Claw Open Detector", self.openDetector
+        )
         wpilib.LiveWindow.addActuator("Collector", "Piston", self.piston)
 
         super().__init__()
@@ -38,7 +39,7 @@ class Collector(Subsystem):
 
         :returns: Whether or not the robot has the ball.
         """
-        return self.ballDetector.get() # TODO: prepend ! to reflect real robot
+        return self.ballDetector.get()  # TODO: prepend ! to reflect real robot
 
     def setSpeed(self, speed):
         """:param speed: The speed to spin the rollers."""
@@ -50,7 +51,7 @@ class Collector(Subsystem):
 
     def isOpen(self):
         """:returns: Whether or not the claw is open"""
-        return self.openDetector.get() # TODO: prepend ! to reflect real robot
+        return self.openDetector.get()  # TODO: prepend ! to reflect real robot
 
     def open(self):
         """Open the claw up. (For shooting)"""
