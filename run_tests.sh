@@ -19,6 +19,7 @@ BASE_TESTS="
   physics-mecanum/src
   physics-spi/src
   sample/src
+  shuffleboard
   tank-drive
   timed/src
 "
