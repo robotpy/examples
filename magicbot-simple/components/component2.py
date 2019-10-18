@@ -10,7 +10,7 @@ class Component2:
     some_motor: wpilib.Talon
 
     # This is changed to the value in robot.py
-    SOME_CONSTANT = int
+    SOME_CONSTANT: int
 
     # This gets reset after each invocation of execute()
     did_something = will_reset_to(False)
