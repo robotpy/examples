@@ -8,7 +8,7 @@ class TwoSteps(AutonomousStateMachine):
     MODE_NAME = "Two Steps"
     DEFAULT = True
 
-    component2 = Component2
+    component2: Component2
 
     drive_speed = tunable(-1)
 

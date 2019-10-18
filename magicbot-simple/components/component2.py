@@ -6,11 +6,11 @@ from magicbot import will_reset_to
 
 class Component2:
 
-    component1 = Component1
-    some_motor = wpilib.Talon
+    component1: Component1
+    some_motor: wpilib.Talon
 
     # This is changed to the value in robot.py
-    SOME_CONSTANT = int
+    SOME_CONSTANT: int
 
     # This gets reset after each invocation of execute()
     did_something = will_reset_to(False)
