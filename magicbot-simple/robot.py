@@ -13,8 +13,8 @@ class MyRobot(MagicRobot):
     # Define components here
     #
 
-    component1 = Component1
-    component2 = Component2
+    component1: Component1
+    component2: Component2
 
     # You can even pass constants to components
     SOME_CONSTANT = 1
