@@ -5,6 +5,7 @@ Example file showing how to get game-data from your driver station / FMS
 import wpilib
 from networktables import NetworkTables
 
+
 class GameDataRobot(wpilib.IterativeRobot):
     def robotInit(self):
         # A way of demonstrating the difference between the game data strings
@@ -13,7 +14,7 @@ class GameDataRobot(wpilib.IterativeRobot):
         self.green = wpilib.Solenoid(2)
         self.yellow = wpilib.Solenoid(3)
         # Set game data to empty string by default
-        self.gameData = ''
+        self.gameData = ""
         # Get the SmartDashboard table from networktables
         self.sd = NetworkTables.getTable("SmartDashboard")
 
