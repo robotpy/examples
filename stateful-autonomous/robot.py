@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import wpilib
+import wpilib.drive
 
 from robotpy_ext.autonomous import AutonomousModeSelector
 
@@ -17,7 +18,7 @@ class MyRobot(wpilib.IterativeRobot):
     def robotInit(self):
 
         # Simple two wheel drive
-        self.drive = wpilib.RobotDrive(0, 1)
+        self.drive = wpilib.drive.DifferentialDrive(wpilib.Talon(0), wpilib.Talon(1))
 
         # Items in this dictionary are available in your autonomous mode
         # as attributes on your autonomous object
