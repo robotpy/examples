@@ -53,7 +53,7 @@ class MyRobot(wpilib.IterativeRobot):
         motor speed is set from the joystick while the RobotDrive turning value is assigned
         from the error between the setpoint and the gyro angle.
         """
-        
+
         turningValue = (self.angleSetpoint - self.gyro.getAngle()) * self.pGain
         if self.joystick.getY() <= 0:
             # forwards

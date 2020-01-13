@@ -29,7 +29,9 @@ class MyRobot(wpilib.IterativeRobot):
 
     def teleopPeriodic(self):
         """Runs the motors with tank steering"""
-        self.myRobot.arcadeDrive(self.stick.getRawAxis(0), self.stick.getRawAxis(1), True)
+        self.myRobot.arcadeDrive(
+            self.stick.getRawAxis(0), self.stick.getRawAxis(1), True
+        )
 
 
 if __name__ == "__main__":
