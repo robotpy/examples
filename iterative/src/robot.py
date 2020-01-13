@@ -9,7 +9,7 @@ class MyRobot(wpilib.IterativeRobot):
     def robotInit(self):
         """Robot-wide initialization code should go here"""
 
-        self.lstick = wpilib.Joystick(1)
+        self.lstick = wpilib.Joystick(0)
         self.motor = wpilib.Jaguar(3)
 
     def autonomousInit(self):
