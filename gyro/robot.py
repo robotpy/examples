@@ -4,9 +4,9 @@ import wpilib
 from wpilib.drive import DifferentialDrive
 
 
-class MyRobot(wpilib.SampleRobot):
+class MyRobot(wpilib.IterativeRobot):
     """This is a demo program showing how to use Gyro control with the
-    RobotDrive class."""
+    DifferentialDrive class."""
 
     def robotInit(self):
         """Robot initialization function"""
@@ -39,33 +39,28 @@ class MyRobot(wpilib.SampleRobot):
         self.gyro = wpilib.AnalogGyro(gyroChannel)
         self.joystick = wpilib.Joystick(self.joystickChannel)
 
-    def autonomous(self):
-        """Runs during Autonomous"""
-        pass
+    def teleopInit(self):
+        """
+        Runs at the beginning of the teleop period
+        """
+        self.gyro.setSensitivity(
+            self.voltsPerDegreePerSecond
+        )  # calibrates gyro values to equal degrees
 
-    def operatorControl(self):
+    def teleopPeriodic(self):
         """
         Sets the gyro sensitivity and drives the robot when the joystick is pushed. The
         motor speed is set from the joystick while the RobotDrive turning value is assigned
         from the error between the setpoint and the gyro angle.
         """
-
-        self.gyro.setSensitivity(
-            self.voltsPerDegreePerSecond
-        )  # calibrates gyro values to equal degrees
-        while self.isOperatorControl() and self.isEnabled():
-            turningValue = (self.angleSetpoint - self.gyro.getAngle()) * self.pGain
-            if self.joystick.getY() <= 0:
-                # forwards
-                self.myRobot.arcadeDrive(self.joystick.getY(), turningValue)
-            elif self.joystick.getY() > 0:
-                # backwards
-                self.myRobot.arcadeDrive(self.joystick.getY(), -turningValue)
-            wpilib.Timer.delay(0.005)
-
-    def test(self):
-        """Runs during test mode"""
-        pass
+        
+        turningValue = (self.angleSetpoint - self.gyro.getAngle()) * self.pGain
+        if self.joystick.getY() <= 0:
+            # forwards
+            self.myRobot.arcadeDrive(self.joystick.getY(), turningValue)
+        elif self.joystick.getY() > 0:
+            # backwards
+            self.myRobot.arcadeDrive(self.joystick.getY(), -turningValue)
 
 
 if __name__ == "__main__":
