@@ -4,7 +4,7 @@
 """
 
 import wpilib
-#import wpilib.drive
+import wpilib.drive
 
 
 class MyRobot(wpilib.IterativeRobot):
