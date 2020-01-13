@@ -8,7 +8,7 @@ import wpilib
 from wpilib.drive import MecanumDrive
 
 
-class MyRobot(wpilib.SampleRobot):
+class MyRobot(wpilib.IterativeRobot):
     # Channels on the roboRIO that the motor controllers are plugged in to
     frontLeftChannel = 2
     rearLeftChannel = 3
@@ -42,18 +42,16 @@ class MyRobot(wpilib.SampleRobot):
 
         self.stick = wpilib.Joystick(self.joystickChannel)
 
-    def operatorControl(self):
-        """Runs the motors with Mecanum drive."""
-
+    def teleopInit(self):
         self.drive.setSafetyEnabled(True)
-        while self.isOperatorControl() and self.isEnabled():
-            # Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
-            # This sample does not use field-oriented drive, so the gyro input is set to zero.
-            self.drive.driveCartesian(
-                self.stick.getX(), self.stick.getY(), self.stick.getZ(), 0
-            )
 
-            wpilib.Timer.delay(0.005)  # wait 5ms to avoid hogging CPU cycles
+    def teleopPeriodic(self):
+        """Runs the motors with Mecanum drive."""
+        # Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
+        # This sample does not use field-oriented drive, so the gyro input is set to zero.
+        self.drive.driveCartesian(
+            self.stick.getX(), self.stick.getY(), self.stick.getZ(), 0
+        )
 
 
 if __name__ == "__main__":
