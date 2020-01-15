@@ -6,7 +6,7 @@ import wpilib
 from networktables import NetworkTables
 
 
-class GameDataRobot(wpilib.IterativeRobot):
+class GameDataRobot(wpilib.TimedRobot):
     def robotInit(self):
         # A way of demonstrating the difference between the game data strings
         self.blue = wpilib.Solenoid(0)
@@ -20,7 +20,7 @@ class GameDataRobot(wpilib.IterativeRobot):
 
     def teleopPeriodic(self):
         data = self.ds.getGameSpecificMessage()
-        if len(data) > 0:
+        if data:
             # Set the robot gamedata property and set a network tables value
             self.gameData = data
             self.sd.putString("gameData", self.gameData)

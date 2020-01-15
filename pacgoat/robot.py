@@ -15,7 +15,7 @@ from subsystems.pneumatics import Pneumatics
 from subsystems.shooter import Shooter
 
 
-class Robot(wpilib.IterativeRobot):
+class Robot(wpilib.TimedRobot):
     """This is the main class for running the PacGoat code."""
 
     def robotInit(self):
