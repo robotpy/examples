@@ -8,7 +8,7 @@ import wpilib
 from wpilib.drive import MecanumDrive
 
 
-class MyRobot(wpilib.IterativeRobot):
+class MyRobot(wpilib.TimedRobot):
     # Channels on the roboRIO that the motor controllers are plugged in to
     frontLeftChannel = 2
     rearLeftChannel = 3
