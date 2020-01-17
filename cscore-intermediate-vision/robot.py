@@ -7,10 +7,9 @@ import wpilib
 
 
 class MyRobot(wpilib.IterativeRobot):
-    
     def robotInit(self):
-        wpilib.CameraServer.launch('vision.py:main')
+        wpilib.CameraServer.launch("vision.py:main")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     wpilib.run(MyRobot)

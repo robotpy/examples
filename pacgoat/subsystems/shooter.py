@@ -27,15 +27,14 @@ class Shooter(Subsystem):
         self.piston1ReedSwitchBack = wpilib.DigitalInput(11)
 
         # Put everything to the LiveWindow for testing.
-        wpilib.LiveWindow.addSensor("Shooter", "Hot Goal Sensor",
-                                    self.hotGoalSensor)
-        wpilib.LiveWindow.addSensor("Shooter", "Piston1 Reed Switch Front",
-                                    self.piston1ReedSwitchFront)
-        wpilib.LiveWindow.addSensor("Shooter", "Piston1 Reed Switch Back",
-                                    self.piston1ReedSwitchBack)
-        wpilib.LiveWindow.addActuator("Shooter", "Latch Piston",
-                                      self.latchPiston)
-        
+        wpilib.LiveWindow.addSensor("Shooter", "Hot Goal Sensor", self.hotGoalSensor)
+        wpilib.LiveWindow.addSensor(
+            "Shooter", "Piston1 Reed Switch Front", self.piston1ReedSwitchFront
+        )
+        wpilib.LiveWindow.addSensor(
+            "Shooter", "Piston1 Reed Switch Back", self.piston1ReedSwitchBack
+        )
+        wpilib.LiveWindow.addActuator("Shooter", "Latch Piston", self.latchPiston)
 
     def initDefaultCommand(self):
         """No default command."""

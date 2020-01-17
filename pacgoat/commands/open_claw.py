@@ -1,6 +1,6 @@
 from wpilib.command import Command
 
-#TODO Check this when done
+# TODO Check this when done
 
 
 class OpenClaw(Command):

@@ -1,5 +1,5 @@
-
 from wpilib.buttons import Trigger
+
 
 class DoubleButton(Trigger):
     """
@@ -13,4 +13,6 @@ class DoubleButton(Trigger):
         self.button2 = button2
 
     def get(self):
-        return self.joy.getRawButton(self.button1) and self.joy.getRawButton(self.button2)
+        return self.joy.getRawButton(self.button1) and self.joy.getRawButton(
+            self.button2
+        )

@@ -1,4 +1,3 @@
-
 from wpilib.command import CommandGroup
 
 from subsystems.collector import Collector

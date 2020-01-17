@@ -7,8 +7,7 @@ import wpilib
 import wpilib.drive
 
 
-class MyRobot(wpilib.IterativeRobot):
-
+class MyRobot(wpilib.TimedRobot):
     def robotInit(self):
         """
         This function is called upon program startup and
@@ -17,7 +16,7 @@ class MyRobot(wpilib.IterativeRobot):
         self.left_motor = wpilib.Spark(0)
         self.right_motor = wpilib.Spark(1)
         self.drive = wpilib.drive.DifferentialDrive(self.left_motor, self.right_motor)
-        self.stick = wpilib.Joystick(1)
+        self.stick = wpilib.Joystick(0)
         self.timer = wpilib.Timer()
 
     def autonomousInit(self):

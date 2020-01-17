@@ -1,4 +1,3 @@
-
 import wpilib
 from wpilib.command import PIDSubsystem
 
@@ -37,11 +36,17 @@ class Pivot(PIDSubsystem):
         self.pot = wpilib.AnalogPotentiometer(1)
 
         # Put everything to the LiveWindow for testing.
-        wpilib.LiveWindow.addSensor("Pivot", "Upper Limit Switch", self.upperLimitSwitch)
-        wpilib.LiveWindow.addSensor("Pivot", "Lower Limit Switch", self.lowerLimitSwitch)
+        wpilib.LiveWindow.addSensor(
+            "Pivot", "Upper Limit Switch", self.upperLimitSwitch
+        )
+        wpilib.LiveWindow.addSensor(
+            "Pivot", "Lower Limit Switch", self.lowerLimitSwitch
+        )
         wpilib.LiveWindow.addSensor("Pivot", "Pot", self.pot)
         wpilib.LiveWindow.addActuator("Pivot", "Motor", self.motor)
-        wpilib.LiveWindow.addActuator("Pivot", "PIDSubsystem Controller", self.getPIDController())
+        wpilib.LiveWindow.addActuator(
+            "Pivot", "PIDSubsystem Controller", self.getPIDController()
+        )
 
     def initDefaultCommand(self):
         """No default command, if PID is enabled, the current setpoint will be maintained."""

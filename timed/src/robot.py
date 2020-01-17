@@ -5,11 +5,11 @@ import wpilib
 
 class MyRobot(wpilib.TimedRobot):
     """Main robot class."""
-    
+
     def robotInit(self):
         """Robot-wide initialization code should go here."""
-        self.lstick = wpilib.Joystick(1)
-        self.motor = wpilib.Jaguar(3)
+        self.lstick = wpilib.Joystick(0)
+        self.motor = wpilib.Talon(3)
 
         self.timer = wpilib.Timer()
         self.loops = 0
@@ -24,8 +24,8 @@ class MyRobot(wpilib.TimedRobot):
 
     def disabledInit(self):
         """Called only at the beginning of disabled mode."""
-        self.logger.info('%d loops / %f seconds', self.loops, self.timer.get())
-    
+        self.logger.info("%d loops / %f seconds", self.loops, self.timer.get())
+
     def disabledPeriodic(self):
         """Called every 20ms in disabled mode."""
         pass
@@ -44,9 +44,9 @@ class MyRobot(wpilib.TimedRobot):
         # Print out the number of loop iterations passed every second
         self.loops += 1
         if self.timer.hasPeriodPassed(1):
-            self.logger.info('%d loops / second', self.loops)
+            self.logger.info("%d loops / second", self.loops)
             self.loops = 0
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     wpilib.run(MyRobot)

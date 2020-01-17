@@ -6,6 +6,7 @@ BASE_TESTS="
   arcade-drive
   cscore-intermediate-vision
   cscore-quick-vision
+  game-data
   gearsbot
   getting-started
   gyro
@@ -19,6 +20,7 @@ BASE_TESTS="
   physics-mecanum/src
   physics-spi/src
   sample/src
+  shuffleboard
   tank-drive
   timed/src
 "
