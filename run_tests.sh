@@ -6,6 +6,7 @@ BASE_TESTS="
   arcade-drive
   cscore-intermediate-vision
   cscore-quick-vision
+  game-data
   gearsbot
   getting-started
   gyro

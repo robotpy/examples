@@ -14,7 +14,7 @@
 import wpilib
 
 
-class MyRobot(wpilib.SampleRobot):
+class MyRobot(wpilib.TimedRobot):
 
     #: update every 0.005 seconds/5 milliseconds (200Hz)
     kUpdatePeriod = 0.005
@@ -25,18 +25,14 @@ class MyRobot(wpilib.SampleRobot):
         self.motor = wpilib.Talon(0)  # initialize the motor as a Talon on channel 0
         self.stick = wpilib.Joystick(0)  # initialize the joystick on port 0
 
-    def operatorControl(self):
+    def teleopPeriodic(self):
         """Runs the motor from a joystick."""
 
-        while self.isOperatorControl() and self.isEnabled():
+        # Set the motor's output.
+        # This takes a number from -1 (100% speed in reverse) to
+        # +1 (100% speed going forward)
 
-            # Set the motor's output.
-            # This takes a number from -1 (100% speed in reverse) to
-            # +1 (100% speed going forward)
-
-            self.motor.set(self.stick.getY())
-
-            wpilib.Timer.delay(self.kUpdatePeriod)  # wait 5ms to the next update
+        self.motor.set(self.stick.getY())
 
 
 if __name__ == "__main__":
