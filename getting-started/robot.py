@@ -7,7 +7,7 @@ import wpilib
 import wpilib.drive
 
 
-class MyRobot(wpilib.IterativeRobot):
+class MyRobot(wpilib.TimedRobot):
     def robotInit(self):
         """
         This function is called upon program startup and

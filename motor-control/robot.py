@@ -14,7 +14,7 @@
 import wpilib
 
 
-class MyRobot(wpilib.IterativeRobot):
+class MyRobot(wpilib.TimedRobot):
 
     #: update every 0.005 seconds/5 milliseconds (200Hz)
     kUpdatePeriod = 0.005

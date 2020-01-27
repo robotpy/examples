@@ -4,7 +4,7 @@ import wpilib
 from wpilib.drive import DifferentialDrive
 
 
-class MyRobot(wpilib.IterativeRobot):
+class MyRobot(wpilib.TimedRobot):
     """This is a demo program showing how to use Gyro control with the
     DifferentialDrive class."""
 

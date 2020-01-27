@@ -9,7 +9,7 @@ import wpilib
 from wpilib.drive import DifferentialDrive
 
 
-class MyRobot(wpilib.IterativeRobot):
+class MyRobot(wpilib.TimedRobot):
     def robotInit(self):
         """Robot initialization function"""
 
