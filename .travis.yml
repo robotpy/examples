@@ -23,7 +23,7 @@ jobs:
 # command to install dependencies
 install:
   - pip install -U pip pytest
-  - pip install --no-deps -r travis-requirements.txt
+  - pip install -r travis-requirements.txt
 # command to run tests
 script:
   - ./run_tests.sh all
