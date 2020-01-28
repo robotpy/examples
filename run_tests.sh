@@ -3,42 +3,40 @@
 cd "$(dirname $0)"
 
 BASE_TESTS="
-  arcade-drive
-  cscore-intermediate-vision
-  cscore-quick-vision
-  game-data
-  gearsbot
+  drivetrain/arcade-drive
+  cameras/cscore-intermediate-vision
+  cameras/cscore-quick-vision
+  utilities/game-data
+  commandbased/gearsbot
   getting-started
-  gyro
-  iterative/src
-  mecanum-drive
-  motor-control
-  pacgoat
-  physics/src
-  physics-4wheel/src
-  physics-camsim/src
-  physics-mecanum/src
-  physics-spi/src
-  sample/src
-  shuffleboard
-  tank-drive
-  timed/src
+  utilities/gyro
+  drivetrain/mecanum-drive
+  utilities/motor-control
+  commandbased/pacgoat
+  physics/physics/src
+  physics/physics-4wheel/src
+  physics/physics-camsim/src
+  physics/physics-mecanum/src
+  physics/physics-spi/src
+  utilities/shuffleboard
+  drivetrain/tank-drive
+  robot-modes/timed/src
 "
 
 ROBOTPY_EXT_TESTS="
-  command-based
-  magicbot-simple
-  stateful-autonomous
+  commandbased/command-based
+  robot-modes/magicbot-simple
+  utilities/stateful-autonomous
 "
 
 NAVX_TESTS="
-  navx
-  navx-rotate-to-angle
-  navx-rotate-to-angle-arcade
+  utilities/navx
+  utilities/navx-rotate-to-angle
+  utilities/navx-rotate-to-angle-arcade
 "
 
 IGNORED_TESTS="
-  physics-pathfinder
+  physics/physics-pathfinder
 "
 
 ALL_TESTS="${BASE_TESTS} ${ROBOTPY_EXT_TESTS} ${NAVX_TESTS}"
