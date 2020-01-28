@@ -7,26 +7,16 @@ BASE_TESTS="
   cameras/cscore-intermediate-vision
   cameras/cscore-quick-vision
   utilities/game-data
-  commandbased/gearsbot
   getting-started
   utilities/gyro
   drivetrain/mecanum-drive
   utilities/motor-control
-  commandbased/pacgoat
-  physics/physics/src
-  physics/physics-4wheel/src
-  physics/physics-camsim/src
-  physics/physics-mecanum/src
-  physics/physics-spi/src
-  utilities/shuffleboard
   drivetrain/tank-drive
   robot-modes/timed/src
 "
 
 ROBOTPY_EXT_TESTS="
-  commandbased/command-based
   robot-modes/magicbot-simple
-  utilities/stateful-autonomous
 "
 
 NAVX_TESTS="
@@ -36,11 +26,21 @@ NAVX_TESTS="
 "
 
 IGNORED_TESTS="
+  utilities/stateful-autonomous
   physics/physics-pathfinder
+  physics/physics/src
+  physics/physics-4wheel/src
+  physics/physics-camsim/src
+  physics/physics-mecanum/src
+  physics/physics-spi/src
+  utilities/shuffleboard
+  commandbased/command-based
+  commandbased/gearsbot
+  commandbased/pacgoat
 "
 
-ALL_TESTS="${BASE_TESTS} ${ROBOTPY_EXT_TESTS} ${NAVX_TESTS}"
-EVERY_TESTS="${ALL_TESTS} ${IGNORED_TESTS}"
+ALL_TESTS="${BASE_TESTS} ${ROBOTPY_EXT_TESTS}"
+EVERY_TESTS="${ALL_TESTS} ${IGNORED_TESTS} ${NAVX_TESTS}"
 
 if [ "$1" == "all" ]; then
   TESTS="$ALL_TESTS"
