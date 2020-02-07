@@ -6,7 +6,7 @@
 import wpilib
 
 
-class MyRobot(wpilib.IterativeRobot):
+class MyRobot(wpilib.TimedRobot):
     def robotInit(self):
         wpilib.CameraServer.launch()
 
