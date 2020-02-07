@@ -17,4 +17,4 @@ class DriveForward(StatefulAutonomous):
 
     @timed_state(duration=5)
     def drive_forward(self):
-        self.drive.drive(self.drive_speed, 0)
+        self.drive.tankDrive(self.drive_speed, -1*(self.drive_speed))
