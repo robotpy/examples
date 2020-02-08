@@ -6,10 +6,7 @@
 
 import wpilib
 from wpilib.drive import MecanumDrive
-#Import the Xbox specific control
-from wpilib.interfaces import GenericHID
 
-Hand = GenericHID.Hand
 
 class MyRobot(wpilib.TimedRobot):
     # Channels on the roboRIO that the motor controllers are plugged in to
@@ -20,7 +17,6 @@ class MyRobot(wpilib.TimedRobot):
 
     # The channel on the driver station that the joystick is connected to
     joystickChannel = 0
-    
 
     def robotInit(self):
         """Robot initialization function"""
@@ -41,9 +37,6 @@ class MyRobot(wpilib.TimedRobot):
             self.frontRightMotor,
             self.rearRightMotor,
         )
-
-        self.drive.setExpiration(0.1)
-
         # Define the Xbox Controller.
         self.stick = wpilib.XboxController(self.joystickChannel)
 
@@ -56,7 +49,10 @@ class MyRobot(wpilib.TimedRobot):
         # This sample does not use field-oriented drive, so the gyro input is set to zero.
         # This Stick configuration is created by K.E. on our team.  Left stick Y axis is speed, Left Stick X axis is strafe, and Right Stick Y axis is turn.
         self.drive.driveCartesian(
-            self.stick.getX(self.stick.Hand.kLeftHand), self.stick.getY(self.stick.Hand.kLeftHand), self.stick.getY(self.stick.Hand.kRightHand), 0
+            self.stick.getX(self.stick.Hand.kLeftHand),
+            self.stick.getY(self.stick.Hand.kLeftHand),
+            self.stick.getY(self.stick.Hand.kRightHand),
+            0,
         )
 
         """Alternatively, to match the driver station enumeration, you may use  ---> self.drive.driveCartesian(

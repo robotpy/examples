@@ -13,12 +13,12 @@ class DriveBackwards(StatefulAutonomous):
 
     @timed_state(duration=0.5, next_state="drive_backwards", first=True)
     def drive_wait(self):
-        self.drive.tankDrive(0,0)
+        self.drive.tankDrive(0, 0)
 
     @timed_state(duration=5, next_state="stop")
     def drive_backwards(self):
-        self.drive.tankDrive(self.drive_speed, -1*(self.drive_speed))
-    @state() #Remove or modify this to add additional states to this class.
-    def stop(self):
-        self.drive.tankDrive(0,0)
+        self.drive.tankDrive(self.drive_speed, -1 * (self.drive_speed))
 
+    @state()  # Remove or modify this to add additional states to this class.
+    def stop(self):
+        self.drive.tankDrive(0, 0)

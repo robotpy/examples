@@ -29,8 +29,10 @@ class MyRobot(wpilib.TimedRobot):
         # * The second argument is passed to each StatefulAutonomous when they
         #   start up
         self.automodes = AutonomousModeSelector("autonomous", self.components)
+
     def autonomousInit(self):
         self.drive.setSafetyEnabled(True)
+
     def autonomousPeriodic(self):
         self.automodes.run()
 

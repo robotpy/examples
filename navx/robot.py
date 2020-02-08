@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import wpilib
+from networktables import NetworkTables
 
 
 import navx
@@ -12,6 +13,8 @@ def run():
 
 class MyRobot(wpilib.TimedRobot):
     def robotInit(self):
+
+        self.sd = NetworkTables.getTable("SmartDashboard")
 
         self.timer = wpilib.Timer()
 
@@ -25,8 +28,8 @@ class MyRobot(wpilib.TimedRobot):
         # self.navx = navx.AHRS.create_i2c()
 
         # Analog input
-        # It seems as though analog is not currently supported. self.analog = wpilib.AnalogInput(navx.pins.getNavxAnalogInChannel(0))
-        
+        # self.analog = wpilib.AnalogInput(navx.pins.getNavxAnalogInChannel(0)) <--It seems as though the analog channel is not currently supported.
+
     def robotPeriodic(self):
 
         self.logger.info("Entered disabled mode")
@@ -34,25 +37,20 @@ class MyRobot(wpilib.TimedRobot):
         self.timer.reset()
         self.timer.start()
 
-        
-
         while self.isDisabled():
 
             if self.timer.hasPeriodPassed(0.5):
-                wpilib.SmartDashboard.putNumber(
-                    "Displacement X", self.navx.getDisplacementX()
-                )
-                wpilib.SmartDashboard.putNumber(
-                    "Displacement Y", self.navx.getDisplacementY()
-                )
-                wpilib.SmartDashboard.putBoolean("IsCalibrating", self.navx.isCalibrating())
-                wpilib.SmartDashboard.putBoolean("IsConnected", self.navx.isConnected())
-                wpilib.SmartDashboard.putNumber("Angle", self.navx.getAngle())
-                wpilib.SmartDashboard.putNumber("Pitch", self.navx.getPitch())
-                wpilib.SmartDashboard.putNumber("Yaw", self.navx.getYaw())
-                wpilib.SmartDashboard.putNumber("Roll", self.navx.getRoll())
-                #wpilib.SmartDashboard.putNumber("Analog", self.analog.getVoltage())
-                wpilib.SmartDashboard.putNumber("Timestamp", self.navx.getLastSensorTimestamp())
+                self.sd.putNumber("Displacement X", self.navx.getDisplacementX())
+                self.sd.putNumber("Displacement Y", self.navx.getDisplacementY())
+                self.sd.putBoolean("IsCalibrating", self.navx.isCalibrating())
+                self.sd.putBoolean("IsConnected", self.navx.isConnected())
+                self.sd.putNumber("Angle", self.navx.getAngle())
+                self.sd.putNumber("Pitch", self.navx.getPitch())
+                self.sd.putNumber("Yaw", self.navx.getYaw())
+                self.sd.putNumber("Roll", self.navx.getRoll())
+                # self.sd.putNumber("Analog", self.analog.getVoltage())
+                self.sd.putNumber("Timestamp", self.navx.getLastSensorTimestamp())
+
 
 if __name__ == "__main__":
     wpilib.run(MyRobot)
