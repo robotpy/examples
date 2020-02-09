@@ -6,7 +6,7 @@ import wpilib.drive
 from robotpy_ext.autonomous import AutonomousModeSelector
 
 
-class MyRobot(wpilib.IterativeRobot):
+class MyRobot(wpilib.TimedRobot):
     """
         This shows using the AutonomousModeSelector to automatically choose
         autonomous modes.
@@ -29,6 +29,9 @@ class MyRobot(wpilib.IterativeRobot):
         # * The second argument is passed to each StatefulAutonomous when they
         #   start up
         self.automodes = AutonomousModeSelector("autonomous", self.components)
+
+    def autonomousInit(self):
+        self.drive.setSafetyEnabled(True)
 
     def autonomousPeriodic(self):
         self.automodes.run()

@@ -1,4 +1,4 @@
-from robotpy_ext.autonomous import StatefulAutonomous, timed_state
+from robotpy_ext.autonomous import StatefulAutonomous, state, timed_state
 
 
 class DriveForward(StatefulAutonomous):
@@ -13,8 +13,12 @@ class DriveForward(StatefulAutonomous):
 
     @timed_state(duration=0.5, next_state="drive_forward", first=True)
     def drive_wait(self):
-        pass
+        self.drive.tankDrive(0, 0)
 
-    @timed_state(duration=5)
+    @timed_state(duration=5, next_state="stop")
     def drive_forward(self):
-        self.drive.drive(self.drive_speed, 0)
+        self.drive.tankDrive(self.drive_speed, -1 * (self.drive_speed))
+
+    @state()  # Remove or modify this to add additional states to this class.
+    def stop(self):
+        self.drive.tankDrive(0, 0)

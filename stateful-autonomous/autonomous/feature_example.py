@@ -1,6 +1,7 @@
 """
     This autonomous mode doesn't do anything particularly useful, it's just
     here to test out features and make sure that things work.
+    The motors will timeout  if you do not set them to 0.
 """
 
 from robotpy_ext.autonomous import StatefulAutonomous, state, timed_state
