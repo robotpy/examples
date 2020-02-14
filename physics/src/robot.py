@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
 
 import wpilib
+import wpilib.drive
+
+if wpilib.RobotBase.isSimulation():
+    is_sim = True
+    import physics
+    import time
+else:
+    is_sim = False
 
 
-class MyRobot(wpilib.SampleRobot):
+class MyRobot(wpilib.TimedRobot):
     """Main robot class"""
 
     def robotInit(self):
@@ -18,7 +26,7 @@ class MyRobot(wpilib.SampleRobot):
         # Position gets automatically updated as robot moves
         self.gyro = wpilib.AnalogGyro(1)
 
-        self.robot_drive = wpilib.RobotDrive(self.l_motor, self.r_motor)
+        self.drive = wpilib.drive.DifferentialDrive(self.l_motor, self.r_motor)
 
         self.motor = wpilib.Jaguar(4)
 
@@ -27,52 +35,50 @@ class MyRobot(wpilib.SampleRobot):
 
         self.position = wpilib.AnalogInput(2)
 
-    def disabled(self):
-        """Called when the robot is disabled"""
-        while self.isDisabled():
-            wpilib.Timer.delay(0.01)
+        if is_sim:
+            self.physics = physics.PhysicsEngine()
+            self.last_tm = time.time()
 
-    def autonomous(self):
+    if is_sim:
+        # TODO: this needs to be builtin
+        def robotPeriodic(self):
+            now = time.time()
+            tm_diff = now - self.last_tm
+            self.last_tm = now
+            self.physics.update_sim(now, tm_diff)
+
+    def autonomousInit(self):
         """Called when autonomous mode is enabled"""
 
-        timer = wpilib.Timer()
-        timer.start()
+        self.timer = wpilib.Timer()
+        self.timer.start()
 
-        while self.isAutonomous() and self.isEnabled():
+    def autonomousPeriodic(self):
+        if self.timer.get() < 2.0:
+            self.robot_drive.arcadeDrive(-1.0, 0.3)
+        else:
+            self.robot_drive.arcadeDrive(0, 0)
 
-            if timer.get() < 2.0:
-                self.robot_drive.arcadeDrive(-1.0, 0.3)
-            else:
-                self.robot_drive.arcadeDrive(0, 0)
-
-            wpilib.Timer.delay(0.01)
-
-    def operatorControl(self):
+    def teleopPeriodic(self):
         """Called when operation control mode is enabled"""
 
-        timer = wpilib.Timer()
-        timer.start()
+        self.drive.arcadeDrive(self.lstick.getY(), self.lstick.getX())
+        #self.drive.arcadeDrive(self.lstick.getRawAxis(1), self.lstick.getRawAxis(3))
 
-        while self.isOperatorControl() and self.isEnabled():
+        # Move a motor with a Joystick
+        y = self.rstick.getY()
 
-            self.robot_drive.arcadeDrive(self.lstick)
+        # stop movement backwards when 1 is on
+        if self.limit1.get():
+            y = max(0, y)
 
-            # Move a motor with a Joystick
-            y = self.rstick.getY()
+        # stop movement forwards when 2 is on
+        if self.limit2.get():
+            y = min(0, y)
 
-            # stop movement backwards when 1 is on
-            if self.limit1.get():
-                y = max(0, y)
-
-            # stop movement forwards when 2 is on
-            if self.limit2.get():
-                y = min(0, y)
-
-            self.motor.set(y)
-
-            wpilib.Timer.delay(0.04)
+        self.motor.set(y)
 
 
 if __name__ == "__main__":
 
-    wpilib.run(MyRobot, physics_enabled=True)
+    wpilib.run(MyRobot)
