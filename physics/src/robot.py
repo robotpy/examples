@@ -55,9 +55,9 @@ class MyRobot(wpilib.TimedRobot):
 
     def autonomousPeriodic(self):
         if self.timer.get() < 2.0:
-            self.robot_drive.arcadeDrive(-1.0, 0.3)
+            self.drive.arcadeDrive(-1.0, -0.3)
         else:
-            self.robot_drive.arcadeDrive(0, 0)
+            self.drive.arcadeDrive(0, 0)
 
     def teleopPeriodic(self):
         """Called when operation control mode is enabled"""
