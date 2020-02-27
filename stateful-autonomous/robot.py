@@ -32,9 +32,13 @@ class MyRobot(wpilib.TimedRobot):
 
     def autonomousInit(self):
         self.drive.setSafetyEnabled(True)
+        self.automodes.start()
 
     def autonomousPeriodic(self):
-        self.automodes.run()
+        self.automodes.periodic()
+
+    def disabledInit(self):
+        self.automodes.disable()
 
     def teleopInit(self):
         pass
