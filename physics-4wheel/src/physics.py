@@ -3,11 +3,14 @@
 #
 
 
+import hal.simulation
+
+from pyfrc.physics.core import PhysicsInterface
 from pyfrc.physics import motor_cfgs, tankmodel
 from pyfrc.physics.units import units
 
 
-class PhysicsEngine(object):
+class PhysicsEngine:
     """
        Simulates a 4-wheel robot using Tank Drive joystick control
     """
@@ -19,6 +22,15 @@ class PhysicsEngine(object):
         """
 
         self.physics_controller = physics_controller
+
+        # Motors
+        self.lf_motor = hal.simulation.PWMSim(1)
+        # self.lr_motor = hal.simulation.PWMSim(2)
+        self.rf_motor = hal.simulation.PWMSim(3)
+        # self.rr_motor = hal.simulation.PWMSim(4)
+
+        # Gyro
+        self.gyro = hal.simulation.AnalogGyroSim(1)
 
         # Change these parameters to fit your robot!
         bumper_width = 3.25 * units.inch
@@ -36,7 +48,7 @@ class PhysicsEngine(object):
         )
         # fmt: on
 
-    def update_sim(self, hal_data, now, tm_diff):
+    def update_sim(self, now, tm_diff):
         """
             Called when the simulation parameters for the program need to be
             updated.
@@ -46,13 +58,14 @@ class PhysicsEngine(object):
                             time that this function was called
         """
 
-        # Simulate the drivetrain
-        lr_motor = hal_data["pwm"][1]["value"]
-        rr_motor = hal_data["pwm"][2]["value"]
+        # Simulate the drivetrain (only front motors used because read should be in sync)
+        lf_motor = self.lf_motor.getSpeed()
+        rf_motor = self.rf_motor.getSpeed()
 
-        # Not needed because front and rear should be in sync
-        # lf_motor = hal_data['pwm'][3]['value']
-        # rf_motor = hal_data['pwm'][4]['value']
+        transform = self.drivetrain.calculate(lf_motor, rf_motor, tm_diff)
+        pose = self.physics_controller.move_robot(transform)
 
-        x, y, angle = self.drivetrain.get_distance(lr_motor, rr_motor, tm_diff)
-        self.physics_controller.distance_drive(x, y, angle)
+        # Update the gyro simulation
+        # -> FRC gyros are positive clockwise, but the returned pose is positive
+        #    counter-clockwise
+        self.gyro.setAngle(-pose.rotation().degrees())

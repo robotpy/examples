@@ -3,13 +3,6 @@
 import wpilib
 import wpilib.drive
 
-if wpilib.RobotBase.isSimulation():
-    is_sim = True
-    import physics
-    import time
-else:
-    is_sim = False
-
 
 class MyRobot(wpilib.TimedRobot):
     """Main robot class"""
@@ -35,18 +28,6 @@ class MyRobot(wpilib.TimedRobot):
 
         self.position = wpilib.AnalogInput(2)
 
-        if is_sim:
-            self.physics = physics.PhysicsEngine()
-            self.last_tm = time.time()
-
-    if is_sim:
-        # TODO: this needs to be builtin
-        def robotPeriodic(self):
-            now = time.time()
-            tm_diff = now - self.last_tm
-            self.last_tm = now
-            self.physics.update_sim(now, tm_diff)
-
     def autonomousInit(self):
         """Called when autonomous mode is enabled"""
 
@@ -62,8 +43,7 @@ class MyRobot(wpilib.TimedRobot):
     def teleopPeriodic(self):
         """Called when operation control mode is enabled"""
 
-        self.drive.arcadeDrive(self.lstick.getY(), self.lstick.getX())
-        #self.drive.arcadeDrive(self.lstick.getRawAxis(1), self.lstick.getRawAxis(3))
+        self.drive.arcadeDrive(-self.lstick.getY(), self.lstick.getX())
 
         # Move a motor with a Joystick
         y = self.rstick.getY()
@@ -80,5 +60,4 @@ class MyRobot(wpilib.TimedRobot):
 
 
 if __name__ == "__main__":
-
     wpilib.run(MyRobot)

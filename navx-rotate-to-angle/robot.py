@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 
 import wpilib
+import wpilib.drive
+import wpilib.controller
+
 from navx import AHRS
 
 
-class MyRobot(wpilib.SampleRobot):
+class MyRobot(wpilib.TimedRobot):
     """This is a demo program showing the use of the navX MXP to implement
     a "rotate to angle" feature. This demo works in the pyfrc simulator.
     
@@ -40,27 +43,33 @@ class MyRobot(wpilib.SampleRobot):
         kP = 0.06
         kI = 0.00
         kD = 0.00
-        kF = 0.00
     else:
         # These PID parameters are used on a real robot
         kP = 0.03
         kI = 0.00
         kD = 0.00
-        kF = 0.00
 
     kToleranceDegrees = 2.0
 
     def robotInit(self):
         # Channels for the wheels
-        frontLeftChannel = 2
-        rearLeftChannel = 3
-        frontRightChannel = 1
-        rearRightChannel = 0
+        frontLeftChannel = 1
+        rearLeftChannel = 2
+        frontRightChannel = 3
+        rearRightChannel = 4
 
-        self.myRobot = wpilib.RobotDrive(
-            frontLeftChannel, rearLeftChannel, frontRightChannel, rearRightChannel
+        self.frontLeftMotor = wpilib.Talon(frontLeftChannel)
+        self.rearLeftMotor = wpilib.Talon(rearLeftChannel)
+        self.frontRightMotor = wpilib.Talon(frontRightChannel)
+        self.rearRightMotor = wpilib.Talon(rearRightChannel)
+
+        self.drive = wpilib.drive.MecanumDrive(
+            self.frontLeftMotor,
+            self.rearLeftMotor,
+            self.frontRightMotor,
+            self.rearRightMotor,
         )
-        self.myRobot.setExpiration(0.1)
+
         self.stick = wpilib.Joystick(0)
 
         #
@@ -72,23 +81,17 @@ class MyRobot(wpilib.SampleRobot):
         self.ahrs = AHRS.create_spi()
         # self.ahrs = AHRS.create_i2c()
 
-        turnController = wpilib.PIDController(
-            self.kP, self.kI, self.kD, self.kF, self.ahrs, output=self
-        )
-        turnController.setInputRange(-180.0, 180.0)
-        turnController.setOutputRange(-1.0, 1.0)
-        turnController.setAbsoluteTolerance(self.kToleranceDegrees)
-        turnController.setContinuous(True)
+        turnController = wpilib.controller.PIDController(self.kP, self.kI, self.kD,)
+        turnController.enableContinuousInput(-180.0, 180.0)
+        turnController.setTolerance(self.kToleranceDegrees)
 
         self.turnController = turnController
-        self.rotateToAngleRate = 0
 
-        # Add the PID Controller to the Test-mode dashboard, allowing manual  */
-        # tuning of the Turn Controller's P, I and D coefficients.            */
-        # Typically, only the P value needs to be modified.                   */
-        wpilib.LiveWindow.addActuator("DriveSystem", "RotateController", turnController)
+    def teleopInit(self):
+        self.tm = wpilib.Timer()
+        self.tm.start()
 
-    def operatorControl(self):
+    def teleopPeriodic(self):
         """Runs the motors with onnidirectional drive steering.
         
         Implements Field-centric drive control.
@@ -101,57 +104,41 @@ class MyRobot(wpilib.SampleRobot):
         driving".
         """
 
-        tm = wpilib.Timer()
-        tm.start()
+        if self.tm.hasPeriodPassed(1.0):
+            print("NavX Gyro", self.ahrs.getYaw(), self.ahrs.getAngle())
 
-        self.myRobot.setSafetyEnabled(True)
-        while self.isOperatorControl() and self.isEnabled():
+        rotateToAngle = False
+        if self.stick.getRawButton(1):
+            self.ahrs.reset()
 
-            if tm.hasPeriodPassed(1.0):
-                print("NavX Gyro", self.ahrs.getYaw(), self.ahrs.getAngle())
+        if self.stick.getRawButton(2):
+            setpoint = 0.0
+            rotateToAngle = True
+        elif self.stick.getRawButton(3):
+            setpoint = 90.0
+            rotateToAngle = True
+        elif self.stick.getRawButton(4):
+            setpoint = 179.9
+            rotateToAngle = True
+        elif self.stick.getRawButton(5):
+            setpoint = -90.0
+            rotateToAngle = True
 
-            rotateToAngle = False
-            if self.stick.getRawButton(1):
-                self.ahrs.reset()
-
-            if self.stick.getRawButton(2):
-                self.turnController.setSetpoint(0.0)
-                rotateToAngle = True
-            elif self.stick.getRawButton(3):
-                self.turnController.setSetpoint(90.0)
-                rotateToAngle = True
-            elif self.stick.getRawButton(4):
-                self.turnController.setSetpoint(179.9)
-                rotateToAngle = True
-            elif self.stick.getRawButton(5):
-                self.turnController.setSetpoint(-90.0)
-                rotateToAngle = True
-
-            if rotateToAngle:
-                self.turnController.enable()
-                currentRotationRate = self.rotateToAngleRate
-            else:
-                self.turnController.disable()
-                currentRotationRate = self.stick.getTwist()
-
-            # Use the joystick X axis for lateral movement,
-            # Y axis for forward movement, and the current
-            # calculated rotation rate (or joystick Z axis),
-            # depending upon whether "rotate to angle" is active.
-            self.myRobot.mecanumDrive_Cartesian(
-                self.stick.getX(),
-                self.stick.getY(),
-                currentRotationRate,
-                self.ahrs.getAngle(),
+        if rotateToAngle:
+            currentRotationRate = self.turnController.calculate(
+                self.ahrs.getYaw(), setpoint
             )
+        else:
+            self.turnController.reset()
+            currentRotationRate = self.stick.getTwist()
 
-            wpilib.Timer.delay(0.005)  # wait for a motor update time
-
-    def pidWrite(self, output):
-        """This function is invoked periodically by the PID Controller,
-        based upon navX MXP yaw angle input and PID Coefficients.
-        """
-        self.rotateToAngleRate = output
+        # Use the joystick X axis for lateral movement,
+        # Y axis for forward movement, and the current
+        # calculated rotation rate (or joystick Z axis),
+        # depending upon whether "rotate to angle" is active.
+        self.drive.driveCartesian(
+            self.stick.getX(), -self.stick.getY(), currentRotationRate, 0
+        )
 
 
 if __name__ == "__main__":
