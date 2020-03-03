@@ -40,8 +40,8 @@ class PhysicsEngine:
         rf_motor = self.rf_motor.getSpeed()
         rr_motor = self.rr_motor.getSpeed()
 
-        vx, vy, vw = self.drivetrain.get_vector(lf_motor, lr_motor, rf_motor, rr_motor)
-        pose = self.physics_controller.vector_drive(vx, vy, vw, tm_diff)
+        speeds = self.drivetrain.calculate(lf_motor, lr_motor, rf_motor, rr_motor)
+        pose = self.physics_controller.drive(speeds, tm_diff)
 
         # Update the gyro simulation
         # -> FRC gyros like NavX are positive clockwise, but
