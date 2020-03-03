@@ -30,26 +30,25 @@ class MyRobot(wpilib.TimedRobot):
         # Analog input
         # self.analog = wpilib.AnalogInput(navx.pins.getNavxAnalogInChannel(0)) <--It seems as though the analog channel is not currently supported.
 
-    def robotPeriodic(self):
-
+    def disabledInit(self):
         self.logger.info("Entered disabled mode")
 
         self.timer.reset()
         self.timer.start()
 
-        while self.isDisabled():
-
-            if self.timer.hasPeriodPassed(0.5):
-                self.sd.putNumber("Displacement X", self.navx.getDisplacementX())
-                self.sd.putNumber("Displacement Y", self.navx.getDisplacementY())
-                self.sd.putBoolean("IsCalibrating", self.navx.isCalibrating())
-                self.sd.putBoolean("IsConnected", self.navx.isConnected())
-                self.sd.putNumber("Angle", self.navx.getAngle())
-                self.sd.putNumber("Pitch", self.navx.getPitch())
-                self.sd.putNumber("Yaw", self.navx.getYaw())
-                self.sd.putNumber("Roll", self.navx.getRoll())
-                # self.sd.putNumber("Analog", self.analog.getVoltage())
-                self.sd.putNumber("Timestamp", self.navx.getLastSensorTimestamp())
+    def disabledPeriodic(self):
+        if self.timer.hasPeriodPassed(0.5):
+            self.sd.putNumber("Displacement X", self.navx.getDisplacementX())
+            self.sd.putNumber("Displacement Y", self.navx.getDisplacementY())
+            self.sd.putBoolean("IsCalibrating", self.navx.isCalibrating())
+            self.sd.putBoolean("IsConnected", self.navx.isConnected())
+            self.sd.putNumber("Angle", self.navx.getAngle())
+            self.sd.putNumber("Pitch", self.navx.getPitch())
+            self.sd.putNumber("Yaw", self.navx.getYaw())
+            print("YAW", self.navx.getYaw())
+            self.sd.putNumber("Roll", self.navx.getRoll())
+            # self.sd.putNumber("Analog", self.analog.getVoltage())
+            self.sd.putNumber("Timestamp", self.navx.getLastSensorTimestamp())
 
 
 if __name__ == "__main__":

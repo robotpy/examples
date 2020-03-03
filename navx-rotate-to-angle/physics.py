@@ -1,7 +1,10 @@
+import hal.simulation
+
+from pyfrc.physics.core import PhysicsInterface
 from pyfrc.physics import drivetrains
 
 
-class PhysicsEngine(object):
+class PhysicsEngine:
     def __init__(self, physics_controller):
         """
             :param physics_controller: `pyfrc.physics.core.PhysicsInterface` object
@@ -9,12 +12,19 @@ class PhysicsEngine(object):
         """
 
         self.physics_controller = physics_controller
-        self.position = 0
 
-        self.physics_controller.add_device_gyro_channel("navxmxp_i2c_1_angle")
-        self.physics_controller.add_device_gyro_channel("navxmxp_spi_4_angle")
+        # Motors
+        self.lf_motor = hal.simulation.PWMSim(1)
+        self.lr_motor = hal.simulation.PWMSim(2)
+        self.rf_motor = hal.simulation.PWMSim(3)
+        self.rr_motor = hal.simulation.PWMSim(4)
 
-    def update_sim(self, hal_data, now, tm_diff):
+        self.navx = hal.simulation.SimDeviceSim("navX-Sensor[4]")
+        self.navx_yaw = self.navx.getDouble("Yaw")
+
+        self.drivetrain = drivetrains.MecanumDrivetrain()
+
+    def update_sim(self, now, tm_diff):
         """
             Called when the simulation parameters for the program need to be
             updated.
@@ -25,12 +35,15 @@ class PhysicsEngine(object):
         """
 
         # Simulate the drivetrain
-        lf_motor = hal_data["pwm"][2]["value"]
-        lr_motor = hal_data["pwm"][3]["value"]
-        rf_motor = hal_data["pwm"][1]["value"]
-        rr_motor = hal_data["pwm"][0]["value"]
+        lf_motor = self.lf_motor.getSpeed()
+        lr_motor = self.lr_motor.getSpeed()
+        rf_motor = self.rf_motor.getSpeed()
+        rr_motor = self.rr_motor.getSpeed()
 
-        vx, vy, vw = drivetrains.mecanum_drivetrain(
-            lr_motor, rr_motor, lf_motor, rf_motor
-        )
-        self.physics_controller.vector_drive(vx, vy, vw, tm_diff)
+        vx, vy, vw = self.drivetrain.get_vector(lf_motor, lr_motor, rf_motor, rr_motor)
+        pose = self.physics_controller.vector_drive(vx, vy, vw, tm_diff)
+
+        # Update the gyro simulation
+        # -> FRC gyros like NavX are positive clockwise, but
+        #    the returned pose is positive counter-clockwise
+        self.navx_yaw.set(-pose.rotation().degrees())

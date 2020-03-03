@@ -15,7 +15,7 @@ from pyfrc.physics.visionsim import VisionSim
 from networktables.util import ntproperty
 
 
-class PhysicsEngine(object):
+class PhysicsEngine:
     """
         Simulates a motor moving something that strikes two limit switches,
         one on each end of the track. Obviously, this is not particularly

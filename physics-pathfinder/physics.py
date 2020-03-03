@@ -16,7 +16,7 @@ from pyfrc.physics import motor_cfgs, tankmodel
 from pyfrc.physics.units import units
 
 
-class PhysicsEngine(object):
+class PhysicsEngine:
     """
         Simulates a motor moving something that strikes two limit switches,
         one on each end of the track. Obviously, this is not particularly

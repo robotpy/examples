@@ -1,7 +1,4 @@
 #
-# TODO: This example has been updated for 2020, but still needs
-#       quite a bit of polish
-#
 # See the documentation for more details on how this works
 #
 # The idea here is you provide a simulation object that overrides specific
@@ -12,63 +9,23 @@
 # of your robot code without too much extra effort.
 #
 
-import math
 import hal.simulation
 
-
+from pyfrc.physics.core import PhysicsInterface
 from pyfrc.physics import motor_cfgs, tankmodel
 from pyfrc.physics.units import units
 
 
-class Field:
-    # TODO: this will be in a future pyfrc release
-
-    def __init__(self):
-        self.device = hal.SimDevice("Field2D")
-        self.fx = self.device.createDouble("x", False, 0.0)
-        self.fy = self.device.createDouble("y", False, 0.0)
-        self.frot = self.device.createDouble("rot", False, 0.0)
-
-        self.x = 0
-        self.y = 0
-        self.angle = 0
-
-    def distance_drive(self, x, y, angle):
-        """Call this from your :func:`PhysicsEngine.update_sim` function.
-           Will update the robot's position on the simulation field.
-           
-           This moves the robot some relative distance and angle from
-           its current position.
-           
-           :param x:     Feet to move the robot in the x direction
-           :param y:     Feet to move the robot in the y direction
-           :param angle: Radians to turn the robot
-        """
-        # TODO: use wpilib kinematics?
-
-        self.angle += angle
-
-        c = math.cos(self.angle)
-        s = math.sin(self.angle)
-
-        self.x += x * c - y * s
-        self.y += x * s + y * c
-        
-        self.fx.set(self.x)
-        self.fy.set(self.y)
-        self.frot.set(math.degrees(self.angle))
-
-
-class PhysicsEngine(object):
+class PhysicsEngine:
     """
         Simulates a motor moving something that strikes two limit switches,
         one on each end of the track. Obviously, this is not particularly
         realistic, but it's good enough to illustrate the point
     """
 
-    def __init__(self):
+    def __init__(self, physics_controller: PhysicsInterface):
 
-        self.field = Field()
+        self.physics_controller = physics_controller
 
         # Motors
         self.l_motor = hal.simulation.PWMSim(1)
@@ -79,6 +36,9 @@ class PhysicsEngine(object):
         self.ain2 = hal.simulation.AnalogInSim(2)
 
         self.motor = hal.simulation.PWMSim(4)
+
+        # Gyro
+        self.gyro = hal.simulation.AnalogGyroSim(1)
 
         self.position = 0
 
@@ -98,7 +58,7 @@ class PhysicsEngine(object):
         )
         # fmt: on
 
-    def update_sim(self, now, tm_diff):
+    def update_sim(self, now: float, tm_diff: float) -> None:
         """
             Called when the simulation parameters for the program need to be
             updated.
@@ -112,8 +72,13 @@ class PhysicsEngine(object):
         l_motor = self.l_motor.getSpeed()
         r_motor = self.r_motor.getSpeed()
 
-        x, y, angle = self.drivetrain.get_distance(l_motor, r_motor, tm_diff)
-        self.field.distance_drive(x, y, angle)
+        transform = self.drivetrain.calculate(l_motor, r_motor, tm_diff)
+        pose = self.physics_controller.move_robot(transform)
+
+        # Update the gyro simulation
+        # -> FRC gyros are positive clockwise, but the returned pose is positive
+        #    counter-clockwise
+        self.gyro.setAngle(-pose.rotation().degrees())
 
         # update position (use tm_diff so the rate is constant)
         self.position += self.motor.getSpeed() * tm_diff * 3
