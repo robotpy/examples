@@ -10,14 +10,10 @@ class Claw(Subsystem):
     """
 
     def __init__(self):
-        super().__init__()
+        super().__init__("Claw")
 
         self.motor = wpilib.Victor(7)
         self.contact = wpilib.DigitalInput(5)
-
-        # Let's show everything on the LiveWindow
-        wpilib.LiveWindow.addActuator("Claw", "Motor", self.motor)
-        wpilib.LiveWindow.addActuator("Claw", "Limit Switch", self.contact)
 
     def log(self):
         pass

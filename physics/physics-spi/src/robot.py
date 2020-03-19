@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 import wpilib
+import wpilib.drive
 
 
-class MyRobot(wpilib.SampleRobot):
+class MyRobot(wpilib.TimedRobot):
     """Main robot class"""
 
     def robotInit(self):
@@ -18,7 +19,7 @@ class MyRobot(wpilib.SampleRobot):
         # Position gets automatically updated as robot moves
         self.gyro = wpilib.ADXRS450_Gyro()
 
-        self.robot_drive = wpilib.RobotDrive(self.l_motor, self.r_motor)
+        self.drive = wpilib.drive.DifferentialDrive(self.l_motor, self.r_motor)
 
         self.motor = wpilib.Jaguar(4)
 
@@ -27,59 +28,36 @@ class MyRobot(wpilib.SampleRobot):
 
         self.position = wpilib.AnalogInput(2)
 
-    def disabled(self):
-        """Called when the robot is disabled"""
-        while self.isDisabled():
-            wpilib.Timer.delay(0.01)
-
-    def autonomous(self):
+    def autonomousInit(self):
         """Called when autonomous mode is enabled"""
 
-        timer = wpilib.Timer()
-        timer.start()
+        self.timer = wpilib.Timer()
+        self.timer.start()
 
-        while self.isAutonomous() and self.isEnabled():
+    def autonomousPeriodic(self):
+        if self.timer.get() < 2.0:
+            self.drive.arcadeDrive(-1.0, -0.3)
+        else:
+            self.drive.arcadeDrive(0, 0)
 
-            if timer.get() < 2.0:
-                self.robot_drive.arcadeDrive(-1.0, -0.3)
-            else:
-                self.robot_drive.arcadeDrive(0, 0)
-
-            wpilib.Timer.delay(0.01)
-
-    def operatorControl(self):
+    def teleopPeriodic(self):
         """Called when operation control mode is enabled"""
 
-        timer = wpilib.Timer()
-        timer.start()
+        self.drive.arcadeDrive(-self.lstick.getY(), self.lstick.getX())
 
-        while self.isOperatorControl() and self.isEnabled():
+        # Move a motor with a Joystick
+        y = self.rstick.getY()
 
-            if timer.hasPeriodPassed(1.0):
-                print("Gyro:", self.gyro.getAngle())
+        # stop movement backwards when 1 is on
+        if self.limit1.get():
+            y = max(0, y)
 
-                # This is where the data ends up..
-                # from hal_impl.data import hal_data
-                # print(hal_data['robot'])
+        # stop movement forwards when 2 is on
+        if self.limit2.get():
+            y = min(0, y)
 
-            self.robot_drive.arcadeDrive(self.lstick)
-
-            # Move a motor with a Joystick
-            y = self.rstick.getY()
-
-            # stop movement backwards when 1 is on
-            if self.limit1.get():
-                y = max(0, y)
-
-            # stop movement forwards when 2 is on
-            if self.limit2.get():
-                y = min(0, y)
-
-            self.motor.set(y)
-
-            wpilib.Timer.delay(0.04)
+        self.motor.set(y)
 
 
 if __name__ == "__main__":
-
-    wpilib.run(MyRobot, physics_enabled=True)
+    wpilib.run(MyRobot)

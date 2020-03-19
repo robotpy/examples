@@ -9,25 +9,37 @@
 # of your robot code without too much extra effort.
 #
 
+import hal.simulation
 
+from pyfrc.physics.core import PhysicsInterface
 from pyfrc.physics import motor_cfgs, tankmodel
 from pyfrc.physics.units import units
 
 
-class PhysicsEngine(object):
+class PhysicsEngine:
     """
         Simulates a motor moving something that strikes two limit switches,
         one on each end of the track. Obviously, this is not particularly
         realistic, but it's good enough to illustrate the point
     """
 
-    def __init__(self, physics_controller):
-        """
-            :param physics_controller: `pyfrc.physics.core.PhysicsInterface` object
-                                       to communicate simulation effects to
-        """
+    def __init__(self, physics_controller: PhysicsInterface):
 
         self.physics_controller = physics_controller
+
+        # Motors
+        self.l_motor = hal.simulation.PWMSim(1)
+        self.r_motor = hal.simulation.PWMSim(2)
+
+        self.dio1 = hal.simulation.DIOSim(1)
+        self.dio2 = hal.simulation.DIOSim(2)
+        self.ain2 = hal.simulation.AnalogInSim(2)
+
+        self.motor = hal.simulation.PWMSim(4)
+
+        # Gyro
+        self.gyro = hal.simulation.AnalogGyroSim(1)
+
         self.position = 0
 
         # Change these parameters to fit your robot!
@@ -46,7 +58,7 @@ class PhysicsEngine(object):
         )
         # fmt: on
 
-    def update_sim(self, hal_data, now, tm_diff):
+    def update_sim(self, now: float, tm_diff: float) -> None:
         """
             Called when the simulation parameters for the program need to be
             updated.
@@ -57,14 +69,19 @@ class PhysicsEngine(object):
         """
 
         # Simulate the drivetrain
-        l_motor = hal_data["pwm"][1]["value"]
-        r_motor = hal_data["pwm"][2]["value"]
+        l_motor = self.l_motor.getSpeed()
+        r_motor = self.r_motor.getSpeed()
 
-        x, y, angle = self.drivetrain.get_distance(l_motor, r_motor, tm_diff)
-        self.physics_controller.distance_drive(x, y, angle)
+        transform = self.drivetrain.calculate(l_motor, r_motor, tm_diff)
+        pose = self.physics_controller.move_robot(transform)
+
+        # Update the gyro simulation
+        # -> FRC gyros are positive clockwise, but the returned pose is positive
+        #    counter-clockwise
+        self.gyro.setAngle(-pose.rotation().degrees())
 
         # update position (use tm_diff so the rate is constant)
-        self.position += hal_data["pwm"][4]["value"] * tm_diff * 3
+        self.position += self.motor.getSpeed() * tm_diff * 3
 
         # update limit switches based on position
         if self.position <= 0:
@@ -80,6 +97,6 @@ class PhysicsEngine(object):
             switch2 = False
 
         # set values here
-        hal_data["dio"][1]["value"] = switch1
-        hal_data["dio"][2]["value"] = switch2
-        hal_data["analog_in"][2]["voltage"] = self.position
+        self.dio1.setValue(switch1)
+        self.dio2.setValue(switch2)
+        self.ain2.setVoltage(self.position)

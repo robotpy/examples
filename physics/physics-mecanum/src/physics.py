@@ -2,11 +2,13 @@
 # See the notes for the other physics sample
 #
 
+import hal.simulation
 
+from pyfrc.physics.core import PhysicsInterface
 from pyfrc.physics import drivetrains
 
 
-class PhysicsEngine(object):
+class PhysicsEngine:
     """
        Simulates a 4-wheel mecanum robot using Tank Drive joystick control 
     """
@@ -19,7 +21,18 @@ class PhysicsEngine(object):
 
         self.physics_controller = physics_controller
 
-    def update_sim(self, hal_data, now, tm_diff):
+        # Motors
+        self.lf_motor = hal.simulation.PWMSim(1)
+        self.lr_motor = hal.simulation.PWMSim(2)
+        self.rf_motor = hal.simulation.PWMSim(3)
+        self.rr_motor = hal.simulation.PWMSim(4)
+
+        # Gyro
+        self.gyro = hal.simulation.AnalogGyroSim(1)
+
+        self.drivetrain = drivetrains.MecanumDrivetrain()
+
+    def update_sim(self, now, tm_diff):
         """
             Called when the simulation parameters for the program need to be
             updated.
@@ -30,14 +43,15 @@ class PhysicsEngine(object):
         """
 
         # Simulate the drivetrain
-        # -> Remember, in the constructor we inverted the left motors, so
-        #    invert the motor values here too!
-        lr_motor = -hal_data["pwm"][1]["value"]
-        rr_motor = hal_data["pwm"][2]["value"]
-        lf_motor = -hal_data["pwm"][3]["value"]
-        rf_motor = hal_data["pwm"][4]["value"]
+        lf_motor = self.lf_motor.getSpeed()
+        lr_motor = self.lr_motor.getSpeed()
+        rf_motor = self.rf_motor.getSpeed()
+        rr_motor = self.rr_motor.getSpeed()
 
-        vx, vy, vw = drivetrains.mecanum_drivetrain(
-            lr_motor, rr_motor, lf_motor, rf_motor
-        )
-        self.physics_controller.vector_drive(vx, vy, vw, tm_diff)
+        speeds = self.drivetrain.calculate(lf_motor, lr_motor, rf_motor, rr_motor)
+        pose = self.physics_controller.drive(speeds, tm_diff)
+
+        # Update the gyro simulation
+        # -> FRC gyros are positive clockwise, but the returned pose is positive
+        #    counter-clockwise
+        self.gyro.setAngle(-pose.rotation().degrees())

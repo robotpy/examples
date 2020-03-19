@@ -4,14 +4,14 @@ import wpilib
 from wpilib.drive import MecanumDrive
 
 
-class MyRobot(wpilib.SampleRobot):
+class MyRobot(wpilib.TimedRobot):
     """Main robot class"""
 
     # Channels on the roboRIO that the motor controllers are plugged in to
-    frontLeftChannel = 2
-    rearLeftChannel = 3
-    frontRightChannel = 1
-    rearRightChannel = 0
+    frontLeftChannel = 1
+    rearLeftChannel = 2
+    frontRightChannel = 3
+    rearRightChannel = 4
 
     # The channel on the driver station that the joystick is connected to
     lStickChannel = 0
@@ -24,20 +24,12 @@ class MyRobot(wpilib.SampleRobot):
         self.frontRightMotor = wpilib.Talon(self.frontRightChannel)
         self.rearRightMotor = wpilib.Talon(self.rearRightChannel)
 
-        # invert the left side motors
-        self.frontLeftMotor.setInverted(True)
-
-        # you may need to change or remove this to match your robot
-        self.rearLeftMotor.setInverted(True)
-
         self.drive = MecanumDrive(
             self.frontLeftMotor,
             self.rearLeftMotor,
             self.frontRightMotor,
             self.rearRightMotor,
         )
-
-        self.drive.setExpiration(0.1)
 
         self.lstick = wpilib.Joystick(self.lStickChannel)
         self.rstick = wpilib.Joystick(self.rStickChannel)
@@ -50,31 +42,28 @@ class MyRobot(wpilib.SampleRobot):
         while self.isDisabled():
             wpilib.Timer.delay(0.01)
 
-    def autonomous(self):
+    def autonomousInit(self):
         """Called when autonomous mode is enabled"""
+        self.timer = wpilib.Timer()
+        self.timer.start()
 
-        timer = wpilib.Timer()
-        timer.start()
+    def autonomousPeriodic(self):
+        if self.timer.get() < 2.0:
+            self.drive.driveCartesian(0, -1, 1, 0)
+        else:
+            self.drive.driveCartesian(0, 0, 0, 0)
 
-        while self.isAutonomous() and self.isEnabled():
-
-            if timer.get() < 2.0:
-                self.drive.driveCartesian(0, -1, 1, 0)
-            else:
-                self.drive.driveCartesian(0, 0, 0, 0)
-
-            wpilib.Timer.delay(0.01)
-
-    def operatorControl(self):
+    def teleopPeriodic(self):
         """Called when operation control mode is enabled"""
 
-        while self.isOperatorControl() and self.isEnabled():
-            self.drive.driveCartesian(
-                self.lstick.getX(), self.lstick.getY(), self.rstick.getX(), 0
-            )
+        # self.drive.driveCartesian(
+        #     self.lstick.getX(), -self.lstick.getY(), self.rstick.getX(), 0
+        # )
 
-            wpilib.Timer.delay(0.04)
+        self.drive.driveCartesian(
+            self.lstick.getX(), -self.lstick.getY(), self.lstick.getRawAxis(2), 0
+        )
 
 
 if __name__ == "__main__":
-    wpilib.run(MyRobot, physics_enabled=True)
+    wpilib.run(MyRobot)
