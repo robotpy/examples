@@ -10,6 +10,7 @@ BASE_TESTS="
   getting-started
   gyro
   mecanum-drive
+  mecanum-driveXbox
   motor-control
   tank-drive
   timed/src
