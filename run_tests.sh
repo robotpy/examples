@@ -7,28 +7,16 @@ BASE_TESTS="
   cscore-intermediate-vision
   cscore-quick-vision
   game-data
-  gearsbot
   getting-started
   gyro
-  iterative/src
   mecanum-drive
   motor-control
-  pacgoat
-  physics/src
-  physics-4wheel/src
-  physics-camsim/src
-  physics-mecanum/src
-  physics-spi/src
-  sample/src
-  shuffleboard
   tank-drive
   timed/src
 "
 
 ROBOTPY_EXT_TESTS="
-  command-based
   magicbot-simple
-  stateful-autonomous
 "
 
 NAVX_TESTS="
@@ -38,11 +26,21 @@ NAVX_TESTS="
 "
 
 IGNORED_TESTS="
+  stateful-autonomous
   physics-pathfinder
+  physics/src
+  physics-4wheel/src
+  physics-camsim/src
+  physics-mecanum/src
+  physics-spi/src
+  shuffleboard
+  command-based
+  gearsbot
+  pacgoat
 "
 
-ALL_TESTS="${BASE_TESTS} ${ROBOTPY_EXT_TESTS} ${NAVX_TESTS}"
-EVERY_TESTS="${ALL_TESTS} ${IGNORED_TESTS}"
+ALL_TESTS="${BASE_TESTS} ${ROBOTPY_EXT_TESTS}"
+EVERY_TESTS="${ALL_TESTS} ${IGNORED_TESTS} ${NAVX_TESTS}"
 
 if [ "$1" == "all" ]; then
   TESTS="$ALL_TESTS"
