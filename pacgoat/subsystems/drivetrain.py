@@ -1,6 +1,8 @@
 import math
 
 import wpilib
+
+from wpilib import drive
 from wpilib.command import Subsystem
 
 from commands.drive_with_joystick import DriveWithJoystick
@@ -21,26 +23,28 @@ class DriveTrain(Subsystem):
         self.frontRightCIM = wpilib.Victor(2)
         self.backLeftCIM = wpilib.Victor(3)
         self.backRightCIM = wpilib.Victor(4)
-        wpilib.LiveWindow.addActuator("DriveTrain", "Front Left CIM", self.frontLeftCIM)
-        wpilib.LiveWindow.addActuator(
-            "DriveTrain", "Front Right CIM", self.frontRightCIM
-        )
-        wpilib.LiveWindow.addActuator("DriveTrain", "Back Left CIM", self.backLeftCIM)
-        wpilib.LiveWindow.addActuator("DriveTrain", "Back Right CIM", self.backRightCIM)
+        #wpilib.LiveWindow.addActuator("DriveTrain", "Front Left CIM", self.frontLeftCIM)
+        #wpilib.LiveWindow.addActuator(
+            #"DriveTrain", "Front Right CIM", self.frontRightCIM
+        #)
+        #wpilib.LiveWindow.addActuator("DriveTrain", "Back Left CIM", self.backLeftCIM)
+        #wpilib.LiveWindow.addActuator("DriveTrain", "Back Right CIM", self.backRightCIM)
 
         # Configure the RobotDrive to reflect the fact that all our motors are
         # wired backwards and our drivers sensitivity preferences.
-        self.drive = wpilib.RobotDrive(
-            self.frontLeftCIM, self.frontRightCIM, self.backLeftCIM, self.backRightCIM
+            
+        self.leftControllerGroup = wpilib.SpeedControllerGroup(self.frontLeftCIM, self.backLeftCIM)
+        self.rightControllerGroup = wpilib.SpeedControllerGroup(self.frontRightCIM, self.backRightCIM)
+            
+        self.leftControllerGroup.setInverted(True)
+        self.rightControllerGroup.setInverted(True)
+            
+        self.drive = drive.DifferentialDrive(
+            self.leftControllerGroup, self.rightControllerGroup
         )
         self.drive.setSafetyEnabled(True)
         self.drive.setExpiration(0.1)
-        self.drive.setSensitivity(0.5)
         self.drive.setMaxOutput(1.0)
-        self.drive.setInvertedMotor(wpilib.RobotDrive.MotorType.kFrontLeft, True)
-        self.drive.setInvertedMotor(wpilib.RobotDrive.MotorType.kFrontRight, True)
-        self.drive.setInvertedMotor(wpilib.RobotDrive.MotorType.kRearLeft, True)
-        self.drive.setInvertedMotor(wpilib.RobotDrive.MotorType.kRearRight, True)
 
         # Configure encoders
         self.rightEncoder = wpilib.Encoder(
@@ -49,8 +53,8 @@ class DriveTrain(Subsystem):
         self.leftEncoder = wpilib.Encoder(
             3, 4, reverseDirection=False, encodingType=wpilib.Encoder.EncodingType.k4X
         )
-        self.rightEncoder.setPIDSourceType(wpilib.Encoder.PIDSourceType.kDisplacement)
-        self.leftEncoder.setPIDSourceType(wpilib.Encoder.PIDSourceType.kDisplacement)
+        self.rightEncoder.setPIDSourceType(wpilib.interfaces.PIDSourceType.kDisplacement)
+        self.leftEncoder.setPIDSourceType(wpilib.interfaces.PIDSourceType.kDisplacement)
 
         if robot.isReal():
             # Converts to feet
@@ -61,9 +65,6 @@ class DriveTrain(Subsystem):
             self.rightEncoder.setDistancePerPulse((4 * math.pi) / (360 * 12))
             self.leftEncoder.setDistancePerPulse((4 * math.pi) / (360 * 12))
 
-        wpilib.LiveWindow.addSensor("DriveTrain", "Right Encoder", self.rightEncoder)
-        wpilib.LiveWindow.addSensor("DriveTrain", "Left Encoder", self.leftEncoder)
-
         # Configure gyro
         # -> the original pacgoat example is at channel 2, but that was before WPILib
         #    moved to zero-based indexing. You need to change the gyro channel in
@@ -73,9 +74,7 @@ class DriveTrain(Subsystem):
             # TODO: Handle more gracefully
             self.gyro.setSensitivity(0.007)
 
-        wpilib.LiveWindow.addSensor("DriveTrain", "Gyro", self.gyro)
-
-        super().__init__()
+        super().__init__("Drivetrain")
 
     def initDefaultCommand(self):
         """

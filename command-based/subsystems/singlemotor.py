@@ -1,5 +1,5 @@
 import wpilib
-from wpilib.command.subsystem import Subsystem
+from wpilib.command import Subsystem
 
 from commands.followjoystick import FollowJoystick
 

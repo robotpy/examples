@@ -1,5 +1,5 @@
-from wpilib.joystick import Joystick
-from wpilib.buttons.joystickbutton import JoystickButton
+from wpilib import Joystick
+from wpilib.buttons import JoystickButton
 
 from commands.crash import Crash
 
@@ -12,7 +12,7 @@ def getJoystick():
 
     joystick = Joystick(0)
 
-    trigger = JoystickButton(joystick, Joystick.ButtonType.kTrigger)
+    trigger = JoystickButton(joystick, Joystick.ButtonType.kTriggerButton)
     trigger.whenPressed(Crash())
 
     return joystick

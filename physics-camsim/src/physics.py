@@ -34,8 +34,6 @@ class PhysicsEngine:
         self.physics_controller = physics_controller
         self.position = 0
 
-        self.physics_controller.add_device_gyro_channel("adxrs450_spi_0_angle")
-
         targets = [
             # right
             VisionSim.Target(15, 13, 250, 0),

@@ -1,6 +1,6 @@
-from wpilib.command.commandgroup import CommandGroup
+from wpilib.command import CommandGroup
 
-from wpilib.command.waitcommand import WaitCommand
+from wpilib.command import WaitCommand
 from commands.setspeed import SetSpeed
 
 
