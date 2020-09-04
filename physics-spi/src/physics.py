@@ -73,8 +73,9 @@ class PhysicsEngine:
         l_motor = self.l_motor.getSpeed()
         r_motor = self.r_motor.getSpeed()
 
-        x, y, angle = self.drivetrain.get_distance(l_motor, r_motor, tm_diff)
-        pose = self.physics_controller.distance_drive(x, y, angle)
+        transform = self.drivetrain.calculate(l_motor, r_motor, tm_diff)
+        
+        pose = self.physics_controller.move_robot(transform)
 
         # Update the gyro simulation
         # -> FRC gyros are positive clockwise, but the returned pose is positive

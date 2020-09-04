@@ -22,14 +22,8 @@ class Collector(Subsystem):
         self.robot = robot
 
         # Put everything to the LiveWindow for testing.
-        wpilib.LiveWindow.addActuator("Collector", "Roller Motor", self.rollerMotor)
-        wpilib.LiveWindow.addSensor("Collector", "Ball Detector", self.ballDetector)
-        wpilib.LiveWindow.addSensor(
-            "Collector", "Claw Open Detector", self.openDetector
-        )
-        wpilib.LiveWindow.addActuator("Collector", "Piston", self.piston)
-
-        super().__init__()
+        
+        super().__init__("Collector")
 
     def hasBall(self):
         """

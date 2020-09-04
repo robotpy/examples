@@ -8,3 +8,6 @@ __pycache__
 .project
 .pydevproject
 imgui.ini
+
+opkg_cache
+pip_cache

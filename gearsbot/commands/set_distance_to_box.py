@@ -1,4 +1,5 @@
 import wpilib
+from wpilib.controller import PIDController
 from wpilib.command import Command
 
 
@@ -15,14 +16,11 @@ class SetDistanceToBox(Command):
         self.robot = robot
 
         self.requires(self.robot.drivetrain)
-        self.pid = wpilib.PIDController(
+        self.pid = PIDController(
             -2,
             0,
             0,
-            lambda: self.robot.drivetrain.getDistanceToObstacle(),
-            lambda d: self.robot.drivetrain.driveManual(d, d),
         )
-        self.pid.setAbsoluteTolerance(0.01)
         self.pid.setSetpoint(distance)
 
     def initialize(self):

@@ -1,11 +1,3 @@
-git+git://github.com/robotpy/pynetworktables.git
-git+git://github.com/robotpy/robotpy-wpilib.git#subdirectory=wpilib
-git+git://github.com/robotpy/robotpy-wpilib.git#subdirectory=hal-base
-git+git://github.com/robotpy/robotpy-wpilib.git#subdirectory=hal-sim
-git+git://github.com/robotpy/robotpy-wpilib-utilities.git
-git+git://github.com/robotpy/robotpy-navx.git
-git+git://github.com/robotpy/robotpy-installer.git
-git+git://github.com/robotpy/pyfrc.git
-
 pynetconsole
 pint
+pyfrc>=2020.0.0<2021

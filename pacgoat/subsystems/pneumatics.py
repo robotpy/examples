@@ -12,16 +12,12 @@ class Pneumatics(Subsystem):
     MAX_PRESSURE = 2.55
 
     def __init__(self, robot):
-        super().__init__()
+        super().__init__("Pneumatics")
         self.robot = robot
 
         self.pressureSensor = wpilib.AnalogInput(3)
         if robot.isReal():
             self.compressor = wpilib.Compressor()
-
-        wpilib.LiveWindow.addSensor(
-            "Pneumatics", "Pressure Sensor", self.pressureSensor
-        )
 
     def initDefaultCommand(self):
         """No default command."""

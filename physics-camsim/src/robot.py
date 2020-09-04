@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 
 import wpilib
+
+import wpilib.drive
+import wpilib.controller
+
 from networktables.util import ntproperty
 
 
@@ -33,19 +37,18 @@ class MyRobot(wpilib.IterativeRobot):
 
         # Basic robot chassis setup
         self.stick = wpilib.Joystick(0)
-        self.robot_drive = wpilib.RobotDrive(0, 1)
+        
+        self.robot_drive = wpilib.drive.DifferentialDrive(wpilib.interfaces.SpeedController(), wpilib.interfaces.SpeedController())
 
         # Position gets automatically updated as robot moves
         self.gyro = wpilib.ADXRS450_Gyro()
 
         # Use PIDController to control angle
-        turnController = wpilib.PIDController(
-            self.kP, self.kI, self.kD, self.kF, self.pidGet, output=self.pidWrite
+        turnController = wpilib.controller.PIDController(
+            self.kP, self.kI, self.kD, self.kF
         )
-        turnController.setInputRange(-180.0, 180.0)
-        turnController.setOutputRange(-1.0, 1.0)
-        turnController.setAbsoluteTolerance(self.kToleranceDegrees)
-        turnController.setContinuous(True)
+        turnController.setTolerance(self.kToleranceDegrees)
+
         self.turnController = turnController
 
         self.rotateToAngleRate = 0

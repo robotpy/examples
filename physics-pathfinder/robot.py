@@ -11,6 +11,7 @@
 import math
 import wpilib
 
+import wpilib.drive
 import pathfinder as pf
 
 
@@ -36,7 +37,7 @@ class MyRobot(wpilib.TimedRobot):
         # Position gets automatically updated as robot moves
         self.gyro = wpilib.AnalogGyro(1)
 
-        self.robot_drive = wpilib.RobotDrive(self.l_motor, self.r_motor)
+        self.robot_drive = wpilib.drive.DifferentialDrive(self.l_motor, self.r_motor)
 
         self.l_encoder = wpilib.Encoder(0, 1)
         self.l_encoder.setDistancePerPulse(

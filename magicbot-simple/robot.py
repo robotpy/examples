@@ -43,7 +43,7 @@ class MyRobot(MagicRobot):
                 self.component2.do_something()
         except:
             self.onException()
-
+            
 
 if __name__ == "__main__":
     wpilib.run(MyRobot)

@@ -1,6 +1,7 @@
 import math
 
 import wpilib
+import wpilib.drive
 from wpilib.command import Subsystem
 
 from commands.tankdrive_with_joystick import TankDriveWithJoystick
@@ -13,7 +14,7 @@ class DriveTrain(Subsystem):
     """
 
     def __init__(self, robot):
-        super().__init__()
+        super().__init__("DriveTrain")
         self.robot = robot
 
         self.front_left_motor = wpilib.Talon(1)
@@ -21,11 +22,11 @@ class DriveTrain(Subsystem):
         self.front_right_motor = wpilib.Talon(3)
         self.back_right_motor = wpilib.Talon(4)
 
-        self.drive = wpilib.RobotDrive(
-            self.front_left_motor,
-            self.back_left_motor,
-            self.front_right_motor,
-            self.back_right_motor,
+        left_motors = wpilib.SpeedControllerGroup(self.front_left_motor, self.back_left_motor)
+        right_motors = wpilib.SpeedControllerGroup(self.front_right_motor, self.back_right_motor)
+        self.drive = wpilib.drive.DifferentialDrive(
+            left_motors,
+            right_motors
         )
 
         self.left_encoder = wpilib.Encoder(1, 2)
@@ -46,23 +47,6 @@ class DriveTrain(Subsystem):
 
         self.rangefinder = wpilib.AnalogInput(6)
         self.gyro = wpilib.AnalogGyro(1)
-
-        wpilib.LiveWindow.addActuator(
-            "Drive Train", "Front_Left Motor", self.front_left_motor
-        )
-        wpilib.LiveWindow.addActuator(
-            "Drive Train", "Back Left Motor", self.back_left_motor
-        )
-        wpilib.LiveWindow.addActuator(
-            "Drive Train", "Front Right Motor", self.front_right_motor
-        )
-        wpilib.LiveWindow.addActuator(
-            "Drive Train", "Back Right Motor", self.back_right_motor
-        )
-        wpilib.LiveWindow.addSensor("Drive Train", "Left Encoder", self.left_encoder)
-        wpilib.LiveWindow.addSensor("Drive Train", "Right Encoder", self.right_encoder)
-        wpilib.LiveWindow.addSensor("Drive Train", "Rangefinder", self.rangefinder)
-        wpilib.LiveWindow.addSensor("Drive Train", "Gyro", self.gyro)
 
     def initDefaultCommand(self):
         """When no other command is running let the operator drive around
