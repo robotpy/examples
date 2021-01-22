@@ -9,7 +9,7 @@
 # of your robot code without too much extra effort.
 #
 
-import hal.simulation
+import wpilib.simulation
 
 from pyfrc.physics.core import PhysicsInterface
 from pyfrc.physics import motor_cfgs, tankmodel
@@ -28,17 +28,17 @@ class PhysicsEngine:
         self.physics_controller = physics_controller
 
         # Motors
-        self.l_motor = hal.simulation.PWMSim(1)
-        self.r_motor = hal.simulation.PWMSim(2)
+        self.l_motor = wpilib.simulation.PWMSim(1)
+        self.r_motor = wpilib.simulation.PWMSim(2)
 
-        self.dio1 = hal.simulation.DIOSim(1)
-        self.dio2 = hal.simulation.DIOSim(2)
-        self.ain2 = hal.simulation.AnalogInSim(2)
+        self.dio1 = wpilib.simulation.DIOSim(1)
+        self.dio2 = wpilib.simulation.DIOSim(2)
+        self.ain2 = wpilib.simulation.AnalogInputSim(2)
 
-        self.motor = hal.simulation.PWMSim(4)
+        self.motor = wpilib.simulation.PWMSim(4)
 
         # Gyro
-        self.gyro = hal.simulation.AnalogGyroSim(1)
+        self.gyro = wpilib.simulation.AnalogGyroSim(1)
 
         self.position = 0
 
