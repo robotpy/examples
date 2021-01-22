@@ -23,22 +23,26 @@ class DriveTrain(Subsystem):
         self.frontRightCIM = wpilib.Victor(2)
         self.backLeftCIM = wpilib.Victor(3)
         self.backRightCIM = wpilib.Victor(4)
-        #wpilib.LiveWindow.addActuator("DriveTrain", "Front Left CIM", self.frontLeftCIM)
-        #wpilib.LiveWindow.addActuator(
-            #"DriveTrain", "Front Right CIM", self.frontRightCIM
-        #)
-        #wpilib.LiveWindow.addActuator("DriveTrain", "Back Left CIM", self.backLeftCIM)
-        #wpilib.LiveWindow.addActuator("DriveTrain", "Back Right CIM", self.backRightCIM)
+        # wpilib.LiveWindow.addActuator("DriveTrain", "Front Left CIM", self.frontLeftCIM)
+        # wpilib.LiveWindow.addActuator(
+        # "DriveTrain", "Front Right CIM", self.frontRightCIM
+        # )
+        # wpilib.LiveWindow.addActuator("DriveTrain", "Back Left CIM", self.backLeftCIM)
+        # wpilib.LiveWindow.addActuator("DriveTrain", "Back Right CIM", self.backRightCIM)
 
         # Configure the RobotDrive to reflect the fact that all our motors are
         # wired backwards and our drivers sensitivity preferences.
-            
-        self.leftControllerGroup = wpilib.SpeedControllerGroup(self.frontLeftCIM, self.backLeftCIM)
-        self.rightControllerGroup = wpilib.SpeedControllerGroup(self.frontRightCIM, self.backRightCIM)
-            
+
+        self.leftControllerGroup = wpilib.SpeedControllerGroup(
+            self.frontLeftCIM, self.backLeftCIM
+        )
+        self.rightControllerGroup = wpilib.SpeedControllerGroup(
+            self.frontRightCIM, self.backRightCIM
+        )
+
         self.leftControllerGroup.setInverted(True)
         self.rightControllerGroup.setInverted(True)
-            
+
         self.drive = drive.DifferentialDrive(
             self.leftControllerGroup, self.rightControllerGroup
         )
@@ -53,7 +57,9 @@ class DriveTrain(Subsystem):
         self.leftEncoder = wpilib.Encoder(
             3, 4, reverseDirection=False, encodingType=wpilib.Encoder.EncodingType.k4X
         )
-        self.rightEncoder.setPIDSourceType(wpilib.interfaces.PIDSourceType.kDisplacement)
+        self.rightEncoder.setPIDSourceType(
+            wpilib.interfaces.PIDSourceType.kDisplacement
+        )
         self.leftEncoder.setPIDSourceType(wpilib.interfaces.PIDSourceType.kDisplacement)
 
         if robot.isReal():

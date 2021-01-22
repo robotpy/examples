@@ -18,9 +18,9 @@ from pyfrc.physics.units import units
 
 class PhysicsEngine:
     """
-        Simulates a motor moving something that strikes two limit switches,
-        one on each end of the track. Obviously, this is not particularly
-        realistic, but it's good enough to illustrate the point
+    Simulates a motor moving something that strikes two limit switches,
+    one on each end of the track. Obviously, this is not particularly
+    realistic, but it's good enough to illustrate the point
     """
 
     def __init__(self, physics_controller: PhysicsInterface):
@@ -60,12 +60,12 @@ class PhysicsEngine:
 
     def update_sim(self, now: float, tm_diff: float) -> None:
         """
-            Called when the simulation parameters for the program need to be
-            updated.
-            
-            :param now: The current time as a float
-            :param tm_diff: The amount of time that has passed since the last
-                            time that this function was called
+        Called when the simulation parameters for the program need to be
+        updated.
+
+        :param now: The current time as a float
+        :param tm_diff: The amount of time that has passed since the last
+                        time that this function was called
         """
 
         # Simulate the drivetrain

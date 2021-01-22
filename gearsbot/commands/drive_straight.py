@@ -7,7 +7,7 @@ class DriveStraight(Command):
     Drive the given distance straight (negative values go backwards).
     Uses a local PID controller to run a simple PID loop that is only
     enabled while this command is running. The input is the averaged
-    values of the left and right encoders. 
+    values of the left and right encoders.
     """
 
     def __init__(self, robot, distance):
@@ -49,5 +49,5 @@ class DriveStraight(Command):
 
     def interrupted(self):
         """Called when another command which requires one or more of the same
-           subsystems is scheduled to run"""
+        subsystems is scheduled to run"""
         self.end()

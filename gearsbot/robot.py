@@ -24,7 +24,7 @@ from subsystems.wrist import Wrist
 class MyRobot(wpilib.IterativeRobot):
     def robotInit(self):
         """This function is run when the robot is first started up and should be
-           used for any initialization code."""
+        used for any initialization code."""
 
         self.drivetrain = DriveTrain(self)
         self.elevator = Elevator(self)

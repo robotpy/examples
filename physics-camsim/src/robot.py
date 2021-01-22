@@ -37,8 +37,10 @@ class MyRobot(wpilib.IterativeRobot):
 
         # Basic robot chassis setup
         self.stick = wpilib.Joystick(0)
-        
-        self.robot_drive = wpilib.drive.DifferentialDrive(wpilib.interfaces.SpeedController(), wpilib.interfaces.SpeedController())
+
+        self.robot_drive = wpilib.drive.DifferentialDrive(
+            wpilib.interfaces.SpeedController(), wpilib.interfaces.SpeedController()
+        )
 
         # Position gets automatically updated as robot moves
         self.gyro = wpilib.ADXRS450_Gyro()
@@ -59,7 +61,7 @@ class MyRobot(wpilib.IterativeRobot):
 
     def pidGet(self):
         """The angle to feed to PIDController must be between
-           -180 and 180"""
+        -180 and 180"""
         return self.normalizeAngle(self.gyro.getAngle())
 
     def pidWrite(self, output):

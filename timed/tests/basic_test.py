@@ -52,20 +52,20 @@ def test_operator_control(control, robot, hal_data):
 
         def on_step(self, tm):
             """
-                Continue operator control for 1000 simulation steps. Each step
-                represents roughly 20ms of fake time.
-                
-                The idea is to change the joystick/other inputs, and see if the 
-                robot motors/etc respond the way that we expect. 
-                
-                Keep in mind that when you set a value, the robot code does not
-                see the value until after this function returns AND the driver
-                station delivers a new packet. Therefore when you use assert to
-                check a motor value, you have to check to see that it matches
-                the previous value that you set on the inputs, not the current
-                value.
-                
-                :param tm: The current robot time in seconds
+            Continue operator control for 1000 simulation steps. Each step
+            represents roughly 20ms of fake time.
+
+            The idea is to change the joystick/other inputs, and see if the
+            robot motors/etc respond the way that we expect.
+
+            Keep in mind that when you set a value, the robot code does not
+            see the value until after this function returns AND the driver
+            station delivers a new packet. Therefore when you use assert to
+            check a motor value, you have to check to see that it matches
+            the previous value that you set on the inputs, not the current
+            value.
+
+            :param tm: The current robot time in seconds
             """
             self.step_count += 1
 
