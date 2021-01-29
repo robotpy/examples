@@ -21,7 +21,7 @@ from subsystems.elevator import Elevator
 from subsystems.wrist import Wrist
 
 
-class MyRobot(wpilib.IterativeRobot):
+class MyRobot(wpilib.TimedRobot):
     def robotInit(self):
         """This function is run when the robot is first started up and should be
         used for any initialization code."""
@@ -40,6 +40,8 @@ class MyRobot(wpilib.IterativeRobot):
         wpilib.SmartDashboard.putData(self.elevator)
         wpilib.SmartDashboard.putData(self.wrist)
         wpilib.SmartDashboard.putData(self.claw)
+        
+        wpilib.LiveWindow.getInstance().setEnabled(True)
 
     def autonomousInit(self):
         # schedule the autonomous command (example)
@@ -64,7 +66,7 @@ class MyRobot(wpilib.IterativeRobot):
 
     def testPeriodic(self):
         """This function is called periodically during test mode"""
-        wpilib.LiveWindow.run()
+        wpilib.LiveWindow.getInstance().updateValues()
 
     def log(self):
         """The log method puts interesting information to the SmartDashboard."""
