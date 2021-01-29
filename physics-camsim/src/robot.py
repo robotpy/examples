@@ -8,7 +8,7 @@ import wpilib.controller
 from networktables.util import ntproperty
 
 
-class MyRobot(wpilib.IterativeRobot):
+class MyRobot(wpilib.TimedRobot):
     """Main robot class"""
 
     # array of (found, timestamp, angle)
