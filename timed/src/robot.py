@@ -13,6 +13,7 @@ class MyRobot(wpilib.TimedRobot):
 
         self.timer = wpilib.Timer()
         self.loops = 0
+        print("OHAI")
 
     def autonomousInit(self):
         """Called only at the beginning of autonomous mode."""
