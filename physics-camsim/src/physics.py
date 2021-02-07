@@ -49,9 +49,11 @@ class PhysicsEngine:
         self.vision = VisionSim(
             targets, 61.0, 1.5, 15, 15, physics_controller=physics_controller
         )
-        
-        # Simulate the drivetrain. 
-        self.drivetrain = drivetrains.TwoMotorDrivetrain(deadzone=drivetrains.linear_deadzone(0.1))
+
+        # Simulate the drivetrain.
+        self.drivetrain = drivetrains.TwoMotorDrivetrain(
+            deadzone=drivetrains.linear_deadzone(0.1)
+        )
 
         # Create the motors.
         self.l_motor = PWMSim(0)
@@ -66,20 +68,20 @@ class PhysicsEngine:
         :param tm_diff: The amount of time that has passed since the last
                         time that this function was called
         """
-        
+
         l_speed = self.l_motor.getSpeed()
         r_speed = self.r_motor.getSpeed()
 
-        # Compute chassis speeds based off of motor speeds. 
+        # Compute chassis speeds based off of motor speeds.
         speeds = self.drivetrain.calculate(l_speed, r_speed)
 
         self.physics_controller.drive(speeds, tm_diff)
 
         pose = self.physics_controller.get_pose()
-        
+
         x = pose.translation().X()
         y = pose.translation().Y()
-        
+
         angle = pose.rotation().degrees()
 
         data = self.vision.compute(now, x, y, angle)

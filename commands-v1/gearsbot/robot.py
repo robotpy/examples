@@ -40,7 +40,7 @@ class MyRobot(wpilib.TimedRobot):
         wpilib.SmartDashboard.putData(self.elevator)
         wpilib.SmartDashboard.putData(self.wrist)
         wpilib.SmartDashboard.putData(self.claw)
-        
+
         wpilib.LiveWindow.getInstance().setEnabled(True)
 
     def autonomousInit(self):
