@@ -9,7 +9,14 @@
 # of your robot code without too much extra effort.
 #
 
-from wpilib.simulation import PWMSim
+from wpilib.simulation import PWMSim, DifferentialDrivetrainSim, EncoderSim
+
+from wpilib import RobotController
+
+from wpimath.geometry import Transform2d
+
+from wpimath.system import LinearSystemId
+from wpimath.system.plant import DCMotor
 
 from pyfrc.physics import drivetrains
 
@@ -56,8 +63,20 @@ class PhysicsEngine:
         )
 
         # Create the motors.
-        self.l_motor = PWMSim(0)
-        self.r_motor = PWMSim(1)
+        self.l_motor = PWMSim(1)
+        self.r_motor = PWMSim(2)
+
+        self.system = LinearSystemId.identifyDrivetrainSystem(1.98, 0.2, 1.5, 0.3)
+        self.drivesim = DifferentialDrivetrainSim(
+            self.system,
+            0.762,
+            DCMotor.CIM(2),
+            8,
+            0.0508,
+        )
+
+        self.leftEncoderSim = EncoderSim.createForChannel(0)
+        self.rightEncoderSim = EncoderSim.createForChannel(2)
 
     def update_sim(self, now, tm_diff):
         """
@@ -72,18 +91,29 @@ class PhysicsEngine:
         l_speed = self.l_motor.getSpeed()
         r_speed = self.r_motor.getSpeed()
 
-        # Compute chassis speeds based off of motor speeds.
-        speeds = self.drivetrain.calculate(l_speed, r_speed)
+        voltage = RobotController.getInputVoltage()
 
-        self.physics_controller.drive(speeds, tm_diff)
+        self.drivesim.setInputs(l_speed * voltage, r_speed * voltage)
+        self.drivesim.update(tm_diff)
 
-        pose = self.physics_controller.get_pose()
+        self.leftEncoderSim.setDistance(self.drivesim.getLeftPosition() * 39.37)
+        self.leftEncoderSim.setRate(self.drivesim.getLeftVelocity() * 39.37)
+        self.rightEncoderSim.setDistance(self.drivesim.getRightPosition() * 39.37)
+        self.rightEncoderSim.setRate(self.drivesim.getRightVelocity() * 39.37)
 
-        x = pose.translation().X()
-        y = pose.translation().Y()
+        self.physics_controller.field.setRobotPose(self.drivesim.getPose())
 
-        angle = pose.rotation().degrees()
+        pose = self.drivesim.getPose()
+
+        currentTranslation = pose.translation()
+        currentRotation = pose.rotation()
+
+        x = currentTranslation.X()
+        y = currentTranslation.Y()
+
+        angle = currentRotation.degrees()
 
         data = self.vision.compute(now, x, y, angle)
+
         if data is not None:
             self.target = data[0][:3]

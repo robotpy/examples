@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import math
+
 import wpilib
 
 import wpilib.drive
@@ -39,9 +41,22 @@ class MyRobot(wpilib.TimedRobot):
         self.stick = wpilib.Joystick(0)
 
         # Create a robot drive with two PWM controlled Talon SRXs.
+
+        self.leftMotor = wpilib.PWMTalonSRX(1)
+        self.rightMotor = wpilib.PWMTalonSRX(2)
+
         self.robot_drive = wpilib.drive.DifferentialDrive(
-            wpilib.PWMTalonSRX(0), wpilib.PWMTalonSRX(1)
+            self.leftMotor, self.rightMotor
         )
+
+        self.leftEncoder = wpilib.Encoder(0, 1, reverseDirection=False)
+
+        # The right-side drive encoder
+        self.rightEncoder = wpilib.Encoder(2, 3, reverseDirection=True)
+
+        # Sets the distance per pulse for the encoders
+        self.leftEncoder.setDistancePerPulse((6 * math.pi) / 1024)
+        self.rightEncoder.setDistancePerPulse((6 * math.pi) / 1024)
 
         # Position gets automatically updated as robot moves
         self.gyro = wpilib.ADXRS450_Gyro()
@@ -73,7 +88,9 @@ class MyRobot(wpilib.TimedRobot):
         """Called every 20ms in teleop"""
 
         # if trigger is pressed, then center the robot to the camera target
-        if self.stick.getTrigger():
+        if self.stick.getRawButton(6):
+
+            print("hello")
 
             found, timestamp, offset = self.target
             turnSpeed = 0.0
