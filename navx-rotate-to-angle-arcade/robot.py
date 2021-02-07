@@ -10,21 +10,21 @@ from navx import AHRS
 class MyRobot(wpilib.TimedRobot):
     """This is a demo program showing the use of the navX MXP to implement
     a "rotate to angle" feature. This demo works in the pyfrc simulator.
-    
+
     This example will automatically rotate the robot to one of four
     angles (0, 90, 180 and 270 degrees).
-    
+
     This rotation can occur when the robot is still, but can also occur
     when the robot is driving.  When using field-oriented control, this
     will cause the robot to drive in a straight line, in whatever direction
     is selected.
-    
+
     This example also includes a feature allowing the driver to "reset"
     the "yaw" angle.  When the reset occurs, the new gyro angle will be
     0 degrees.  This can be useful in cases when the gyro drifts, which
     doesn't typically happen during a FRC match, but can occur during
     long practice sessions.
-    
+
     Note that the PID Controller coefficients defined below will need to
     be tuned for your drive system.
     """
@@ -69,7 +69,9 @@ class MyRobot(wpilib.TimedRobot):
         # self.ahrs = AHRS.create_i2c()
 
         turnController = wpilib.controller.PIDController(
-            self.kP, self.kI, self.kD,
+            self.kP,
+            self.kI,
+            self.kD,
         )
         turnController.enableContinuousInput(-180.0, 180.0)
         turnController.setTolerance(self.kToleranceDegrees)
@@ -82,12 +84,12 @@ class MyRobot(wpilib.TimedRobot):
 
     def teleopPeriodic(self):
         """Runs the motors with onnidirectional drive steering.
-        
+
         Implements Field-centric drive control.
-        
+
         Also implements "rotate to angle", where the angle
         being rotated to is defined by one of four buttons.
-        
+
         Note that this "rotate to angle" approach can also
         be used while driving to implement "straight-line
         driving".
@@ -114,7 +116,9 @@ class MyRobot(wpilib.TimedRobot):
             rotateToAngle = True
 
         if rotateToAngle:
-            currentRotationRate = self.turnController.calculate(self.ahrs.getYaw(), setpoint)
+            currentRotationRate = self.turnController.calculate(
+                self.ahrs.getYaw(), setpoint
+            )
         else:
             self.turnController.reset()
             currentRotationRate = self.stick.getX()

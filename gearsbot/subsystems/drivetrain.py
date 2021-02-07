@@ -9,8 +9,8 @@ from commands.tankdrive_with_joystick import TankDriveWithJoystick
 
 class DriveTrain(Subsystem):
     """The DriveTrain subsystem incorporates the sensors and actuators attached to
-       the robots chassis. These include four drive motors, a left and right encoder
-       and a gyro.
+    the robots chassis. These include four drive motors, a left and right encoder
+    and a gyro.
     """
 
     def __init__(self, robot):
@@ -22,12 +22,13 @@ class DriveTrain(Subsystem):
         self.front_right_motor = wpilib.Talon(3)
         self.back_right_motor = wpilib.Talon(4)
 
-        left_motors = wpilib.SpeedControllerGroup(self.front_left_motor, self.back_left_motor)
-        right_motors = wpilib.SpeedControllerGroup(self.front_right_motor, self.back_right_motor)
-        self.drive = wpilib.drive.DifferentialDrive(
-            left_motors,
-            right_motors
+        left_motors = wpilib.SpeedControllerGroup(
+            self.front_left_motor, self.back_left_motor
         )
+        right_motors = wpilib.SpeedControllerGroup(
+            self.front_right_motor, self.back_right_motor
+        )
+        self.drive = wpilib.drive.DifferentialDrive(left_motors, right_motors)
 
         self.left_encoder = wpilib.Encoder(1, 2)
         self.right_encoder = wpilib.Encoder(3, 4)
@@ -50,7 +51,7 @@ class DriveTrain(Subsystem):
 
     def initDefaultCommand(self):
         """When no other command is running let the operator drive around
-           using the PS3 joystick"""
+        using the PS3 joystick"""
         self.setDefaultCommand(TankDriveWithJoystick(self.robot))
 
     def log(self):
@@ -66,10 +67,10 @@ class DriveTrain(Subsystem):
         wpilib.SmartDashboard.putNumber("Gyro", self.gyro.getAngle())
 
     def driveManual(self, left, right):
-        """ Tank style driving for the DriveTrain. 
-            
-            :param left: Speed in range [-1, 1]
-            :param right: Speed in range [-1, 1]
+        """Tank style driving for the DriveTrain.
+
+        :param left: Speed in range [-1, 1]
+        :param right: Speed in range [-1, 1]
         """
         self.drive.tankDrive(left, right)
 

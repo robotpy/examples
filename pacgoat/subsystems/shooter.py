@@ -27,7 +27,7 @@ class Shooter(Subsystem):
         self.piston1ReedSwitchBack = wpilib.DigitalInput(11)
 
         # Put everything to the LiveWindow for testing.
-       
+
     def initDefaultCommand(self):
         """No default command."""
         pass

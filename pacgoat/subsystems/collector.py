@@ -22,7 +22,7 @@ class Collector(Subsystem):
         self.robot = robot
 
         # Put everything to the LiveWindow for testing.
-        
+
         super().__init__("Collector")
 
     def hasBall(self):

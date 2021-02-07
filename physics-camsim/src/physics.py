@@ -20,9 +20,9 @@ from networktables.util import ntproperty
 
 class PhysicsEngine:
     """
-        Simulates a motor moving something that strikes two limit switches,
-        one on each end of the track. Obviously, this is not particularly
-        realistic, but it's good enough to illustrate the point
+    Simulates a motor moving something that strikes two limit switches,
+    one on each end of the track. Obviously, this is not particularly
+    realistic, but it's good enough to illustrate the point
     """
 
     # array of (found, timestamp, angle)
@@ -30,8 +30,8 @@ class PhysicsEngine:
 
     def __init__(self, physics_controller):
         """
-            :param physics_controller: `pyfrc.physics.core.PhysicsInterface` object
-                                       to communicate simulation effects to
+        :param physics_controller: `pyfrc.physics.core.PhysicsInterface` object
+                                   to communicate simulation effects to
         """
 
         self.physics_controller = physics_controller
@@ -49,9 +49,11 @@ class PhysicsEngine:
         self.vision = VisionSim(
             targets, 61.0, 1.5, 15, 15, physics_controller=physics_controller
         )
-        
-        # Simulate the drivetrain. 
-        self.drivetrain = drivetrains.TwoMotorDrivetrain(deadzone=drivetrains.linear_deadzone(0.1))
+
+        # Simulate the drivetrain.
+        self.drivetrain = drivetrains.TwoMotorDrivetrain(
+            deadzone=drivetrains.linear_deadzone(0.1)
+        )
 
         # Create the motors.
         self.l_motor = PWMSim(0)
@@ -59,27 +61,27 @@ class PhysicsEngine:
 
     def update_sim(self, now, tm_diff):
         """
-            Called when the simulation parameters for the program need to be
-            updated.
-            
-            :param now: The current time as a float
-            :param tm_diff: The amount of time that has passed since the last
-                            time that this function was called
+        Called when the simulation parameters for the program need to be
+        updated.
+
+        :param now: The current time as a float
+        :param tm_diff: The amount of time that has passed since the last
+                        time that this function was called
         """
-        
+
         l_speed = self.l_motor.getSpeed()
         r_speed = self.r_motor.getSpeed()
 
-        # Compute chassis speeds based off of motor speeds. 
+        # Compute chassis speeds based off of motor speeds.
         speeds = self.drivetrain.calculate(l_speed, r_speed)
 
         self.physics_controller.drive(speeds, tm_diff)
 
         pose = self.physics_controller.get_pose()
-        
+
         x = pose.translation().X()
         y = pose.translation().Y()
-        
+
         angle = pose.rotation().degrees()
 
         data = self.vision.compute(now, x, y, angle)

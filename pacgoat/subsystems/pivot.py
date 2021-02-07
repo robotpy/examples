@@ -15,9 +15,9 @@ class Pivot(PIDSubsystem):
     SHOOT_NEAR = 30
 
     def __init__(self, robot):
-        
+
         super().__init__("Pivot", 7.0, 0.0, 8.0)
-        
+
         self.robot = robot
         self.setAbsoluteTolerance(0.005)
         self.getPIDController().disableContinuousInput()

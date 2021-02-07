@@ -37,10 +37,10 @@ class Elevator(PIDSubsystem):
 
     def returnPIDInput(self):
         """Use the potentiometer as the PID sensor. This method is automatically
-           called by the subsystem"""
+        called by the subsystem"""
         return self.pot.get()
 
     def usePIDOutput(self, output):
         """Use the motor as the PID output. This method is automatically called by
-           the subsystem"""
+        the subsystem"""
         self.motor.set(output)

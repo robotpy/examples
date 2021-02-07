@@ -36,14 +36,14 @@ class MyRobot(MagicRobot):
 
     def teleopPeriodic(self):
         """Place code here that does things as a result of operator
-           actions"""
+        actions"""
 
         try:
             if self.joystick.getTrigger():
                 self.component2.do_something()
         except:
             self.onException()
-            
+
 
 if __name__ == "__main__":
     wpilib.run(MyRobot)

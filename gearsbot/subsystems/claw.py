@@ -6,7 +6,7 @@ class Claw(Subsystem):
     """
     The claw subsystem is a simple system with a motor for opening and closing.
     If using stronger motors, you should probably use a sensor so that the
-    motors don't stall. 
+    motors don't stall.
     """
 
     def __init__(self):
@@ -32,5 +32,5 @@ class Claw(Subsystem):
 
     def isGrabbing(self):
         """Return true when the robot is grabbing an object hard enough
-           to trigger the limit switch"""
+        to trigger the limit switch"""
         return self.contact.get()

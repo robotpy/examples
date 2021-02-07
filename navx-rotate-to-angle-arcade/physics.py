@@ -1,4 +1,3 @@
-
 import hal.simulation
 
 from pyfrc.physics.core import PhysicsInterface
@@ -9,8 +8,8 @@ from pyfrc.physics.units import units
 class PhysicsEngine:
     def __init__(self, physics_controller: PhysicsInterface):
         """
-            :param physics_controller: `pyfrc.physics.core.PhysicsInterface` object
-                                       to communicate simulation effects to
+        :param physics_controller: `pyfrc.physics.core.PhysicsInterface` object
+                                   to communicate simulation effects to
         """
 
         # Motors
@@ -20,9 +19,8 @@ class PhysicsEngine:
         # NavX (SPI interface)
         self.navx = hal.simulation.SimDeviceSim("navX-Sensor[4]")
         self.navx_yaw = self.navx.getDouble("Yaw")
-        
-        self.physics_controller = physics_controller
 
+        self.physics_controller = physics_controller
 
         # Change these parameters to fit your robot!
         bumper_width = 3.25 * units.inch
@@ -42,12 +40,12 @@ class PhysicsEngine:
 
     def update_sim(self, now, tm_diff):
         """
-            Called when the simulation parameters for the program need to be
-            updated.
-            
-            :param now: The current time as a float
-            :param tm_diff: The amount of time that has passed since the last
-                            time that this function was called
+        Called when the simulation parameters for the program need to be
+        updated.
+
+        :param now: The current time as a float
+        :param tm_diff: The amount of time that has passed since the last
+                        time that this function was called
         """
 
         # Simulate the drivetrain
@@ -61,4 +59,3 @@ class PhysicsEngine:
         # -> FRC gyros like NavX are positive clockwise, but
         #    the returned pose is positive counter-clockwise
         self.navx_yaw.set(-pose.rotation().degrees())
-

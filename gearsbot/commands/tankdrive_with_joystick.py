@@ -3,7 +3,7 @@ from wpilib.command import Command
 
 class TankDriveWithJoystick(Command):
     """
-        Have the robot drive tank style using the PS3 Joystick until interrupted.
+    Have the robot drive tank style using the PS3 Joystick until interrupted.
     """
 
     def __init__(self, robot):
@@ -29,5 +29,5 @@ class TankDriveWithJoystick(Command):
 
     def interrupted(self):
         """Called when another command which requires one or more of the same
-           subsystems is scheduled to run"""
+        subsystems is scheduled to run"""
         self.end()
