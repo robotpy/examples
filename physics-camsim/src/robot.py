@@ -7,7 +7,6 @@ import wpilib.controller
 
 from networktables.util import ntproperty
 
-
 class MyRobot(wpilib.TimedRobot):
     """Main robot class"""
 
@@ -37,10 +36,9 @@ class MyRobot(wpilib.TimedRobot):
 
         # Basic robot chassis setup
         self.stick = wpilib.Joystick(0)
-
-        self.robot_drive = wpilib.drive.DifferentialDrive(
-            wpilib.interfaces.SpeedController(), wpilib.interfaces.SpeedController()
-        )
+        
+        # Create a robot drive with two PWM controlled Talon SRXs. 
+        self.robot_drive = wpilib.drive.DifferentialDrive(wpilib.PWMTalonSRX(0), wpilib.PWMTalonSRX(1))
 
         # Position gets automatically updated as robot moves
         self.gyro = wpilib.ADXRS450_Gyro()
@@ -92,9 +90,9 @@ class MyRobot(wpilib.TimedRobot):
             else:
                 self.turnController.disable()
 
-            self.robot_drive.arcadeDrive(0, turnSpeed)
+            self.robot_drive.arcadeDrive(0, turnSpeed, squareInputs=True)
         else:
-            self.robot_drive.arcadeDrive(self.stick, True)
+            self.robot_drive.arcadeDrive(self.stick.getY() * -1, self.stick.getX(), squareInputs=True)
 
 
 if __name__ == "__main__":

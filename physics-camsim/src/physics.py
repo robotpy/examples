@@ -9,7 +9,10 @@
 # of your robot code without too much extra effort.
 #
 
+from wpilib.simulation import PWMSim
+
 from pyfrc.physics import drivetrains
+
 from pyfrc.physics.visionsim import VisionSim
 
 from networktables.util import ntproperty
@@ -46,8 +49,15 @@ class PhysicsEngine:
         self.vision = VisionSim(
             targets, 61.0, 1.5, 15, 15, physics_controller=physics_controller
         )
+        
+        # Simulate the drivetrain. 
+        self.drivetrain = drivetrains.TwoMotorDrivetrain(deadzone=drivetrains.linear_deadzone(0.1))
 
-    def update_sim(self, hal_data, now, tm_diff):
+        # Create the motors.
+        self.l_motor = PWMSim(0)
+        self.r_motor = PWMSim(1)
+
+    def update_sim(self, now, tm_diff):
         """
         Called when the simulation parameters for the program need to be
         updated.
@@ -56,15 +66,21 @@ class PhysicsEngine:
         :param tm_diff: The amount of time that has passed since the last
                         time that this function was called
         """
+        
+        l_speed = self.l_motor.getSpeed()
+        r_speed = self.r_motor.getSpeed()
 
-        # Simulate the drivetrain
-        l_motor = hal_data["pwm"][0]["value"]
-        r_motor = hal_data["pwm"][1]["value"]
+        # Compute chassis speeds based off of motor speeds. 
+        speeds = self.drivetrain.calculate(l_speed, r_speed)
 
-        speed, rotation = drivetrains.two_motor_drivetrain(l_motor, r_motor)
-        self.physics_controller.drive(speed, rotation, tm_diff)
+        self.physics_controller.drive(speeds, tm_diff)
 
-        x, y, angle = self.physics_controller.get_position()
+        pose = self.physics_controller.get_pose()
+        
+        x = pose.translation().X()
+        y = pose.translation().Y()
+        
+        angle = pose.rotation().degrees()
 
         data = self.vision.compute(now, x, y, angle)
         if data is not None:
