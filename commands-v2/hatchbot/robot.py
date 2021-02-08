@@ -26,10 +26,10 @@ class MyRobot(commands2.TimedCommandRobot):
         # Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         # autonomous chooser on the dashboard.
         self.container = RobotContainer()
-    
+
     def disabledInit(self) -> None:
         """This function is called once each time the robot enters Disabled mode."""
-    
+
     def disabledPeriodic(self) -> None:
         """This function is called periodically when disabled"""
 
@@ -39,7 +39,7 @@ class MyRobot(commands2.TimedCommandRobot):
 
         if self.autonomousCommand:
             self.autonomousCommand.schedule()
-    
+
     def autonomousPeriodic(self) -> None:
         """This function is called periodically during autonomous"""
 
@@ -57,6 +57,7 @@ class MyRobot(commands2.TimedCommandRobot):
     def testInit(self) -> None:
         # Cancels all running commands at the start of test mode
         commands2.CommandScheduler.getInstance().cancelAll()
+
 
 if __name__ == "__main__":
     wpilib.run(MyRobot)
