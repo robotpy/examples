@@ -32,7 +32,7 @@ kAutoBackupDistanceInches = 20
 kAutoDriveSpeed = 0.5
 
 # Operator Interface
-kDriverControllerPort = 1
+kDriverControllerPort = 0
 
 # Physical parameters
 kDriveTrainMotorCount = 2
