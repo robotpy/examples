@@ -43,8 +43,12 @@ class PhysicsEngine:
             constants.kWheelRadius,
         )
 
-        self.leftEncoderSim = wpilib.simulation.EncoderSim.createForChannel(constants.kLeftEncoderPorts[0])
-        self.rightEncoderSim = wpilib.simulation.EncoderSim.createForChannel(constants.kRightEncoderPorts[0])
+        self.leftEncoderSim = wpilib.simulation.EncoderSim.createForChannel(
+            constants.kLeftEncoderPorts[0]
+        )
+        self.rightEncoderSim = wpilib.simulation.EncoderSim.createForChannel(
+            constants.kRightEncoderPorts[0]
+        )
 
     def update_sim(self, now: float, tm_diff: float) -> None:
         """
@@ -61,7 +65,7 @@ class PhysicsEngine:
         r_motor = self.r_motor.getSpeed()
 
         voltage = wpilib.RobotController.getInputVoltage()
-        self.drivesim.setInputs(l_motor * voltage , -r_motor * voltage)
+        self.drivesim.setInputs(l_motor * voltage, -r_motor * voltage)
         self.drivesim.update(tm_diff)
 
         self.leftEncoderSim.setDistance(self.drivesim.getLeftPosition() * 39.37)
@@ -70,5 +74,3 @@ class PhysicsEngine:
         self.rightEncoderSim.setRate(self.drivesim.getRightVelocity() * 39.37)
 
         self.physics_controller.field.setRobotPose(self.drivesim.getPose())
-
-

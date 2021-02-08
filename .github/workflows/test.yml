@@ -1,0 +1,44 @@
+---
+name: dist
+
+on:
+  pull_request:
+  push:
+    branches:
+    - main
+    tags:
+    - '*'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: psf/black@stable
+
+  # test:
+  #   runs-on: ${{ matrix.os }}
+  #   strategy:
+  #     matrix:
+  #       os: [windows-latest, macos-latest, ubuntu-18.04]
+  #       python_version: [3.6, 3.7, 3.8, 3.9]
+  #       architecture: [x86, x64]
+  #       exclude:
+  #       - os: macos-latest
+  #         architecture: x86
+  #       - os: ubuntu-18.04
+  #         architecture: x86
+
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - uses: actions/setup-python@v2
+  #     with:
+  #       python-version: ${{ matrix.python_version }}
+  #       architecture: ${{ matrix.architecture }}
+  #   - name: Install deps
+  #     run: |
+  #       pip install -U pip
+  #       pip install robotpy[all] pytest
+  #   - name: Run tests
+  #     run: bash run_tests.sh all
+  #     shell: bash
