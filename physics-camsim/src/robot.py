@@ -59,7 +59,7 @@ class MyRobot(wpilib.TimedRobot):
         self.rightEncoder.setDistancePerPulse((6 * math.pi) / 1024)
 
         # Position gets automatically updated as robot moves
-        self.gyro = wpilib.ADXRS450_Gyro()
+        self.gyro = wpilib.AnalogGyro(0)
 
         # Use PIDController to control angle
         turnController = wpilib.controller.PIDController(
@@ -88,16 +88,13 @@ class MyRobot(wpilib.TimedRobot):
         """Called every 20ms in teleop"""
 
         # if trigger is pressed, then center the robot to the camera target
-        if self.stick.getRawButton(6):
 
-            print("hello")
+        if self.stick.getRawButton(6):
 
             found, timestamp, offset = self.target
             turnSpeed = 0.0
 
             if found > 0:
-                self.turnController.enable()
-
                 # remember: the camera tells you the *offset*, so the angle you
                 # want the robot to go to is the angle + the offset
                 angle = self.gyro.getAngle() + offset
@@ -105,10 +102,10 @@ class MyRobot(wpilib.TimedRobot):
                 # setpoint needs to be normalized
                 angle = self.normalizeAngle(angle)
 
+                # print('goto ' + str(angle))
+
                 self.turnController.setSetpoint(angle)
                 turnSpeed = self.rotateToAngleRate
-            else:
-                self.turnController.disable()
 
             self.robot_drive.arcadeDrive(0, turnSpeed, squareInputs=True)
         else:
