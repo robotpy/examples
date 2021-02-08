@@ -9,7 +9,12 @@
 # of your robot code without too much extra effort.
 #
 
-from wpilib.simulation import PWMSim, DifferentialDrivetrainSim, EncoderSim
+from wpilib.simulation import (
+    PWMSim,
+    DifferentialDrivetrainSim,
+    EncoderSim,
+    AnalogGyroSim,
+)
 
 from wpilib import RobotController
 
@@ -20,7 +25,7 @@ from wpimath.system.plant import DCMotor
 
 from pyfrc.physics import drivetrains
 
-from pyfrc.physics.visionsim import VisionSim
+from pyfrc.physics.visionsim import VisionSim, VisionSimTarget
 
 from networktables.util import ntproperty
 
@@ -46,11 +51,11 @@ class PhysicsEngine:
 
         targets = [
             # right
-            VisionSim.Target(15, 13, 250, 0),
+            VisionSimTarget(15, 13, 250, 0),
             # middle
-            VisionSim.Target(16.5, 15.5, 295, 65),
+            VisionSimTarget(16.5, 15.5, 295, 65),
             # left
-            VisionSim.Target(15, 18, 0, 110),
+            VisionSimTarget(15, 18, 0, 110),
         ]
 
         self.vision = VisionSim(
@@ -65,6 +70,8 @@ class PhysicsEngine:
         # Create the motors.
         self.l_motor = PWMSim(1)
         self.r_motor = PWMSim(2)
+
+        self.gyroSim = AnalogGyroSim(0)
 
         self.system = LinearSystemId.identifyDrivetrainSystem(1.98, 0.2, 1.5, 0.3)
         self.drivesim = DifferentialDrivetrainSim(
