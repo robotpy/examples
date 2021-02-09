@@ -3,7 +3,7 @@
 #
 
 
-import hal.simulation
+import wpilib.simulation
 
 from pyfrc.physics.core import PhysicsInterface
 from pyfrc.physics import motor_cfgs, tankmodel
@@ -24,13 +24,13 @@ class PhysicsEngine:
         self.physics_controller = physics_controller
 
         # Motors
-        self.lf_motor = hal.simulation.PWMSim(1)
+        self.lf_motor = wpilib.simulation.PWMSim(1)
         # self.lr_motor = hal.simulation.PWMSim(2)
-        self.rf_motor = hal.simulation.PWMSim(3)
+        self.rf_motor = wpilib.simulation.PWMSim(3)
         # self.rr_motor = hal.simulation.PWMSim(4)
 
         # Gyro
-        self.gyro = hal.simulation.AnalogGyroSim(1)
+        self.gyro = wpilib.simulation.AnalogGyroSim(1)
 
         # Change these parameters to fit your robot!
         bumper_width = 3.25 * units.inch

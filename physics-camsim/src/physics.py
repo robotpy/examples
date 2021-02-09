@@ -9,8 +9,23 @@
 # of your robot code without too much extra effort.
 #
 
+from wpilib.simulation import (
+    PWMSim,
+    DifferentialDrivetrainSim,
+    EncoderSim,
+    AnalogGyroSim,
+)
+
+from wpilib import RobotController
+
+from wpimath.geometry import Transform2d
+
+from wpimath.system import LinearSystemId
+from wpimath.system.plant import DCMotor
+
 from pyfrc.physics import drivetrains
-from pyfrc.physics.visionsim import VisionSim
+
+from pyfrc.physics.visionsim import VisionSim, VisionSimTarget
 
 from networktables.util import ntproperty
 
@@ -36,18 +51,41 @@ class PhysicsEngine:
 
         targets = [
             # right
-            VisionSim.Target(15, 13, 250, 0),
+            VisionSimTarget(15, 13, 250, 0),
             # middle
-            VisionSim.Target(16.5, 15.5, 295, 65),
+            VisionSimTarget(16.5, 15.5, 295, 65),
             # left
-            VisionSim.Target(15, 18, 0, 110),
+            VisionSimTarget(15, 18, 0, 110),
         ]
 
         self.vision = VisionSim(
             targets, 61.0, 1.5, 15, 15, physics_controller=physics_controller
         )
 
-    def update_sim(self, hal_data, now, tm_diff):
+        # Simulate the drivetrain.
+        self.drivetrain = drivetrains.TwoMotorDrivetrain(
+            deadzone=drivetrains.linear_deadzone(0.1)
+        )
+
+        # Create the motors.
+        self.l_motor = PWMSim(1)
+        self.r_motor = PWMSim(2)
+
+        self.gyroSim = AnalogGyroSim(0)
+
+        self.system = LinearSystemId.identifyDrivetrainSystem(1.98, 0.2, 1.5, 0.3)
+        self.drivesim = DifferentialDrivetrainSim(
+            self.system,
+            0.762,
+            DCMotor.CIM(2),
+            8,
+            0.0508,
+        )
+
+        self.leftEncoderSim = EncoderSim.createForChannel(0)
+        self.rightEncoderSim = EncoderSim.createForChannel(2)
+
+    def update_sim(self, now, tm_diff):
         """
         Called when the simulation parameters for the program need to be
         updated.
@@ -57,15 +95,32 @@ class PhysicsEngine:
                         time that this function was called
         """
 
-        # Simulate the drivetrain
-        l_motor = hal_data["pwm"][0]["value"]
-        r_motor = hal_data["pwm"][1]["value"]
+        l_speed = self.l_motor.getSpeed()
+        r_speed = self.r_motor.getSpeed()
 
-        speed, rotation = drivetrains.two_motor_drivetrain(l_motor, r_motor)
-        self.physics_controller.drive(speed, rotation, tm_diff)
+        voltage = RobotController.getInputVoltage()
 
-        x, y, angle = self.physics_controller.get_position()
+        self.drivesim.setInputs(l_speed * voltage, r_speed * voltage)
+        self.drivesim.update(tm_diff)
+
+        self.leftEncoderSim.setDistance(self.drivesim.getLeftPosition() * 39.37)
+        self.leftEncoderSim.setRate(self.drivesim.getLeftVelocity() * 39.37)
+        self.rightEncoderSim.setDistance(self.drivesim.getRightPosition() * 39.37)
+        self.rightEncoderSim.setRate(self.drivesim.getRightVelocity() * 39.37)
+
+        self.physics_controller.field.setRobotPose(self.drivesim.getPose())
+
+        pose = self.drivesim.getPose()
+
+        currentTranslation = pose.translation()
+        currentRotation = pose.rotation()
+
+        x = currentTranslation.X()
+        y = currentTranslation.Y()
+
+        angle = currentRotation.degrees()
 
         data = self.vision.compute(now, x, y, angle)
+
         if data is not None:
             self.target = data[0][:3]
