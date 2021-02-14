@@ -76,7 +76,7 @@ class RobotContainer:
         requiredSubsystems = [self.driveSubsystem]
         
         #print('start at ' + str(self.driveSubsystem.getPose()))
-                
+        
         ramseteCommand = RamseteCommand(self.exampleTrajectory,
                                         self.driveSubsystem.getPose,
                                         ramseteController,

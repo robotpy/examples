@@ -71,9 +71,7 @@ class PhysicsEngine:
         # Simulate the drivetrain
         l_motor = self.frontLeftMotor.getSpeed()
         r_motor = self.frontRightMotor.getSpeed()
-        
-        print(self.frontLeftMotor.getSpeed())
-        
+                
         self.gyro.setAngle(-self.drivesim.getHeading().degrees())
 
         voltage = RobotController.getInputVoltage()

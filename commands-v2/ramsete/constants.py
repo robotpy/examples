@@ -58,7 +58,7 @@ kPDriveVel = 0.001# 8.5
 
 # Auto constants
 
-maxSpeedMetersPerSecond = 6
+maxSpeedMetersPerSecond = 3
 maxAccelerationMetersPerSecondSquared = 3
 
 # Baseline values for a RAMSETE follower in units of meters
