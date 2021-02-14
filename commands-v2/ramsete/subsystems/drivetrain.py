@@ -1,7 +1,8 @@
 from commands2 import SubsystemBase
 
-from wpilib import SpeedControllerGroup, PWMVictorSPX, Encoder, ADXRS450_Gyro
+from wpilib import SpeedControllerGroup, PWMVictorSPX, Encoder, ADXRS450_Gyro, XboxController
 from wpilib.drive import DifferentialDrive
+from wpilib.interfaces import GenericHID
 
 from wpimath.kinematics import DifferentialDriveOdometry, DifferentialDriveWheelSpeeds
 
@@ -9,15 +10,21 @@ from constants import *
 
 class Drivetrain(SubsystemBase):
     
-    def __init__(self):
+    def __init__(self, controller: XboxController):
+        
+        super().__init__()
+        
+        frontLeftMotor, backLeftMotor = PWMVictorSPX(frontLeftMotorID), PWMVictorSPX(backLeftMotorID)
+        frontRightMotor, backRightMotor = PWMVictorSPX(frontRightMotorID), PWMVictorSPX(backRightMotorID)
+        
         self.leftMotors = SpeedControllerGroup(
-            PWMVictorSPX(frontLeftMotorID),
-            PWMVictorSPX(backLeftMotorID)
+            frontLeftMotor,
+            backLeftMotor
         )
         
         self.rightMotors = SpeedControllerGroup(
-            PWMVictorSPX(frontRightMotorID),
-            PWMVictorSPX(backRightMotorID)
+            frontRightMotor,
+            backRightMotor
         )
         
         self.drivetrain = DifferentialDrive(self.leftMotors, self.rightMotors)
@@ -26,7 +33,7 @@ class Drivetrain(SubsystemBase):
             leftEncoderPorts[0],
             leftEncoderPorts[1],
             leftEncoderReversed
-                                   )
+        )
         
         self.leftEncoder.setDistancePerPulse(encoderDistancePerPulse)
         
@@ -42,6 +49,8 @@ class Drivetrain(SubsystemBase):
     
         self.odometry = DifferentialDriveOdometry(self.gyro.getRotation2d())
         
+        self.controller = controller
+        
         self.resetEncoders()
         
     def periodic(self):
@@ -51,17 +60,21 @@ class Drivetrain(SubsystemBase):
         )
         
     def getPose(self):
-        return self.odometry.getPoseMeters()
+        return self.odometry.getPose()
     
     def getWheelSpeeds(self):
-        return DifferentialDriveWheelSpeeds(self.leftEncoder.getRate(), self.rightEncoder.getRate())
+        speeds = DifferentialDriveWheelSpeeds(self.leftEncoder.getRate(), self.rightEncoder.getRate())
+        return speeds
     
     def resetOdometry(self, pose):
         self.resetEncoders()
         self.odometry.resetPosition(pose, self.gyro.getRotation2d())
     
-    def arcadeDrive(self, fwd, rot):
-        self.drivetrain.arcadeDrive(fwd, rot)
+    def arcadeDrive(self):
+        self.drivetrain.arcadeDrive(
+            self.controller.getY(GenericHID.Hand.kLeftHand), 
+            self.controller.getX(GenericHID.Hand.kRightHand)
+        )
         
     def tankDriveVolts(self, leftVolts, rightVolts):
         self.leftMotors.setVoltage(leftVolts)
@@ -83,6 +96,9 @@ class Drivetrain(SubsystemBase):
     
     def setMaxOutput(self, maxOutput):
         self.drivetrain.setMaxOutput(maxOutput)
+    
+    def stopMoving(self):
+        self.tankDriveVolts(0, 0)
     
     def zeroHeading(self):
         self.gyro.reset()

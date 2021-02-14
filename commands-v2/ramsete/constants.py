@@ -33,6 +33,7 @@ encoderCPR = 1024
 # In meters, distance between wheels on each side of robot. 
 
 trackWidth = 0.69
+drivetrainMotorCount = 4
 driveKinematics = DifferentialDriveKinematics(trackWidth)
 
 wheelDiameterMeters = 0.15

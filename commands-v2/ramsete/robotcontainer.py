@@ -2,13 +2,14 @@ from commands2 import RunCommand, RamseteCommand
 from commands2.button import JoystickButton
 
 from wpilib import XboxController
+from wpilib.controller import RamseteController, PIDController
 
-from wpimath.controller import SimpleMotorFeedforward, RamseteController, PIDController
+from wpimath.controller import SimpleMotorFeedforwardMeters
 
 from wpilib.interfaces import GenericHID
 
 from wpimath.trajectory.constraint import DifferentialDriveVoltageConstraint
-from wpimath.trajectory import TrajectoryConfig, TrajectoryGenerator
+from wpimath.trajectory import TrajectoryConfig, TrajectoryGenerator, Trajectory
 
 from wpimath.geometry import Pose2d, Rotation2d, Translation2d
 
@@ -20,28 +21,28 @@ class RobotContainer:
     
     def __init__(self):
         
-        self.driveSubsystem = Drivetrain()
-        
         self.driverController = XboxController(driverControllerID)
+        self.driveSubsystem = Drivetrain(self.driverController)
         
-        self.driveSubsystem.setDefaultCommand(
-            RunCommand(
-                self.driveSubsystem.arcadeDrive(
-                    self.driverController.getY(GenericHID.Hand.kLeft),
-                    self.driverController.getX(GenericHID.Hand.kRight)
-                ),
+        doThis = RunCommand(
+                self.driveSubsystem.arcadeDrive,
                 self.driveSubsystem
             )
+        
+        self.driveSubsystem.setDefaultCommand(
+            doThis    
         )
         
     def getAutonomousCommand(self):
-        autoVoltageConstraint = DifferentialDriveVoltageConstraint(
-            SimpleMotorFeedforward(
+        motorFFOne = SimpleMotorFeedforwardMeters(
                 ksVolts,
                 kvVoltSecondsPerMeter,
-                kaVoltSecondsSquaredPerMeter),
+                kaVoltSecondsSquaredPerMeter)
+        
+        autoVoltageConstraint = DifferentialDriveVoltageConstraint(
+            motorFFOne,
             driveKinematics,
-            10
+            10 # 10 volts max.
         )
         
         config = TrajectoryConfig(
@@ -49,35 +50,45 @@ class RobotContainer:
             maxAccelerationMetersPerSecondSquared
                                   )
         
-        self.config.setKinematics(driveKinematics)
-        self.config.addConstraint(autoVoltageConstraint)
+        config.setKinematics(driveKinematics)
+        config.addConstraint(autoVoltageConstraint)
+        
+        initial = Pose2d(0, 0, Rotation2d(0))
+        movements = [Translation2d(1, 1), Translation2d(2, -1)]
+        final = Pose2d(3, 0, Rotation2d(0))
         
         exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-            Pose2d(0, 0, Rotation2d),
-            [Translation2d(1, 1), Translation2d(2, -1)],
-            Pose2d(3, 0, Rotation2d),
+            initial,
+            movements,
+            final,
             config
             )
         
-        ramseteCommand = RamseteCommand(exampleTrajectory,
-                                        self.driveSubsystem.getPose,
-                                        RamseteController(ramseteB, ramseteZeta),
-                                        SimpleMotorFeedforward(
+        ramseteController = RamseteController(ramseteB, ramseteZeta)
+        leftPIDController, rightPIDController = PIDController(kPDriveVel, 0, 0), PIDController(kPDriveVel, 0, 0)
+        motorFFTwo = SimpleMotorFeedforwardMeters(
                                             ksVolts,
                                             kvVoltSecondsPerMeter,
                                             kaVoltSecondsSquaredPerMeter
                                         ),
+        requiredSubsystems = [self.driveSubsystem]
+                
+        ramseteCommand = RamseteCommand(exampleTrajectory,
+                                        self.driveSubsystem.getPose,
+                                        ramseteController,
+                                        motorFFTwo[0], # Returns a tuple fsr.
                                         driveKinematics,
                                         self.driveSubsystem.getWheelSpeeds,
-                                        PIDController(kPDriveVel, 0, 0),
-                                        PIDController(kPDriveVel, 0, 0),
+                                        leftPIDController, 
+                                        rightPIDController,
                                         self.driveSubsystem.tankDriveVolts,
-                                        self.driveSubsystem
+                                        requiredSubsystems
                                         )
         
-        self.driveSubsystem.resetOdometry(exampleTrajectory.getInitialPose())
+        initialPosition = exampleTrajectory.initialPose()
+        self.driveSubsystem.resetOdometry(initialPosition)
         
-        return ramseteCommand.andThen(self.driveSubsystem.tankDriveVolts(0, 0))
+        return ramseteCommand.andThen(self.driveSubsystem.stopMoving)
         
     def configureButtons(self):
         self.slowButton = JoystickButton(self.driverController, 1).whenPressed
