@@ -1,5 +1,7 @@
 from commands2 import RamseteCommand
 
+from wpilib import AnalogGyro
+
 from wpimath.kinematics import DifferentialDriveKinematics
 
 from math import pi
@@ -8,6 +10,9 @@ from math import pi
 A place for the constant values in the code
 that may be used in more than one place. 
 """
+
+# Universal gyro.
+gyroObject = AnalogGyro(1)
 
 # ID for the driver's joystick. 
 driverControllerID = 0
@@ -45,15 +50,15 @@ encoderDistancePerPulse = (wheelDiameterMeters * pi) / encoderCPR
 # drivetrain using the FRC Characterization tool. These are for demo purposes
 # only!
 
-ksVolts = 0.22
+ksVolts = 0.88
 kvVoltSecondsPerMeter = 1.98
-kaVoltSecondsSquaredPerMeter = 0.2
+kaVoltSecondsSquaredPerMeter = 0.8
 
-kPDriveVel = 8.5
+kPDriveVel = 0.001# 8.5
 
 # Auto constants
 
-maxSpeedMetersPerSecond = 3
+maxSpeedMetersPerSecond = 6
 maxAccelerationMetersPerSecondSquared = 3
 
 # Baseline values for a RAMSETE follower in units of meters

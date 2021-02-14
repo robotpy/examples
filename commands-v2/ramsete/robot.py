@@ -29,6 +29,8 @@ class MyRobot(commands2.TimedCommandRobot):
 
     def disabledInit(self) -> None:
         """This function is called once each time the robot enters Disabled mode."""
+        if self.autonomousCommand:
+            self.autonomousCommand.cancel()
 
     def disabledPeriodic(self) -> None:
         """This function is called periodically when disabled"""
@@ -42,7 +44,8 @@ class MyRobot(commands2.TimedCommandRobot):
 
     def autonomousPeriodic(self) -> None:
         """This function is called periodically during autonomous"""
-
+        #print(self.container.exampleTrajectory.State.pose)
+    
     def teleopInit(self) -> None:
         # This makes sure that the autonomous stops running when
         # teleop starts running. If you want the autonomous to

@@ -9,8 +9,8 @@
 # of your robot code without too much extra effort.
 #
 
-import wpilib
-import wpilib.simulation
+from wpilib import AnalogGyro, RobotController
+from wpilib.simulation import PWMSim, DifferentialDrivetrainSim, EncoderSim, AnalogGyroSim
 from wpimath.system import LinearSystemId
 from wpimath.system.plant import DCMotor
 
@@ -31,13 +31,16 @@ class PhysicsEngine:
         self.physics_controller = physics_controller
 
         # Motors
-        self.l_motor = wpilib.simulation.PWMSim(1)
-        self.r_motor = wpilib.simulation.PWMSim(2)
+        self.frontLeftMotor = PWMSim(frontLeftMotorID)
+        self.frontRightMotor = PWMSim(frontRightMotorID)
+        
+        self.backLeftMotor = PWMSim(backLeftMotorID)
+        self.backRightMotor = PWMSim(backRightMotorID)
 
         motor = DCMotor.CIM(drivetrainMotorCount)
 
-        self.system = LinearSystemId.identifyDrivetrainSystem(1.98, 0.2, 1.5, 0.3)
-        self.drivesim = wpilib.simulation.DifferentialDrivetrainSim(
+        self.system = LinearSystemId.identifyDrivetrainSystem(kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter, 1.5, 0.3)
+        self.drivesim = DifferentialDrivetrainSim(
             self.system,
             trackWidth,
             motor,
@@ -45,12 +48,15 @@ class PhysicsEngine:
             (wheelDiameterMeters / 2),
         )
 
-        self.leftEncoderSim = wpilib.simulation.EncoderSim.createForChannel(
+        self.leftEncoderSim = EncoderSim.createForChannel(
             leftEncoderPorts[0]
         )
-        self.rightEncoderSim = wpilib.simulation.EncoderSim.createForChannel(
+        self.rightEncoderSim = EncoderSim.createForChannel(
             rightEncoderPorts[0]
         )
+        
+        self.realGyro = gyroObject
+        self.gyro = AnalogGyroSim(self.realGyro)
 
     def update_sim(self, now: float, tm_diff: float) -> None:
         """
@@ -63,10 +69,14 @@ class PhysicsEngine:
         """
 
         # Simulate the drivetrain
-        l_motor = self.l_motor.getSpeed()
-        r_motor = self.r_motor.getSpeed()
+        l_motor = self.frontLeftMotor.getSpeed()
+        r_motor = self.frontRightMotor.getSpeed()
+        
+        print(self.frontLeftMotor.getSpeed())
+        
+        self.gyro.setAngle(-self.drivesim.getHeading().degrees())
 
-        voltage = wpilib.RobotController.getInputVoltage()
+        voltage = RobotController.getInputVoltage()
         self.drivesim.setInputs(l_motor * voltage, -r_motor * voltage)
         self.drivesim.update(tm_diff)
 

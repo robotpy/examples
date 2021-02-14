@@ -1,16 +1,17 @@
 from commands2 import SubsystemBase
 
-from wpilib import SpeedControllerGroup, PWMVictorSPX, Encoder, ADXRS450_Gyro, XboxController
+from wpilib import SpeedControllerGroup, PWMVictorSPX, Encoder
 from wpilib.drive import DifferentialDrive
 from wpilib.interfaces import GenericHID
 
+from wpimath.geometry import Pose2d, Rotation2d
 from wpimath.kinematics import DifferentialDriveOdometry, DifferentialDriveWheelSpeeds
 
 from constants import *
 
 class Drivetrain(SubsystemBase):
     
-    def __init__(self, controller: XboxController):
+    def __init__(self, controller: GenericHID):
         
         super().__init__()
         
@@ -45,7 +46,8 @@ class Drivetrain(SubsystemBase):
         
         self.rightEncoder.setDistancePerPulse(encoderDistancePerPulse)
         
-        self.gyro = ADXRS450_Gyro()
+        self.gyro = gyroObject
+        self.gyro.calibrate()
     
         self.odometry = DifferentialDriveOdometry(self.gyro.getRotation2d())
         
@@ -72,8 +74,8 @@ class Drivetrain(SubsystemBase):
     
     def arcadeDrive(self):
         self.drivetrain.arcadeDrive(
-            self.controller.getY(GenericHID.Hand.kLeftHand), 
-            self.controller.getX(GenericHID.Hand.kRightHand)
+            -self.controller.getRawAxis(1), 
+            self.controller.getRawAxis(2)*0.65 # Multiply by 65% for more control.
         )
         
     def tankDriveVolts(self, leftVolts, rightVolts):
