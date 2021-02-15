@@ -82,7 +82,7 @@ class PhysicsEngine:
         l_motor = self.m_frontLeftMotor.getSpeed()
         r_motor = self.m_frontRightMotor.getSpeed()
 
-        # self.m_gyro.setAngle(-self.m_drivesim.getHeading().degrees())
+        self.m_gyro.setAngle(-self.m_drivesim.getHeading().degrees())
 
         voltage = RobotController.getInputVoltage()
         self.m_drivesim.setInputs(l_motor * voltage, -r_motor * voltage)
