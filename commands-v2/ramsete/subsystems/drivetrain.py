@@ -117,8 +117,6 @@ class Drivetrain(SubsystemBase):
         self.leftEncoder.reset()
         self.rightEncoder.reset()
 
-    # Take the sum of each encoder's traversed distance and divide it by two,
-    # since we have two encoder values, to find the average value of the two.
     def getAverageEncoderDistance(self):
         """
         Take the sum of each encoder's traversed distance and divide it by two,
