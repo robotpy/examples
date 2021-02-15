@@ -9,17 +9,17 @@
 # of your robot code without too much extra effort.
 #
 
-from wpilib import AnalogGyro, RobotController
+from wpilib import RobotController, ADXRS450_Gyro
 from wpilib.simulation import (
     PWMSim,
     DifferentialDrivetrainSim,
     EncoderSim,
-    AnalogGyroSim,
+    ADXRS450_GyroSim,
 )
 from wpimath.system import LinearSystemId
 from wpimath.system.plant import DCMotor
 
-from constants import constant
+import constants
 
 from pyfrc.physics.core import PhysicsInterface
 
@@ -35,36 +35,36 @@ class PhysicsEngine:
 
         self.physics_controller = physics_controller
 
-        # Motors
-        self.frontLeftMotor = PWMSim(constant.frontLeftMotorID)
-        self.frontRightMotor = PWMSim(constant.frontRightMotorID)
+        # Motor simulation definitions. Each correlates to a motor defined in
+        # the drivetrain subsystem.
+        self.m_frontLeftMotor = PWMSim(constants.kLeftMotor1Port)
+        self.m_backLeftMotor = PWMSim(constants.kLeftMotor2Port)
+        self.m_frontRightMotor = PWMSim(constants.kRightMotor1Port)
+        self.m_backRightMotor = PWMSim(constants.kRightMotor2Port)
 
-        self.backLeftMotor = PWMSim(constant.backLeftMotorID)
-        self.backRightMotor = PWMSim(constant.backRightMotorID)
-
-        motor = DCMotor.CIM(constant.drivetrainMotorCount)
-
-        self.system = LinearSystemId.identifyDrivetrainSystem(
-            constant.kvVoltSecondsPerMeter,
-            constant.kaVoltSecondsSquaredPerMeter,
-            1.5,
-            0.3,
+        self.m_system = LinearSystemId.identifyDrivetrainSystem(
+            constants.kvVoltSecondsPerMeter,              # The linear velocity gain in volt seconds per distance.
+            constants.kaVoltSecondsSquaredPerMeter,       # The linear acceleration gain, in volt seconds^2 per distance.
+            1.5,                                          # The angular velocity gain, in volt seconds per angle.
+            0.3,                                          # The angular acceleration gain, in volt seconds^2 per angle.
         )
-        self.drivesim = DifferentialDrivetrainSim(
-            self.system,
-            constant.trackWidth,
-            motor,
-            1,  # One to one output
-            (constant.wheelDiameterMeters / 2),
-        )
-
-        self.leftEncoderSim = EncoderSim.createForChannel(constant.leftEncoderPorts[0])
-        self.rightEncoderSim = EncoderSim.createForChannel(
-            constant.rightEncoderPorts[0]
+                
+        self.m_drivesim = DifferentialDrivetrainSim(      # The simulation model of the drivetrain.
+            self.m_system,                                # The state-space model for a drivetrain.
+            constants.kTrackWidthMeters,                  # The robot's trackwidth, which is the distance between the wheels on the left side and those on the right side. The units is meters.
+            DCMotor.NEO(constants.kDrivetrainMotorCount), # Four NEO drivetrain setup.
+            1,                                            # One to one output gearing.
+            (constants.kWheelDiameterMeters / 2),         # The radius of the drivetrain wheels in meters.
         )
 
-        self.realGyro = constant.gyroObject
-        self.gyro = AnalogGyroSim(self.realGyro)
+        self.m_leftEncoderSim = EncoderSim.createForChannel(
+            constants.kLeftEncoderPorts[0]
+        )
+        self.m_rightEncoderSim = EncoderSim.createForChannel(
+            constants.kRightEncoderPorts[0]
+        )
+
+        self.m_gyro = ADXRS450_GyroSim(ADXRS450_Gyro())
 
     def update_sim(self, now: float, tm_diff: float) -> None:
         """
@@ -77,18 +77,18 @@ class PhysicsEngine:
         """
 
         # Simulate the drivetrain
-        l_motor = self.frontLeftMotor.getSpeed()
-        r_motor = self.frontRightMotor.getSpeed()
+        l_motor = self.m_frontLeftMotor.getSpeed()
+        r_motor = self.m_frontRightMotor.getSpeed()
 
-        self.gyro.setAngle(-self.drivesim.getHeading().degrees())
+        #self.m_gyro.setAngle(-self.m_drivesim.getHeading().degrees())
 
         voltage = RobotController.getInputVoltage()
-        self.drivesim.setInputs(l_motor * voltage, -r_motor * voltage)
-        self.drivesim.update(tm_diff)
+        self.m_drivesim.setInputs(l_motor * voltage, -r_motor * voltage)
+        self.m_drivesim.update(tm_diff)
 
-        self.leftEncoderSim.setDistance(self.drivesim.getLeftPosition() * 39.37)
-        self.leftEncoderSim.setRate(self.drivesim.getLeftVelocity() * 39.37)
-        self.rightEncoderSim.setDistance(self.drivesim.getRightPosition() * 39.37)
-        self.rightEncoderSim.setRate(self.drivesim.getRightVelocity() * 39.37)
+        self.m_leftEncoderSim.setDistance(self.m_drivesim.getLeftPosition() * 39.37)
+        self.m_leftEncoderSim.setRate(self.m_drivesim.getLeftVelocity() * 39.37)
+        self.m_rightEncoderSim.setDistance(self.m_drivesim.getRightPosition() * 39.37)
+        self.m_rightEncoderSim.setRate(self.m_drivesim.getRightVelocity() * 39.37)
 
-        self.physics_controller.field.setRobotPose(self.drivesim.getPose())
+        self.physics_controller.field.setRobotPose(self.m_drivesim.getPose())
