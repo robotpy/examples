@@ -65,7 +65,7 @@ class Drivetrain(SubsystemBase):
     def periodic(self):
         """
         Called periodically when it can be called. Updates the robot's
-        odometry with sensor data. 
+        odometry with sensor data.
         """
         self.m_odometry.update(
             self.m_gyro.getRotation2d(),
@@ -84,12 +84,10 @@ class Drivetrain(SubsystemBase):
         )
         return speeds
 
-    
     def resetOdometry(self, pose):
         """ Resets the robot's odometry to a given position."""
         self.resetEncoders()
         self.m_odometry.resetPosition(pose, self.m_gyro.getRotation2d())
-
 
     def arcadeDrive(self):
         """Drive the robot with standard arcade controls."""
@@ -109,7 +107,6 @@ class Drivetrain(SubsystemBase):
 
         self.m_drive.feed()  # Resets the timer for this motor's MotorSafety
 
-    
     def stopMoving(self):
         """Stops the robot from moving. This is important because we need a reference to not take any arguments."""
         self.m_leftMotors.setVoltage(0)
@@ -131,7 +128,6 @@ class Drivetrain(SubsystemBase):
             self.m_leftEncoder.getDistance() + self.m_rightEncoder.getDistance()
         ) / 2
 
-    
     def getLeftEncoder(self):
         """Returns the left encoder object."""
         return self.m_leftEncoder
@@ -140,7 +136,6 @@ class Drivetrain(SubsystemBase):
         """Returns the right encoder object."""
         return self.m_rightEncoder
 
-    
     def setMaxOutput(self, maxOutput):
         """Set the max percent output of the drivetrain, allowing for slower control."""
         self.m_drive.setMaxOutput(maxOutput)

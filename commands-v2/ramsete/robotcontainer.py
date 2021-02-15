@@ -132,7 +132,7 @@ class RobotContainer:
 
     def configureButtons(self):
         """Configure the buttons for the driver's controller"""
-        
+
         # We won't do anything with this button itself, so we don't need to
         # define a variable.
 
