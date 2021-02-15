@@ -21,6 +21,13 @@ import constants
 
 
 class RobotContainer:
+
+    """
+    This class hosts the bulk of the robot's functions. Little robot logic needs to be
+    handled here or in the robot periodic methods, as this is a command-based system.
+    The structure (commands, subsystems, and button mappings) should be done here.
+    """
+
     def __init__(self):
 
         # Create the driver's controller.
