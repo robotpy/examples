@@ -10,11 +10,16 @@
 #
 
 from wpilib import AnalogGyro, RobotController
-from wpilib.simulation import PWMSim, DifferentialDrivetrainSim, EncoderSim, AnalogGyroSim
+from wpilib.simulation import (
+    PWMSim,
+    DifferentialDrivetrainSim,
+    EncoderSim,
+    AnalogGyroSim,
+)
 from wpimath.system import LinearSystemId
 from wpimath.system.plant import DCMotor
 
-from constants import *
+from constants import constant
 
 from pyfrc.physics.core import PhysicsInterface
 
@@ -31,31 +36,34 @@ class PhysicsEngine:
         self.physics_controller = physics_controller
 
         # Motors
-        self.frontLeftMotor = PWMSim(frontLeftMotorID)
-        self.frontRightMotor = PWMSim(frontRightMotorID)
-        
-        self.backLeftMotor = PWMSim(backLeftMotorID)
-        self.backRightMotor = PWMSim(backRightMotorID)
+        self.frontLeftMotor = PWMSim(constant.frontLeftMotorID)
+        self.frontRightMotor = PWMSim(constant.frontRightMotorID)
 
-        motor = DCMotor.CIM(drivetrainMotorCount)
+        self.backLeftMotor = PWMSim(constant.backLeftMotorID)
+        self.backRightMotor = PWMSim(constant.backRightMotorID)
 
-        self.system = LinearSystemId.identifyDrivetrainSystem(kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter, 1.5, 0.3)
+        motor = DCMotor.CIM(constant.drivetrainMotorCount)
+
+        self.system = LinearSystemId.identifyDrivetrainSystem(
+            constant.kvVoltSecondsPerMeter,
+            constant.kaVoltSecondsSquaredPerMeter,
+            1.5,
+            0.3,
+        )
         self.drivesim = DifferentialDrivetrainSim(
             self.system,
-            trackWidth,
+            constant.trackWidth,
             motor,
-            1, # One to one output
-            (wheelDiameterMeters / 2),
+            1,  # One to one output
+            (constant.wheelDiameterMeters / 2),
         )
 
-        self.leftEncoderSim = EncoderSim.createForChannel(
-            leftEncoderPorts[0]
-        )
+        self.leftEncoderSim = EncoderSim.createForChannel(constant.leftEncoderPorts[0])
         self.rightEncoderSim = EncoderSim.createForChannel(
-            rightEncoderPorts[0]
+            constant.rightEncoderPorts[0]
         )
-        
-        self.realGyro = gyroObject
+
+        self.realGyro = constant.gyroObject
         self.gyro = AnalogGyroSim(self.realGyro)
 
     def update_sim(self, now: float, tm_diff: float) -> None:
@@ -71,7 +79,7 @@ class PhysicsEngine:
         # Simulate the drivetrain
         l_motor = self.frontLeftMotor.getSpeed()
         r_motor = self.frontRightMotor.getSpeed()
-                
+
         self.gyro.setAngle(-self.drivesim.getHeading().degrees())
 
         voltage = RobotController.getInputVoltage()
@@ -84,4 +92,3 @@ class PhysicsEngine:
         self.rightEncoderSim.setRate(self.drivesim.getRightVelocity() * 39.37)
 
         self.physics_controller.field.setRobotPose(self.drivesim.getPose())
- 

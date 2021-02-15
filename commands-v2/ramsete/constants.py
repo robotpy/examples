@@ -11,58 +11,65 @@ A place for the constant values in the code
 that may be used in more than one place. 
 """
 
-# Universal gyro.
-gyroObject = AnalogGyro(1)
 
-# ID for the driver's joystick. 
-driverControllerID = 0
+class Constants:
+    def __init__(self):
 
-# The CAN IDs for the drivetrain motor controllers. 
-frontLeftMotorID = 0
-frontRightMotorID = 1
+        # Universal gyro.
+        self.gyroObject = AnalogGyro(1)
 
-backLeftMotorID = 2
-backRightMotorID = 3
+        # ID for the driver's joystick.
+        self.driverControllerID = 0
 
-# Encoders and their respective motor controllers.
+        # The CAN IDs for the drivetrain motor controllers.
+        self.frontLeftMotorID = 0
+        self.frontRightMotorID = 1
 
-leftEncoderPorts = (0, 1)
-rightEncoderPorts = (2, 3)
+        self.backLeftMotorID = 2
+        self.backRightMotorID = 3
 
-leftEncoderReversed = False
-rightEncoderReversed = True
+        # Encoders and their respective motor controllers.
 
-# Encoder counts per rotation.
-encoderCPR = 1024
+        self.leftEncoderPorts = (0, 1)
+        self.rightEncoderPorts = (2, 3)
 
-# In meters, distance between wheels on each side of robot. 
+        self.leftEncoderReversed = False
+        self.rightEncoderReversed = True
 
-trackWidth = 0.69
-drivetrainMotorCount = 4
-driveKinematics = DifferentialDriveKinematics(trackWidth)
+        # Encoder counts per rotation.
+        self.encoderCPR = 1024
 
-wheelDiameterMeters = 0.15
+        # In meters, distance between wheels on each side of robot.
 
-# The following works assuming the encoders are directly mounted to the wheel shafts.
-encoderDistancePerPulse = (wheelDiameterMeters * pi) / encoderCPR
+        self.trackWidth = 0.69
+        self.drivetrainMotorCount = 4
+        self.driveKinematics = DifferentialDriveKinematics(self.trackWidth)
 
-# NOTE: Please do NOT use these values on your robot. Rather, characterize your 
-# drivetrain using the FRC Characterization tool. These are for demo purposes
-# only!
+        self.wheelDiameterMeters = 0.15
 
-ksVolts = 0.88
-kvVoltSecondsPerMeter = 1.98
-kaVoltSecondsSquaredPerMeter = 0.8
+        # The following works assuming the encoders are directly mounted to the wheel shafts.
+        self.encoderDistancePerPulse = (self.wheelDiameterMeters * pi) / self.encoderCPR
 
-kPDriveVel = 0.001# 8.5
+        # NOTE: Please do NOT use these values on your robot. Rather, characterize your
+        # drivetrain using the FRC Characterization tool. These are for demo purposes
+        # only!
 
-# Auto constants
+        self.ksVolts = 0.268
+        self.kvVoltSecondsPerMeter = 1.89
+        self.kaVoltSecondsSquaredPerMeter = 0.243
 
-maxSpeedMetersPerSecond = 3
-maxAccelerationMetersPerSecondSquared = 3
+        self.kPDriveVel = 0.001  # 8.5
 
-# Baseline values for a RAMSETE follower in units of meters
-# and seconds. 
+        # Auto constants
 
-ramseteB = 2
-ramseteZeta = 0.7
+        self.maxSpeedMetersPerSecond = 3
+        self.maxAccelerationMetersPerSecondSquared = 3
+
+        # Baseline values for a RAMSETE follower in units of meters
+        # and seconds.
+
+        self.ramseteB = 2
+        self.ramseteZeta = 0.7
+
+
+constant = Constants()
