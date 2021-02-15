@@ -6,7 +6,7 @@ from wpilib.controller import RamseteController, PIDController
 
 from wpimath.controller import SimpleMotorFeedforwardMeters
 
-from wpilib.kinematics import ChassisSpeeds
+from wpimath.kinematics import ChassisSpeeds
 
 from wpilib.interfaces import GenericHID
 
@@ -31,10 +31,10 @@ class RobotContainer:
     def __init__(self):
 
         # Create the driver's controller.
-        self.m_driverController = XboxController(constants.kDriverControllerID)
+        self.driverController = XboxController(constants.kDriverControllerID)
 
         # Create an instance of the drivetrain subsystem.
-        self.m_robotDrive = Drivetrain(self.m_driverController)
+        self.robotDrive = Drivetrain(self.driverController)
 
         # Configure and set the button bindings for the driver's controller.
         self.configureButtons()
@@ -42,12 +42,13 @@ class RobotContainer:
         # Set the default command for the drive subsystem. It's default command will allow
         # the robot to drive with the controller.
 
-        self.m_robotDrive.setDefaultCommand(
-            RunCommand(self.m_robotDrive.arcadeDrive, self.m_robotDrive)
+        self.robotDrive.setDefaultCommand(
+            RunCommand(self.robotDrive.arcadeDrive, self.robotDrive)
         )
 
     # Return the autonomous command, the RAMSETE command.
     def getAutonomousCommand(self):
+        """Returns the command to be ran during the autonomous period."""
 
         # Create a voltage constraint to ensure we don't accelerate too fast.
 
@@ -61,7 +62,7 @@ class RobotContainer:
             10,  # 10 volts max.
         )
 
-        """Below will generate the trajectory using a set of programmed configurations"""
+        # Below will generate the trajectory using a set of programmed configurations
 
         # Create a configuration for the trajctory. This tells the trajectory its constraints
         # as well as its resources, such as the kinematics object.
@@ -96,11 +97,11 @@ class RobotContainer:
             config,
         )
 
-        """Below creates the RAMSETE command"""
+        # Below creates the RAMSETE command
 
         ramseteCommand = RamseteCommand(
             self.exampleTrajectory,  # The trajectory to follow.
-            self.m_robotDrive.getPose,  # A reference to a method that will return our position.
+            self.robotDrive.getPose,  # A reference to a method that will return our position.
             RamseteController(  # Our RAMSETE controller.
                 constants.kRamseteB, constants.kRamseteZeta
             ),
@@ -110,31 +111,33 @@ class RobotContainer:
                 constants.kaVoltSecondsSquaredPerMeter,
             ),
             constants.kDriveKinematics,  # Our drive kinematics.
-            self.m_robotDrive.getWheelSpeeds,  # A reference to a method which will return a
+            self.robotDrive.getWheelSpeeds,  # A reference to a method which will return a
             PIDController(
                 constants.kPDriveVel, 0, 0
             ),  # The turn controller for the left side of the drivetrain.
             PIDController(
                 constants.kPDriveVel, 0, 0
             ),  # The turn controller for the right side of the drivetrain.
-            self.m_robotDrive.tankDriveVolts,  # A reference to a method which will set a specified
+            self.robotDrive.tankDriveVolts,  # A reference to a method which will set a specified
             # voltage to each motor. The command will pass the two parameters.
-            [self.m_robotDrive],  # The subsystems the command should require.
+            [self.robotDrive],  # The subsystems the command should require.
         )
 
         # Reset the robot's position to the starting position of the trajectory.
-        self.m_robotDrive.resetOdometry(self.exampleTrajectory.initialPose())
+        self.robotDrive.resetOdometry(self.exampleTrajectory.initialPose())
 
         # Return the command to schedule. The "andThen()" will halt the robot after
         # the command finishes.
-        return ramseteCommand.andThen(self.m_robotDrive.stopMoving)
+        return ramseteCommand.andThen(self.robotDrive.stopMoving)
 
     def configureButtons(self):
+        """Configure the buttons for the driver's controller"""
+        
         # We won't do anything with this button itself, so we don't need to
         # define a variable.
 
         JoystickButton(
-            self.m_driverController, XboxController.Button.kBumperRight.value
-        ).whenPressed(self.m_robotDrive.setSlowMaxOutput).whenReleased(
-            self.m_robotDrive.setNormalMaxOutput
+            self.driverController, XboxController.Button.kBumperRight.value
+        ).whenPressed(self.robotDrive.setSlowMaxOutput).whenReleased(
+            self.robotDrive.setNormalMaxOutput
         )
