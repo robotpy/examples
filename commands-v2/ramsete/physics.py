@@ -43,18 +43,20 @@ class PhysicsEngine:
         self.m_backRightMotor = PWMSim(constants.kRightMotor2Port)
 
         self.m_system = LinearSystemId.identifyDrivetrainSystem(
-            constants.kvVoltSecondsPerMeter,              # The linear velocity gain in volt seconds per distance.
-            constants.kaVoltSecondsSquaredPerMeter,       # The linear acceleration gain, in volt seconds^2 per distance.
-            1.5,                                          # The angular velocity gain, in volt seconds per angle.
-            0.3,                                          # The angular acceleration gain, in volt seconds^2 per angle.
+            constants.kvVoltSecondsPerMeter,  # The linear velocity gain in volt seconds per distance.
+            constants.kaVoltSecondsSquaredPerMeter,  # The linear acceleration gain, in volt seconds^2 per distance.
+            1.5,  # The angular velocity gain, in volt seconds per angle.
+            0.3,  # The angular acceleration gain, in volt seconds^2 per angle.
         )
-                
-        self.m_drivesim = DifferentialDrivetrainSim(      # The simulation model of the drivetrain.
-            self.m_system,                                # The state-space model for a drivetrain.
-            constants.kTrackWidthMeters,                  # The robot's trackwidth, which is the distance between the wheels on the left side and those on the right side. The units is meters.
-            DCMotor.NEO(constants.kDrivetrainMotorCount), # Four NEO drivetrain setup.
-            1,                                            # One to one output gearing.
-            (constants.kWheelDiameterMeters / 2),         # The radius of the drivetrain wheels in meters.
+
+        self.m_drivesim = DifferentialDrivetrainSim(  # The simulation model of the drivetrain.
+            self.m_system,  # The state-space model for a drivetrain.
+            constants.kTrackWidthMeters,  # The robot's trackwidth, which is the distance between the wheels on the left side and those on the right side. The units is meters.
+            DCMotor.NEO(constants.kDrivetrainMotorCount),  # Four NEO drivetrain setup.
+            1,  # One to one output gearing.
+            (
+                constants.kWheelDiameterMeters / 2
+            ),  # The radius of the drivetrain wheels in meters.
         )
 
         self.m_leftEncoderSim = EncoderSim.createForChannel(
@@ -80,7 +82,7 @@ class PhysicsEngine:
         l_motor = self.m_frontLeftMotor.getSpeed()
         r_motor = self.m_frontRightMotor.getSpeed()
 
-        #self.m_gyro.setAngle(-self.m_drivesim.getHeading().degrees())
+        # self.m_gyro.setAngle(-self.m_drivesim.getHeading().degrees())
 
         voltage = RobotController.getInputVoltage()
         self.m_drivesim.setInputs(l_motor * voltage, -r_motor * voltage)

@@ -9,6 +9,7 @@ from wpimath.kinematics import DifferentialDriveOdometry, DifferentialDriveWheel
 
 import constants
 
+
 class Drivetrain(SubsystemBase):
     def __init__(self, controller: GenericHID):
 
@@ -40,7 +41,7 @@ class Drivetrain(SubsystemBase):
             constants.kRightEncoderPorts[1],
             constants.kRightEncoderReversed,
         )
-        
+
         # Configure the encoder so it knows how many encoder units are in one rotation.
         self.m_leftEncoder.setDistancePerPulse(constants.kEncoderDistancePerPulse)
         self.m_rightEncoder.setDistancePerPulse(constants.kEncoderDistancePerPulse)
@@ -60,7 +61,7 @@ class Drivetrain(SubsystemBase):
         self.resetEncoders()
 
     # Called periodically when it can be called. Updates the robot's
-    # odometry with sensor data. 
+    # odometry with sensor data.
     def periodic(self):
         self.m_odometry.update(
             self.m_gyro.getRotation2d(),
@@ -87,19 +88,21 @@ class Drivetrain(SubsystemBase):
     # Drive the robot with standard arcade controls.
     def arcadeDrive(self):
         self.m_drive.arcadeDrive(
-            -self.m_controller.getRawAxis(1), # Invert the y-axis's input.
-            self.m_controller.getRawAxis(2) * 0.65, # Multiply by 65% for more control.
+            -self.m_controller.getRawAxis(1),  # Invert the y-axis's input.
+            self.m_controller.getRawAxis(2) * 0.65,  # Multiply by 65% for more control.
         )
 
     # Control the robot's drivetrain with voltage inputs for each side.
     def tankDriveVolts(self, leftVolts, rightVolts):
-        self.m_leftMotors.setVoltage(leftVolts) # Set the voltage of the left side.
-        self.m_rightMotors.setVoltage(-rightVolts) # Set the voltage of the right side. It's
+        self.m_leftMotors.setVoltage(leftVolts)  # Set the voltage of the left side.
+        self.m_rightMotors.setVoltage(
+            -rightVolts
+        )  # Set the voltage of the right side. It's
         # inverted with a negative sign because it's motors need to spin in the negative direction
         # to move forward.
-        
-        self.m_drive.feed() # Resets the timer for this motor's MotorSafety
-        
+
+        self.m_drive.feed()  # Resets the timer for this motor's MotorSafety
+
     # Stops the robot from moving. This is important because we need a reference to not take any arguments.
     def stopMoving(self):
         self.m_leftMotors.setVoltage(0)
@@ -110,10 +113,12 @@ class Drivetrain(SubsystemBase):
         self.m_leftEncoder.reset()
         self.m_rightEncoder.reset()
 
-    # Take the sum of each encoder's traversed distance and divide it by two, 
+    # Take the sum of each encoder's traversed distance and divide it by two,
     # since we have two encoder values, to find the average value of the two.
     def getAverageEncoderDistance(self):
-        return (self.m_leftEncoder.getDistance() + self.m_rightEncoder.getDistance()) / 2
+        return (
+            self.m_leftEncoder.getDistance() + self.m_rightEncoder.getDistance()
+        ) / 2
 
     # Returns the left encoder object.
     def getLeftEncoder(self):

@@ -31,7 +31,7 @@ kRightEncoderReversed = True
 kTrackWidthMeters = 0.69
 kDriveKinematics = DifferentialDriveKinematics(kTrackWidthMeters)
 
-# Encoder counts per revolution/rotation. 
+# Encoder counts per revolution/rotation.
 kEncoderCPR = 1024
 kWheelDiameterMeters = 0.15
 
