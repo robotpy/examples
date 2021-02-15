@@ -31,7 +31,7 @@ class RobotContainer:
     def __init__(self):
 
         # Create the driver's controller.
-        self.driverController = XboxController(constants.kDriverControllerID)
+        self.driverController = XboxController(constants.kDriverControllerPort)
 
         # Create an instance of the drivetrain subsystem.
         self.robotDrive = Drivetrain(self.driverController)

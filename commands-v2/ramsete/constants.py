@@ -9,7 +9,7 @@ from wpimath.kinematics import DifferentialDriveKinematics
 import math
 
 # ID for the driver's joystick.
-kDriverControllerID = 0
+kDriverControllerPort = 0
 
 # The PWM IDs for the drivetrain motor controllers.
 kLeftMotor1Port = 0
