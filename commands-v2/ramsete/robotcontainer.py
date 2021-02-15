@@ -128,7 +128,7 @@ class RobotContainer:
             self.m_driverController, 
             XboxController.Button.kBumperRight.value
         ).whenPressed(
-            self.m_robotDrive.setMaxOutput(0.5)
+            self.m_robotDrive.setSlowMaxOutput
         ).whenReleased(
-            self.m_robotDrive.setMaxOutput(1)
+            self.m_robotDrive.setNormalMaxOutput
         )

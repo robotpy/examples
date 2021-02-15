@@ -127,6 +127,14 @@ class Drivetrain(SubsystemBase):
     def setMaxOutput(self, maxOutput):
         self.m_drive.setMaxOutput(maxOutput)
 
+    # Sets the slow max output. Needed a method that doesn't take any arguments.
+    def setSlowMaxOutput(self):
+        self.setMaxOutput(0.5)
+
+    # Sets the standard max output. Needed a method that doesn't take any arguments.
+    def setNormalMaxOutput(self):
+        self.setMaxOutput(1)
+
     # Zeroes the gyro's heading.
     def zeroHeading(self):
         self.m_gyro.reset()
