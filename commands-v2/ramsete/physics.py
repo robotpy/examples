@@ -50,24 +50,18 @@ class PhysicsEngine:
         )
 
         # The simulation model of the drivetrain.
-        self.drivesim = DifferentialDrivetrainSim(  
+        self.drivesim = DifferentialDrivetrainSim(
             # The state-space model for a drivetrain.
-            self.system,  
-            
-            # The robot's trackwidth, which is the distance between the wheels on the left side 
+            self.system,
+            # The robot's trackwidth, which is the distance between the wheels on the left side
             # and those on the right side. The units is meters.
-            constants.kTrackWidthMeters,  
-            
+            constants.kTrackWidthMeters,
             # Four NEO drivetrain setup.
-            DCMotor.NEO(constants.kDrivetrainMotorCount),  
-            
+            DCMotor.NEO(constants.kDrivetrainMotorCount),
             # One to one output gearing.
-            1, 
-            
+            1,
             # The radius of the drivetrain wheels in meters.
-            (constants.kWheelDiameterMeters / 2),  
-                
-            
+            (constants.kWheelDiameterMeters / 2),
         )
 
         self.leftEncoderSim = EncoderSim.createForChannel(
