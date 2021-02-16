@@ -60,8 +60,6 @@ class Drivetrain(SubsystemBase):
         # Reset the encoders upon the initilization of the robot.
         self.resetEncoders()
 
-    # Called periodically when it can be called. Updates the robot's
-    # odometry with sensor data.
     def periodic(self):
         """
         Called periodically when it can be called. Updates the robot's
