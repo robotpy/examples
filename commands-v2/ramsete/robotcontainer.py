@@ -46,7 +46,6 @@ class RobotContainer:
             RunCommand(self.robotDrive.arcadeDrive, self.robotDrive)
         )
 
-    # Return the autonomous command, the RAMSETE command.
     def getAutonomousCommand(self):
         """Returns the command to be ran during the autonomous period."""
 
@@ -59,7 +58,7 @@ class RobotContainer:
                 constants.kaVoltSecondsSquaredPerMeter,
             ),
             constants.kDriveKinematics,
-            10,  # 10 volts max.
+            maxVoltage=10,  # 10 volts max.
         )
 
         # Below will generate the trajectory using a set of programmed configurations
@@ -105,9 +104,7 @@ class RobotContainer:
             self.robotDrive.getPose,  
             
             # Our RAMSETE controller.
-            RamseteController(  
-                constants.kRamseteB, constants.kRamseteZeta
-            ),
+            RamseteController(constants.kRamseteB, constants.kRamseteZeta),
             
             # A feedforward object for the robot.
             SimpleMotorFeedforwardMeters(  
