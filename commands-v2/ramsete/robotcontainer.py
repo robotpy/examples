@@ -98,43 +98,30 @@ class RobotContainer:
 
         ramseteCommand = RamseteCommand(
             # The trajectory to follow.
-            self.exampleTrajectory,  
-            
+            self.exampleTrajectory,
             # A reference to a method that will return our position.
-            self.robotDrive.getPose,  
-            
+            self.robotDrive.getPose,
             # Our RAMSETE controller.
             RamseteController(constants.kRamseteB, constants.kRamseteZeta),
-            
             # A feedforward object for the robot.
-            SimpleMotorFeedforwardMeters(  
+            SimpleMotorFeedforwardMeters(
                 constants.ksVolts,
                 constants.kvVoltSecondsPerMeter,
                 constants.kaVoltSecondsSquaredPerMeter,
             ),
-            
             # Our drive kinematics.
-            constants.kDriveKinematics,  
-            
+            constants.kDriveKinematics,
             # A reference to a method which will return a DifferentialDriveWheelSpeeds object.
-            self.robotDrive.getWheelSpeeds,   
-            
+            self.robotDrive.getWheelSpeeds,
             # The turn controller for the left side of the drivetrain.
-            PIDController(
-                constants.kPDriveVel, 0, 0
-            ),  
-            
+            PIDController(constants.kPDriveVel, 0, 0),
             # The turn controller for the right side of the drivetrain.
-            PIDController(
-                constants.kPDriveVel, 0, 0
-            ),  
-            
+            PIDController(constants.kPDriveVel, 0, 0),
             # A reference to a method which will set a specified
             # voltage to each motor. The command will pass the two parameters.
-            self.robotDrive.tankDriveVolts,  
-            
+            self.robotDrive.tankDriveVolts,
             # The subsystems the command should require.
-            [self.robotDrive],  
+            [self.robotDrive],
         )
 
         # Reset the robot's position to the starting position of the trajectory.
