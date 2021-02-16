@@ -49,14 +49,25 @@ class PhysicsEngine:
             0.3,  # The angular acceleration gain, in volt seconds^2 per angle.
         )
 
-        self.drivesim = DifferentialDrivetrainSim(  # The simulation model of the drivetrain.
-            self.system,  # The state-space model for a drivetrain.
-            constants.kTrackWidthMeters,  # The robot's trackwidth, which is the distance between the wheels on the left side and those on the right side. The units is meters.
-            DCMotor.NEO(constants.kDrivetrainMotorCount),  # Four NEO drivetrain setup.
-            1,  # One to one output gearing.
-            (
-                constants.kWheelDiameterMeters / 2
-            ),  # The radius of the drivetrain wheels in meters.
+        # The simulation model of the drivetrain.
+        self.drivesim = DifferentialDrivetrainSim(  
+            # The state-space model for a drivetrain.
+            self.system,  
+            
+            # The robot's trackwidth, which is the distance between the wheels on the left side 
+            # and those on the right side. The units is meters.
+            constants.kTrackWidthMeters,  
+            
+            # Four NEO drivetrain setup.
+            DCMotor.NEO(constants.kDrivetrainMotorCount),  
+            
+            # One to one output gearing.
+            1, 
+            
+            # The radius of the drivetrain wheels in meters.
+            (constants.kWheelDiameterMeters / 2),  
+                
+            
         )
 
         self.leftEncoderSim = EncoderSim.createForChannel(
