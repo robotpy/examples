@@ -71,13 +71,11 @@ class RobotContainer:
             constants.kMaxAccelerationMetersPerSecondSquared,
         )
 
+        # Ensures that the max speed is actually obeyed.
         config.setKinematics(constants.kDriveKinematics)
 
-        config.addConstraint(autoVoltageConstraint)
-
-        # Ensures that the max speed is actually obeyed.
-
         # Apply the previously defined voltage constraint.
+        config.addConstraint(autoVoltageConstraint)
 
         # Start at the origin facing the +x direction.
         initialPosition = Pose2d(0, 0, Rotation2d(0))
