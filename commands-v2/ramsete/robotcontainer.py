@@ -98,27 +98,46 @@ class RobotContainer:
         # Below creates the RAMSETE command
 
         ramseteCommand = RamseteCommand(
-            self.exampleTrajectory,  # The trajectory to follow.
-            self.robotDrive.getPose,  # A reference to a method that will return our position.
-            RamseteController(  # Our RAMSETE controller.
+            # The trajectory to follow.
+            self.exampleTrajectory,  
+            
+            # A reference to a method that will return our position.
+            self.robotDrive.getPose,  
+            
+            # Our RAMSETE controller.
+            RamseteController(  
                 constants.kRamseteB, constants.kRamseteZeta
             ),
-            SimpleMotorFeedforwardMeters(  # A feedforward object for the robot.
+            
+            # A feedforward object for the robot.
+            SimpleMotorFeedforwardMeters(  
                 constants.ksVolts,
                 constants.kvVoltSecondsPerMeter,
                 constants.kaVoltSecondsSquaredPerMeter,
             ),
-            constants.kDriveKinematics,  # Our drive kinematics.
-            self.robotDrive.getWheelSpeeds,  # A reference to a method which will return a
+            
+            # Our drive kinematics.
+            constants.kDriveKinematics,  
+            
+            # A reference to a method which will return a DifferentialDriveWheelSpeeds object.
+            self.robotDrive.getWheelSpeeds,   
+            
+            # The turn controller for the left side of the drivetrain.
             PIDController(
                 constants.kPDriveVel, 0, 0
-            ),  # The turn controller for the left side of the drivetrain.
+            ),  
+            
+            # The turn controller for the right side of the drivetrain.
             PIDController(
                 constants.kPDriveVel, 0, 0
-            ),  # The turn controller for the right side of the drivetrain.
-            self.robotDrive.tankDriveVolts,  # A reference to a method which will set a specified
+            ),  
+            
+            # A reference to a method which will set a specified
             # voltage to each motor. The command will pass the two parameters.
-            [self.robotDrive],  # The subsystems the command should require.
+            self.robotDrive.tankDriveVolts,  
+            
+            # The subsystems the command should require.
+            [self.robotDrive],  
         )
 
         # Reset the robot's position to the starting position of the trajectory.
