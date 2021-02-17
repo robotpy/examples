@@ -34,7 +34,7 @@ class RobotContainer:
         self.driverController = XboxController(constants.kDriverControllerPort)
 
         # Create an instance of the drivetrain subsystem.
-        self.robotDrive = Drivetrain(self.driverController)
+        self.robotDrive = Drivetrain()
 
         # Configure and set the button bindings for the driver's controller.
         self.configureButtons()
@@ -43,7 +43,11 @@ class RobotContainer:
         # the robot to drive with the controller.
 
         self.robotDrive.setDefaultCommand(
-            RunCommand(self.robotDrive.arcadeDrive, self.robotDrive)
+            RunCommand(lambda: self.robotDrive.arcadeDrive(
+                -self.driverController.getRawAxis(1), 
+                self.driverController.getRawAxis(2)*0.65
+                ), 
+            self.robotDrive)
         )
 
     def getAutonomousCommand(self):
@@ -129,7 +133,7 @@ class RobotContainer:
 
         # Return the command to schedule. The "andThen()" will halt the robot after
         # the command finishes.
-        return ramseteCommand.andThen(self.robotDrive.stopMoving)
+        return ramseteCommand.andThen(lambda: self.robotDrive.tankDriveVolts(0, 0))
 
     def configureButtons(self):
         """Configure the buttons for the driver's controller"""
@@ -141,6 +145,6 @@ class RobotContainer:
             JoystickButton(
                 self.driverController, XboxController.Button.kBumperRight.value
             )
-            .whenPressed(self.robotDrive.setSlowMaxOutput)
-            .whenReleased(self.robotDrive.setNormalMaxOutput)
+            .whenPressed(lambda: self.robotDrive.setSlowMaxOutput(0.5))
+            .whenReleased(lambda: self.robotDrive.setNormalMaxOutput(1))
         )

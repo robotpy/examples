@@ -2,7 +2,6 @@ from commands2 import SubsystemBase
 
 from wpilib import SpeedControllerGroup, PWMSparkMax, Encoder, ADXRS450_Gyro
 from wpilib.drive import DifferentialDrive
-from wpilib.interfaces import GenericHID
 
 from wpimath.geometry import Pose2d, Rotation2d
 from wpimath.kinematics import DifferentialDriveOdometry, DifferentialDriveWheelSpeeds
@@ -11,7 +10,7 @@ import constants
 
 
 class Drivetrain(SubsystemBase):
-    def __init__(self, controller: GenericHID):
+    def __init__(self):
 
         super().__init__()
 
@@ -54,9 +53,6 @@ class Drivetrain(SubsystemBase):
         # keep a record of our position on the field.
         self.odometry = DifferentialDriveOdometry(self.gyro.getRotation2d())
 
-        # Make the controller object universal an attribute to the drivetrain.
-        self.controller = controller
-
         # Reset the encoders upon the initilization of the robot.
         self.resetEncoders()
 
@@ -87,28 +83,22 @@ class Drivetrain(SubsystemBase):
         self.resetEncoders()
         self.odometry.resetPosition(pose, self.gyro.getRotation2d())
 
-    def arcadeDrive(self):
+    def arcadeDrive(self, fwd, rot):
         """Drive the robot with standard arcade controls."""
-        self.drive.arcadeDrive(
-            -self.controller.getRawAxis(1),  # Invert the y-axis's input.
-            self.controller.getRawAxis(2) * 0.65,  # Multiply by 65% for more control.
-        )
+        self.drive.arcadeDrive(fwd, rot)
 
     def tankDriveVolts(self, leftVolts, rightVolts):
         """Control the robot's drivetrain with voltage inputs for each side."""
-        self.leftMotors.setVoltage(leftVolts)  # Set the voltage of the left side.
-        self.rightMotors.setVoltage(
-            -rightVolts
-        )  # Set the voltage of the right side. It's
+        # Set the voltage of the left side.
+        self.leftMotors.setVoltage(leftVolts)  
+        
+        # Set the voltage of the right side. It's
         # inverted with a negative sign because it's motors need to spin in the negative direction
         # to move forward.
-
-        self.drive.feed()  # Resets the timer for this motor's MotorSafety
-
-    def stopMoving(self):
-        """Stops the robot from moving. This is important because we need a reference to not take any arguments."""
-        self.leftMotors.setVoltage(0)
-        self.rightMotors.setVoltage(0)
+        self.rightMotors.setVoltage(-rightVolts)  
+        
+        # Resets the timer for this motor's MotorSafety
+        self.drive.feed() 
 
     def resetEncoders(self):
         """Resets the encoders of the drivetrain."""
@@ -133,14 +123,6 @@ class Drivetrain(SubsystemBase):
     def setMaxOutput(self, maxOutput):
         """Set the max percent output of the drivetrain, allowing for slower control."""
         self.drive.setMaxOutput(maxOutput)
-
-    def setSlowMaxOutput(self):
-        """Sets the slow max output. Needed a method that doesn't take any arguments."""
-        self.setMaxOutput(0.5)
-
-    def setNormalMaxOutput(self):
-        """Sets the standard max output. Needed a method that doesn't take any arguments."""
-        self.setMaxOutput(1)
 
     def zeroHeading(self):
         """Zeroes the gyro's heading."""

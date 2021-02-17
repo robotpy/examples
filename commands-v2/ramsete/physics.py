@@ -93,9 +93,9 @@ class PhysicsEngine:
         self.drivesim.setInputs(l_motor * voltage, -r_motor * voltage)
         self.drivesim.update(tm_diff)
 
-        self.leftEncoderSim.setDistance(self.drivesim.getLeftPosition() * 39.37)
-        self.leftEncoderSim.setRate(self.drivesim.getLeftVelocity() * 39.37)
-        self.rightEncoderSim.setDistance(self.drivesim.getRightPosition() * 39.37)
-        self.rightEncoderSim.setRate(self.drivesim.getRightVelocity() * 39.37)
+        self.leftEncoderSim.setDistance(self.drivesim.getLeftPosition())
+        self.leftEncoderSim.setRate(self.drivesim.getLeftVelocity())
+        self.rightEncoderSim.setDistance(self.drivesim.getRightPosition())
+        self.rightEncoderSim.setRate(self.drivesim.getRightVelocity())
 
         self.physics_controller.field.setRobotPose(self.drivesim.getPose())
