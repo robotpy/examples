@@ -90,15 +90,15 @@ class Drivetrain(SubsystemBase):
     def tankDriveVolts(self, leftVolts, rightVolts):
         """Control the robot's drivetrain with voltage inputs for each side."""
         # Set the voltage of the left side.
-        self.leftMotors.setVoltage(leftVolts)  
-        
+        self.leftMotors.setVoltage(leftVolts)
+
         # Set the voltage of the right side. It's
         # inverted with a negative sign because it's motors need to spin in the negative direction
         # to move forward.
-        self.rightMotors.setVoltage(-rightVolts)  
-        
+        self.rightMotors.setVoltage(-rightVolts)
+
         # Resets the timer for this motor's MotorSafety
-        self.drive.feed() 
+        self.drive.feed()
 
     def resetEncoders(self):
         """Resets the encoders of the drivetrain."""

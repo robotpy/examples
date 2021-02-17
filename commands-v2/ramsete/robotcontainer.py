@@ -43,11 +43,13 @@ class RobotContainer:
         # the robot to drive with the controller.
 
         self.robotDrive.setDefaultCommand(
-            RunCommand(lambda: self.robotDrive.arcadeDrive(
-                -self.driverController.getRawAxis(1), 
-                self.driverController.getRawAxis(2)*0.65
-                ), 
-            self.robotDrive)
+            RunCommand(
+                lambda: self.robotDrive.arcadeDrive(
+                    -self.driverController.getRawAxis(1),
+                    self.driverController.getRawAxis(2) * 0.65,
+                ),
+                self.robotDrive,
+            )
         )
 
     def getAutonomousCommand(self):
