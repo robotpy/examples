@@ -3,10 +3,12 @@ __pycache__
 .coverage
 .cache
 
+.vscode/
 .deploy_cfg
 
 .project
 .pydevproject
+
 imgui.ini
 
 opkg_cache
