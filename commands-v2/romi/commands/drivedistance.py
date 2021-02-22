@@ -30,7 +30,7 @@ class DriveDistance(commands2.CommandBase):
 
     def execute(self) -> None:
         """Called every time the scheduler runs while the command is scheduled."""
-        self.drive.arcadeDrive(0, self.speed)
+        self.drive.arcadeDrive(self.speed, 0)
 
     def end(self, interrupted: bool) -> None:
         """Called once the command ends or is interrupted."""
