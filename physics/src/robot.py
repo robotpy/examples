@@ -3,13 +3,6 @@
 import wpilib
 import wpilib.drive
 
-import pkg_resources
-
-for dist in pkg_resources.Environment():
-    print(dist)
-
-exit(1)
-
 
 class MyRobot(wpilib.TimedRobot):
     """Main robot class"""
