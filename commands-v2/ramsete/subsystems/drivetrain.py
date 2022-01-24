@@ -1,6 +1,6 @@
 from commands2 import SubsystemBase
 
-from wpilib import SpeedControllerGroup, PWMSparkMax, Encoder, ADXRS450_Gyro
+from wpilib import SpeedControllerGroup, PWMSparkMax, Encoder, AnalogGyro
 from wpilib.drive import DifferentialDrive
 
 from wpimath.geometry import Pose2d, Rotation2d
@@ -47,7 +47,7 @@ class Drivetrain(SubsystemBase):
 
         # Create the gyro, a sensor which can indicate the heading of the robot relative
         # to a customizable position.
-        self.gyro = ADXRS450_Gyro()
+        self.gyro = AnalogGyro(1)
 
         # Create the an object for our odometry, which will utilize sensor data to
         # keep a record of our position on the field.

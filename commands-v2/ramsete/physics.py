@@ -14,7 +14,7 @@ from wpilib.simulation import (
     PWMSim,
     DifferentialDrivetrainSim,
     EncoderSim,
-    ADXRS450_GyroSim,
+    AnalogGyroSim,
 )
 from wpimath.system import LinearSystemId
 from wpimath.system.plant import DCMotor
@@ -71,7 +71,7 @@ class PhysicsEngine:
             constants.kRightEncoderPorts[0]
         )
 
-        self.gyro = ADXRS450_GyroSim(ADXRS450_Gyro())
+        self.gyro = AnalogGyroSim(1)
 
     def update_sim(self, now: float, tm_diff: float) -> None:
         """
