@@ -4,6 +4,7 @@
 #
 
 import math
+import wpilib
 
 # Motors
 kLeftMotor1Port = 0
@@ -23,6 +24,7 @@ kWheelDiameterInches = 6
 kEncoderDistancePerPulse = (kWheelDiameterInches * math.pi) / kEncoderCPR
 
 # Hatch
+kHatchSolenoidModuleType = wpilib.PneumaticsModuleType.CTREPCM
 kHatchSolenoidModule = 0
 kHatchSolenoidPorts = (0, 1)
 

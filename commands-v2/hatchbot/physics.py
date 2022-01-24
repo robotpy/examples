@@ -65,7 +65,7 @@ class PhysicsEngine:
         r_motor = self.r_motor.getSpeed()
 
         voltage = wpilib.RobotController.getInputVoltage()
-        self.drivesim.setInputs(l_motor * voltage, -r_motor * voltage)
+        self.drivesim.setInputs(l_motor * voltage, r_motor * voltage)
         self.drivesim.update(tm_diff)
 
         self.leftEncoderSim.setDistance(self.drivesim.getLeftPosition() * 39.37)

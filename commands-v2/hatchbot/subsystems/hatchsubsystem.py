@@ -9,7 +9,9 @@ class HatchSubsystem(commands2.SubsystemBase):
         super().__init__()
 
         self.hatchSolenoid = wpilib.DoubleSolenoid(
-            constants.kHatchSolenoidModule, *constants.kHatchSolenoidPorts
+            constants.kHatchSolenoidModule,
+            constants.kHatchSolenoidModuleType,
+            *constants.kHatchSolenoidPorts
         )
 
     def grabHatch(self) -> None:
