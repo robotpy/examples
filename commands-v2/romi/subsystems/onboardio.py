@@ -82,7 +82,7 @@ class OnBoardIO(commands2.SubsystemBase):
         return False
 
     def setGreenLed(self, value: bool) -> None:
-        """Sets the green LED. """
+        """Sets the green LED."""
         if self.greenLed:
             self.greenLed.set(value)
         else:
@@ -92,7 +92,7 @@ class OnBoardIO(commands2.SubsystemBase):
                 self.nextMessageTime = now + self.MESSAGE_INTERVAL
 
     def setRedLed(self, value: bool) -> None:
-        """Sets the red LED. """
+        """Sets the red LED."""
         if self.redLed:
             self.redLed.set(value)
         else:

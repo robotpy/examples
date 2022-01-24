@@ -79,7 +79,7 @@ class DriveTrain(Subsystem):
         self.driveManual(-joy.getY(), -joy.getThrottle())
 
     def getHeading(self):
-        """ :returns: The robots heading in degrees"""
+        """:returns: The robots heading in degrees"""
         return self.gyro.getAngle()
 
     def reset(self):
@@ -89,13 +89,13 @@ class DriveTrain(Subsystem):
         self.right_encoder.reset()
 
     def getDistance(self):
-        """ :returns: The distance driven (average of left and right encoders)"""
+        """:returns: The distance driven (average of left and right encoders)"""
         return (
             self.left_encoder.getDistance() + self.right_encoder.getDistance()
         ) / 2.0
 
     def getDistanceToObstacle(self):
-        """ :returns: The distance to the obstacle detected by the rangefinder"""
+        """:returns: The distance to the obstacle detected by the rangefinder"""
 
         # Really meters in simulation since it's a rangefinder...
         return self.rangefinder.getAverageVoltage()

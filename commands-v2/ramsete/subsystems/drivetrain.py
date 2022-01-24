@@ -79,7 +79,7 @@ class Drivetrain(SubsystemBase):
         return speeds
 
     def resetOdometry(self, pose):
-        """ Resets the robot's odometry to a given position."""
+        """Resets the robot's odometry to a given position."""
         self.resetEncoders()
         self.odometry.resetPosition(pose, self.gyro.getRotation2d())
 
