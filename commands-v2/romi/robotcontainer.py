@@ -7,13 +7,13 @@ import typing
 import commands2
 import commands2.button
 import wpilib
+import romi
 
 from commands.arcadedrive import ArcadeDrive
 from commands.autonomous_distance import AutonomousDistance
 from commands.autonomous_time import AutonomousTime
 
 from subsystems.drivetrain import Drivetrain
-from subsystems.onboardio import ChannelMode, OnBoardIO
 
 
 class RobotContainer:
@@ -28,7 +28,9 @@ class RobotContainer:
 
         # The robot's subsystems and commands are defined here...
         self.drivetrain = Drivetrain()
-        self.onboardIO = OnBoardIO(ChannelMode.INPUT, ChannelMode.INPUT)
+        self.onboardIO = romi.OnBoardIO(
+            romi.OnBoardIO.ChannelMode.INPUT, romi.OnBoardIO.ChannelMode.INPUT
+        )
 
         # Assumes a gamepad plugged into channnel 0
         self.controller = wpilib.Joystick(0)

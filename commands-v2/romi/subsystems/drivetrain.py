@@ -7,8 +7,7 @@ import math
 import commands2
 import wpilib
 import wpilib.drive
-
-from sensors.romigyro import RomiGyro
+import romi
 
 
 class Drivetrain(commands2.SubsystemBase):
@@ -33,7 +32,7 @@ class Drivetrain(commands2.SubsystemBase):
         self.drive = wpilib.drive.DifferentialDrive(self.leftMotor, self.rightMotor)
 
         # Set up the RomiGyro
-        self.gyro = RomiGyro()
+        self.gyro = romi.RomiGyro()
 
         # Set up the BuiltInAccelerometer
         self.accelerometer = wpilib.BuiltInAccelerometer()
