@@ -5,21 +5,23 @@ Example file showing how to get game-data from your driver station / FMS
 import wpilib
 from networktables import NetworkTables
 
+PNUE_MOD_TYPE = wpilib.PneumaticsModuleType.CTREPCM
+
 
 class GameDataRobot(wpilib.TimedRobot):
     def robotInit(self):
         # A way of demonstrating the difference between the game data strings
-        self.blue = wpilib.Solenoid(0)
-        self.red = wpilib.Solenoid(1)
-        self.green = wpilib.Solenoid(2)
-        self.yellow = wpilib.Solenoid(3)
+        self.blue = wpilib.Solenoid(PNUE_MOD_TYPE, 0)
+        self.red = wpilib.Solenoid(PNUE_MOD_TYPE, 1)
+        self.green = wpilib.Solenoid(PNUE_MOD_TYPE, 2)
+        self.yellow = wpilib.Solenoid(PNUE_MOD_TYPE, 3)
         # Set game data to empty string by default
         self.gameData = ""
         # Get the SmartDashboard table from networktables
         self.sd = NetworkTables.getTable("SmartDashboard")
 
     def teleopPeriodic(self):
-        data = self.ds.getGameSpecificMessage()
+        data = wpilib.DriverStation.getGameSpecificMessage()
         if data:
             # Set the robot gamedata property and set a network tables value
             self.gameData = data
