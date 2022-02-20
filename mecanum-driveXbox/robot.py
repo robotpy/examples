@@ -49,9 +49,9 @@ class MyRobot(wpilib.TimedRobot):
         # This sample does not use field-oriented drive, so the gyro input is set to zero.
         # This Stick configuration is created by K.E. on our team.  Left stick Y axis is speed, Left Stick X axis is strafe, and Right Stick Y axis is turn.
         self.drive.driveCartesian(
-            self.stick.getX(self.stick.Hand.kLeftHand),
-            self.stick.getY(self.stick.Hand.kLeftHand),
-            self.stick.getY(self.stick.Hand.kRightHand),
+            self.stick.getLeftX(),
+            self.stick.getLeftY(),
+            self.stick.getRightY(),
             0,
         )
 
