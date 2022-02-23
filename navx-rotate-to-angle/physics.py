@@ -1,30 +1,36 @@
-import hal.simulation
+import wpilib.simulation
 
 from pyfrc.physics.core import PhysicsInterface
 from pyfrc.physics import drivetrains
 
+import typing
+
+if typing.TYPE_CHECKING:
+    from robot import MyRobot
+
 
 class PhysicsEngine:
-    def __init__(self, physics_controller):
+    def __init__(self, physics_controller: PhysicsInterface, robot: "MyRobot"):
         """
-        :param physics_controller: `pyfrc.physics.core.PhysicsInterface` object
+        :param physics_controller: `pyfrc.physics.core.Physics` object
                                    to communicate simulation effects to
+        :param robot: your robot object
         """
 
         self.physics_controller = physics_controller
 
         # Motors
-        self.lf_motor = hal.simulation.PWMSim(1)
-        self.lr_motor = hal.simulation.PWMSim(2)
-        self.rf_motor = hal.simulation.PWMSim(3)
-        self.rr_motor = hal.simulation.PWMSim(4)
+        self.lf_motor = wpilib.simulation.PWMSim(robot.frontLeftMotor.getChannel())
+        self.lr_motor = wpilib.simulation.PWMSim(robot.rearLeftMotor.getChannel())
+        self.rf_motor = wpilib.simulation.PWMSim(robot.frontRightMotor.getChannel())
+        self.rr_motor = wpilib.simulation.PWMSim(robot.rearRightMotor.getChannel())
 
-        self.navx = hal.simulation.SimDeviceSim("navX-Sensor[4]")
+        self.navx = wpilib.simulation.SimDeviceSim("navX-Sensor[4]")
         self.navx_yaw = self.navx.getDouble("Yaw")
 
         self.drivetrain = drivetrains.MecanumDrivetrain()
 
-    def update_sim(self, now, tm_diff):
+    def update_sim(self, now: float, tm_diff: float) -> None:
         """
         Called when the simulation parameters for the program need to be
         updated.

@@ -24,10 +24,15 @@ from wpimath.system import LinearSystemId
 from wpimath.system.plant import DCMotor
 
 from pyfrc.physics import drivetrains
-
+from pyfrc.physics.core import PhysicsInterface
 from pyfrc.physics.visionsim import VisionSim, VisionSimTarget
 
 from networktables.util import ntproperty
+
+import typing
+
+if typing.TYPE_CHECKING:
+    from robot import MyRobot
 
 
 class PhysicsEngine:
@@ -40,7 +45,7 @@ class PhysicsEngine:
     # array of (found, timestamp, angle)
     target = ntproperty("/camera/target", (0.0, float("inf"), 0.0))
 
-    def __init__(self, physics_controller):
+    def __init__(self, physics_controller: PhysicsInterface, robot: "MyRobot"):
         """
         :param physics_controller: `pyfrc.physics.core.PhysicsInterface` object
                                    to communicate simulation effects to
@@ -68,10 +73,10 @@ class PhysicsEngine:
         )
 
         # Create the motors.
-        self.l_motor = PWMSim(1)
-        self.r_motor = PWMSim(2)
+        self.l_motor = PWMSim(robot.leftMotor.getChannel())
+        self.r_motor = PWMSim(robot.rightMotor.getChannel())
 
-        self.gyroSim = AnalogGyroSim(0)
+        self.gyroSim = AnalogGyroSim(robot.gyro)
 
         self.system = LinearSystemId.identifyDrivetrainSystem(1.98, 0.2, 1.5, 0.3)
         self.drivesim = DifferentialDrivetrainSim(
@@ -82,10 +87,10 @@ class PhysicsEngine:
             0.0508,
         )
 
-        self.leftEncoderSim = EncoderSim.createForChannel(0)
-        self.rightEncoderSim = EncoderSim.createForChannel(2)
+        self.leftEncoderSim = EncoderSim(robot.leftEncoder)
+        self.rightEncoderSim = EncoderSim(robot.rightEncoder)
 
-    def update_sim(self, now, tm_diff):
+    def update_sim(self, now: float, tm_diff: float) -> None:
         """
         Called when the simulation parameters for the program need to be
         updated.

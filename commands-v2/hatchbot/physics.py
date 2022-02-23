@@ -18,6 +18,11 @@ import constants
 
 from pyfrc.physics.core import PhysicsInterface
 
+import typing
+
+if typing.TYPE_CHECKING:
+    from robot import MyRobot
+
 
 class PhysicsEngine:
     """
@@ -26,13 +31,17 @@ class PhysicsEngine:
     realistic, but it's good enough to illustrate the point
     """
 
-    def __init__(self, physics_controller: PhysicsInterface):
+    def __init__(self, physics_controller: PhysicsInterface, robot: "MyRobot"):
 
         self.physics_controller = physics_controller
 
         # Motors
-        self.l_motor = wpilib.simulation.PWMSim(1)
-        self.r_motor = wpilib.simulation.PWMSim(2)
+        self.l_motor = wpilib.simulation.PWMSim(
+            robot.container.drive.left1.getChannel()
+        )
+        self.r_motor = wpilib.simulation.PWMSim(
+            robot.container.drive.right1.getChannel()
+        )
 
         self.system = LinearSystemId.identifyDrivetrainSystem(1.98, 0.2, 1.5, 0.3)
         self.drivesim = wpilib.simulation.DifferentialDrivetrainSim(
@@ -43,11 +52,11 @@ class PhysicsEngine:
             constants.kWheelRadius,
         )
 
-        self.leftEncoderSim = wpilib.simulation.EncoderSim.createForChannel(
-            constants.kLeftEncoderPorts[0]
+        self.leftEncoderSim = wpilib.simulation.EncoderSim(
+            robot.container.drive.leftEncoder
         )
-        self.rightEncoderSim = wpilib.simulation.EncoderSim.createForChannel(
-            constants.kRightEncoderPorts[0]
+        self.rightEncoderSim = wpilib.simulation.EncoderSim(
+            robot.container.drive.rightEncoder
         )
 
     def update_sim(self, now: float, tm_diff: float) -> None:

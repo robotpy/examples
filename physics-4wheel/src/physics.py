@@ -9,28 +9,34 @@ from pyfrc.physics.core import PhysicsInterface
 from pyfrc.physics import motor_cfgs, tankmodel
 from pyfrc.physics.units import units
 
+import typing
+
+if typing.TYPE_CHECKING:
+    from robot import MyRobot
+
 
 class PhysicsEngine:
     """
     Simulates a 4-wheel robot using Tank Drive joystick control
     """
 
-    def __init__(self, physics_controller):
+    def __init__(self, physics_controller: PhysicsInterface, robot: "MyRobot"):
         """
         :param physics_controller: `pyfrc.physics.core.Physics` object
                                    to communicate simulation effects to
+        :param robot: your robot object
         """
 
         self.physics_controller = physics_controller
 
         # Motors
-        self.lf_motor = wpilib.simulation.PWMSim(1)
-        # self.lr_motor = hal.simulation.PWMSim(2)
-        self.rf_motor = wpilib.simulation.PWMSim(3)
-        # self.rr_motor = hal.simulation.PWMSim(4)
+        self.lf_motor = wpilib.simulation.PWMSim(robot.lf_motor.getChannel())
+        # self.lr_motor = wpilib.simulation.PWMSim(2)
+        self.rf_motor = wpilib.simulation.PWMSim(robot.rf_motor.getChannel())
+        # self.rr_motor = wpilib.simulation.PWMSim(4)
 
         # Gyro
-        self.gyro = wpilib.simulation.AnalogGyroSim(1)
+        self.gyro = wpilib.simulation.AnalogGyroSim(robot.gyro)
 
         # Change these parameters to fit your robot!
         bumper_width = 3.25 * units.inch
@@ -48,7 +54,7 @@ class PhysicsEngine:
         )
         # fmt: on
 
-    def update_sim(self, now, tm_diff):
+    def update_sim(self, now: float, tm_diff: float) -> None:
         """
         Called when the simulation parameters for the program need to be
         updated.

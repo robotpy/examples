@@ -15,6 +15,11 @@ from pyfrc.physics.core import PhysicsInterface
 from pyfrc.physics import motor_cfgs, tankmodel
 from pyfrc.physics.units import units
 
+import typing
+
+if typing.TYPE_CHECKING:
+    from robot import MyRobot
+
 
 class PhysicsEngine:
     """
@@ -23,22 +28,22 @@ class PhysicsEngine:
     realistic, but it's good enough to illustrate the point
     """
 
-    def __init__(self, physics_controller: PhysicsInterface):
+    def __init__(self, physics_controller: PhysicsInterface, robot: "MyRobot"):
 
         self.physics_controller = physics_controller
 
         # Motors
-        self.l_motor = wpilib.simulation.PWMSim(1)
-        self.r_motor = wpilib.simulation.PWMSim(2)
+        self.l_motor = wpilib.simulation.PWMSim(robot.l_motor.getChannel())
+        self.r_motor = wpilib.simulation.PWMSim(robot.r_motor.getChannel())
 
-        self.dio1 = wpilib.simulation.DIOSim(1)
-        self.dio2 = wpilib.simulation.DIOSim(2)
-        self.ain2 = wpilib.simulation.AnalogInputSim(2)
+        self.dio1 = wpilib.simulation.DIOSim(robot.limit1)
+        self.dio2 = wpilib.simulation.DIOSim(robot.limit2)
+        self.ain2 = wpilib.simulation.AnalogInputSim(robot.position)
 
-        self.motor = wpilib.simulation.PWMSim(4)
+        self.motor = wpilib.simulation.PWMSim(robot.motor.getChannel())
 
         # Gyro
-        self.gyro = wpilib.simulation.AnalogGyroSim(1)
+        self.gyro = wpilib.simulation.AnalogGyroSim(robot.gyro)
 
         self.position = 0
 

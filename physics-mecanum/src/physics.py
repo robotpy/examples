@@ -2,10 +2,15 @@
 # See the notes for the other physics sample
 #
 
-import hal.simulation
+import wpilib.simulation
 
 from pyfrc.physics.core import PhysicsInterface
 from pyfrc.physics import drivetrains
+
+import typing
+
+if typing.TYPE_CHECKING:
+    from robot import MyRobot
 
 
 class PhysicsEngine:
@@ -13,7 +18,7 @@ class PhysicsEngine:
     Simulates a 4-wheel mecanum robot using Tank Drive joystick control
     """
 
-    def __init__(self, physics_controller):
+    def __init__(self, physics_controller: PhysicsInterface, robot: "MyRobot"):
         """
         :param physics_controller: `pyfrc.physics.core.Physics` object
                                    to communicate simulation effects to
@@ -22,17 +27,17 @@ class PhysicsEngine:
         self.physics_controller = physics_controller
 
         # Motors
-        self.lf_motor = hal.simulation.PWMSim(1)
-        self.lr_motor = hal.simulation.PWMSim(2)
-        self.rf_motor = hal.simulation.PWMSim(3)
-        self.rr_motor = hal.simulation.PWMSim(4)
+        self.lf_motor = wpilib.simulation.PWMSim(robot.frontLeftMotor.getChannel())
+        self.lr_motor = wpilib.simulation.PWMSim(robot.rearLeftMotor.getChannel())
+        self.rf_motor = wpilib.simulation.PWMSim(robot.frontRightMotor.getChannel())
+        self.rr_motor = wpilib.simulation.PWMSim(robot.rearRightMotor.getChannel())
 
         # Gyro
-        self.gyro = hal.simulation.AnalogGyroSim(1)
+        self.gyro = wpilib.simulation.AnalogGyroSim(robot.gyro)
 
         self.drivetrain = drivetrains.MecanumDrivetrain()
 
-    def update_sim(self, now, tm_diff):
+    def update_sim(self, now: float, tm_diff: float) -> None:
         """
         Called when the simulation parameters for the program need to be
         updated.

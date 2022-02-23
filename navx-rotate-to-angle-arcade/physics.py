@@ -1,23 +1,29 @@
-import hal.simulation
+import wpilib.simulation
 
 from pyfrc.physics.core import PhysicsInterface
 from pyfrc.physics import motor_cfgs, tankmodel
 from pyfrc.physics.units import units
 
+import typing
+
+if typing.TYPE_CHECKING:
+    from robot import MyRobot
+
 
 class PhysicsEngine:
-    def __init__(self, physics_controller: PhysicsInterface):
+    def __init__(self, physics_controller: PhysicsInterface, robot: "MyRobot"):
         """
-        :param physics_controller: `pyfrc.physics.core.PhysicsInterface` object
+        :param physics_controller: `pyfrc.physics.core.Physics` object
                                    to communicate simulation effects to
+        :param robot: your robot object
         """
 
         # Motors
-        self.l_motor = hal.simulation.PWMSim(1)
-        self.r_motor = hal.simulation.PWMSim(2)
+        self.l_motor = wpilib.simulation.PWMSim(robot.l_motor)
+        self.r_motor = wpilib.simulation.PWMSim(robot.r_motor)
 
         # NavX (SPI interface)
-        self.navx = hal.simulation.SimDeviceSim("navX-Sensor[4]")
+        self.navx = wpilib.simulation.SimDeviceSim("navX-Sensor[4]")
         self.navx_yaw = self.navx.getDouble("Yaw")
 
         self.physics_controller = physics_controller
@@ -38,7 +44,7 @@ class PhysicsEngine:
         )
         # fmt: on
 
-    def update_sim(self, now, tm_diff):
+    def update_sim(self, now: float, tm_diff: float) -> None:
         """
         Called when the simulation parameters for the program need to be
         updated.

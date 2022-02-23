@@ -9,11 +9,16 @@
 # of your robot code without too much extra effort.
 #
 
-import hal.simulation
+import wpilib.simulation
 
 from pyfrc.physics.core import PhysicsInterface
 from pyfrc.physics import motor_cfgs, tankmodel
 from pyfrc.physics.units import units
+
+import typing
+
+if typing.TYPE_CHECKING:
+    from robot import MyRobot
 
 
 class PhysicsEngine:
@@ -23,23 +28,27 @@ class PhysicsEngine:
     realistic, but it's good enough to illustrate the point
     """
 
-    def __init__(self, physics_controller: PhysicsInterface):
+    def __init__(self, physics_controller: PhysicsInterface, robot: "MyRobot"):
+        """
+        :param physics_controller: `pyfrc.physics.core.Physics` object
+                                   to communicate simulation effects to
+        :param robot: your robot object
+        """
 
         self.physics_controller = physics_controller
 
         # Motors
-        self.l_motor = hal.simulation.PWMSim(1)
-        self.r_motor = hal.simulation.PWMSim(2)
+        self.l_motor = wpilib.simulation.PWMSim(robot.l_motor.getChannel())
+        self.r_motor = wpilib.simulation.PWMSim(robot.r_motor.getChannel())
 
-        self.dio1 = hal.simulation.DIOSim(1)
-        self.dio2 = hal.simulation.DIOSim(2)
-        self.ain2 = hal.simulation.AnalogInSim(2)
+        self.dio1 = wpilib.simulation.DIOSim(robot.limit1)
+        self.dio2 = wpilib.simulation.DIOSim(robot.limit2)
+        self.ain2 = wpilib.simulation.AnalogInputSim(robot.position)
 
-        self.motor = hal.simulation.PWMSim(4)
+        self.motor = wpilib.simulation.PWMSim(robot.motor.getChannel())
 
         # Gyro
-        self.gyro = hal.simulation.SimDeviceSim("ADXRS450_Gyro[0]")
-        self.gyro_angle = self.gyro.getDouble("Angle")
+        self.gyro = wpilib.simulation.ADXRS450_GyroSim(robot.gyro)
 
         self.position = 0
 
@@ -80,7 +89,7 @@ class PhysicsEngine:
         # Update the gyro simulation
         # -> FRC gyros are positive clockwise, but the returned pose is positive
         #    counter-clockwise
-        self.gyro_angle.set(-pose.rotation().degrees())
+        self.gyro.setAngle(-pose.rotation().degrees())
 
         # update position (use tm_diff so the rate is constant)
         self.position += self.motor.getSpeed() * tm_diff * 3
