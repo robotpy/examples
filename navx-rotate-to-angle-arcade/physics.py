@@ -19,8 +19,8 @@ class PhysicsEngine:
         """
 
         # Motors
-        self.l_motor = wpilib.simulation.PWMSim(robot.l_motor)
-        self.r_motor = wpilib.simulation.PWMSim(robot.r_motor)
+        self.l_motor = wpilib.simulation.PWMSim(robot.l_motor.getChannel())
+        self.r_motor = wpilib.simulation.PWMSim(robot.r_motor.getChannel())
 
         # NavX (SPI interface)
         self.navx = wpilib.simulation.SimDeviceSim("navX-Sensor[4]")

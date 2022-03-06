@@ -2,7 +2,7 @@
 
 import wpilib
 import wpilib.drive
-import wpilib.controller
+import wpimath.controller
 
 from navx import AHRS
 
@@ -68,7 +68,7 @@ class MyRobot(wpilib.TimedRobot):
         self.ahrs = AHRS.create_spi()
         # self.ahrs = AHRS.create_i2c()
 
-        turnController = wpilib.controller.PIDController(
+        turnController = wpimath.controller.PIDController(
             self.kP,
             self.kI,
             self.kD,
