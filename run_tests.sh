@@ -4,21 +4,31 @@ cd "$(dirname $0)"
 
 BASE_TESTS="
   arcade-drive
+  arm-simulation
+  commands-v2/hatchbot
+  commands-v2/ramsete
+  commands-v2/romi
   cscore-intermediate-vision
   cscore-quick-vision
+  elevator-simulation
   game-data
   getting-started
   gyro
   mecanum-drive
   mecanum-driveXbox
   motor-control
+  physics/src
+  physics-4wheel/src
+  physics-camsim/src
+  physics-mecanum/src
+  physics-spi/src
   tank-drive
   timed/src
 "
 
-ROBOTPY_EXT_TESTS="
-  magicbot-simple
-"
+ROBOTPY_EXT_TESTS=""
+  # magicbot-simple
+# "
 
 NAVX_TESTS="
   navx
@@ -27,17 +37,9 @@ NAVX_TESTS="
 "
 
 IGNORED_TESTS="
+  magicbot-simple
   stateful-autonomous
-  physics-pathfinder
-  physics/src
-  physics-4wheel/src
-  physics-camsim/src
-  physics-mecanum/src
-  physics-spi/src
   shuffleboard
-  command-based
-  gearsbot
-  pacgoat
 "
 
 ALL_TESTS="${BASE_TESTS} ${ROBOTPY_EXT_TESTS}"
@@ -56,21 +58,19 @@ else
   exit 1
 fi
 
+TMPD=$(mktemp -d)
+trap 'rm -rf "$TMPD"' EXIT
+
 # Ensure that when new samples are added, they are added to the list of things
 # to test. Otherwise, exit.
-EVERY_TESTS=$(for i in ${EVERY_TESTS}; do
+for i in ${EVERY_TESTS}; do
   echo ./$i/robot.py
-done | sort)
+done | sort > $TMPD/a
 
-FOUND_TESTS=$(find . -name robot.py | sort)
+find . -name robot.py | sort > $TMPD/b
 
-if [ "$EVERY_TESTS" != "$FOUND_TESTS" ]; then
-  echo "Specified:"
-  echo "$EVERY_TESTS"
-  echo
-  echo "Found:"
-  echo "$FOUND_TESTS"
-  echo
+if ! diff -u $TMPD/a $TMPD/b; then
+
   if [ -z "$FORCE_ANYWAYS" ]; then
     echo "ERROR: Not every robot.py file is in the list of tests!"
     exit 1
