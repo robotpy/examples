@@ -37,9 +37,9 @@ def test_operator_control(control, robot):
 
         # Enable the robot, check to see if it was set
         control.step_timing(seconds=0.1, autonomous=False, enabled=True)
-        assert pytest.approx(0.5, motorsim.getSpeed())
+        assert 0.5 == pytest.approx(motorsim.getSpeed())
 
         # change it, see if it's still set
         joysim.setY(0.2)
         control.step_timing(seconds=0.1, autonomous=False, enabled=True)
-        assert pytest.approx(0.2, motorsim.getSpeed())
+        assert 0.2 == pytest.approx(motorsim.getSpeed())
