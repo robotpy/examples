@@ -30,12 +30,6 @@ ROBOTPY_EXT_TESTS=""
   # magicbot-simple
 # "
 
-NAVX_TESTS="
-  navx
-  navx-rotate-to-angle
-  navx-rotate-to-angle-arcade
-"
-
 IGNORED_TESTS="
   magicbot-simple
   stateful-autonomous
@@ -51,10 +45,8 @@ elif [ "$1" == "base" ]; then
   TESTS="$BASE_TESTS"
 elif [ "$1" == "ext" ]; then
   TESTS="$ROBOTPY_EXT_TESTS"
-elif [ "$1" == "navx" ]; then
-  TESTS="$NAVX_TESTS"
 else
-  echo "Usage: run_tests.sh all|base|ext|navx"
+  echo "Usage: run_tests.sh all|base|ext"
   exit 1
 fi
 
