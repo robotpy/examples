@@ -5,6 +5,7 @@ __pycache__
 
 .vscode/
 .deploy_cfg
+deploy.json
 
 .project
 .pydevproject
@@ -14,3 +15,5 @@ simgui*.json
 
 opkg_cache
 pip_cache
+
+networktables.*
