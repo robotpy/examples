@@ -123,7 +123,7 @@ class PhysicsEngine:
         x = currentTranslation.X()
         y = currentTranslation.Y()
 
-        angle = currentRotation.degrees()
+        angle = currentRotation.radians()
 
         data = self.vision.compute(now, x, y, angle)
 
