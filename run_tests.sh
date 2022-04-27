@@ -26,29 +26,15 @@ BASE_TESTS="
   timed/src
 "
 
-ROBOTPY_EXT_TESTS=""
-  # magicbot-simple
-# "
-
 IGNORED_TESTS="
   magicbot-simple
   stateful-autonomous
   shuffleboard
 "
 
-ALL_TESTS="${BASE_TESTS} ${ROBOTPY_EXT_TESTS}"
-EVERY_TESTS="${ALL_TESTS} ${IGNORED_TESTS} ${NAVX_TESTS}"
-
-if [ "$1" == "all" ]; then
-  TESTS="$ALL_TESTS"
-elif [ "$1" == "base" ]; then
-  TESTS="$BASE_TESTS"
-elif [ "$1" == "ext" ]; then
-  TESTS="$ROBOTPY_EXT_TESTS"
-else
-  echo "Usage: run_tests.sh all|base|ext"
-  exit 1
-fi
+ALL_TESTS="${BASE_TESTS}"
+EVERY_TESTS="${ALL_TESTS} ${IGNORED_TESTS}"
+TESTS="${ALL_TESTS}"
 
 TMPD=$(mktemp -d)
 trap 'rm -rf "$TMPD"' EXIT
