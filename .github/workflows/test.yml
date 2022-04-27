@@ -16,29 +16,23 @@ jobs:
     - uses: actions/checkout@v2
     - uses: psf/black@stable
 
-  # test:
-  #   runs-on: ${{ matrix.os }}
-  #   strategy:
-  #     matrix:
-  #       os: [windows-latest, macos-latest, ubuntu-18.04]
-  #       python_version: [3.6, 3.7, 3.8, 3.9]
-  #       architecture: [x86, x64]
-  #       exclude:
-  #       - os: macos-latest
-  #         architecture: x86
-  #       - os: ubuntu-18.04
-  #         architecture: x86
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-18.04]
+        python_version: [3.7, 3.8, 3.9, "3.10"]
 
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - uses: actions/setup-python@v2
-  #     with:
-  #       python-version: ${{ matrix.python_version }}
-  #       architecture: ${{ matrix.architecture }}
-  #   - name: Install deps
-  #     run: |
-  #       pip install -U pip
-  #       pip install robotpy[all] pytest
-  #   - name: Run tests
-  #     run: bash run_tests.sh all
-  #     shell: bash
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python_version }}
+        architecture: ${{ matrix.architecture }}
+    - name: Install deps
+      run: |
+        pip install -U pip
+        pip install 'robotpy[commands2,romi]<2023.0.0,>=2022.4.0' pytest
+    - name: Run tests
+      run: bash run_tests.sh
+      shell: bash
