@@ -7,6 +7,7 @@
 import wpilib
 import wpilib.drive
 
+
 class MyRobot(TimedRobot):
     # Channels on the roboRIO that the motor controllers are plugged in to
     kFrontLeftChannel = 2
@@ -28,14 +29,18 @@ class MyRobot(TimedRobot):
         self.frontRight.setInverted(True)
         self.rearRight.setInverted(True)
 
-        self.robotDrive = wpilib.drive.MecanumDrive(self.frontLeft, self.rearLeft, self.frontRight, self.rearRight)
+        self.robotDrive = wpilib.drive.MecanumDrive(
+            self.frontLeft, self.rearLeft, self.frontRight, self.rearRight
+        )
 
         self.stick = wpilib.Joystick(self.kJoystickChannel)
 
     def teleopPeriodic(self):
         # Use the joystick X axis for lateral movement, Y axis for forward
         # movement, and Z axis for rotation.
-        self.robotDrive.driveCartesian(-self.stick.getY(), self.stick.getX(), self.stick.getZ(), 0)
+        self.robotDrive.driveCartesian(
+            -self.stick.getY(), self.stick.getX(), self.stick.getZ(), 0
+        )
 
 
 if __name__ == "__main__":
