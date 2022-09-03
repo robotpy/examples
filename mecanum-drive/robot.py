@@ -8,7 +8,7 @@ import wpilib
 import wpilib.drive
 
 
-class MyRobot(TimedRobot):
+class MyRobot(wpilib.TimedRobot):
     # Channels on the roboRIO that the motor controllers are plugged in to
     kFrontLeftChannel = 2
     kRearLeftChannel = 3
