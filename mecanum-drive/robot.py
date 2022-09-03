@@ -30,14 +30,14 @@ class MyRobot(TimedRobot):
         self.frontRight.setInverted(True)
         self.rearRight.setInverted(True)
 
-        self.m_drive = MecanumDrive(self.frontLeft, self.rearLeft, self.frontRight, self.rearRight)
+        self.m_robotDrive = MecanumDrive(self.frontLeft, self.rearLeft, self.frontRight, self.rearRight)
 
         self.m_stick = Joystick(self.kJoystickChannel)
 
     def teleopPeriodic(self):
         # Use the joystick X axis for lateral movement, Y axis for forward
         # movement, and Z axis for rotation.
-        self.m_drive.driveCartesian(-self.m_stick.getY(), self.m_stick.getX(), self.m_stick.getZ(), 0)
+        self.m_robotDrive.driveCartesian(-self.m_stick.getY(), self.m_stick.getX(), self.m_stick.getZ(), 0)
 
 
 if __name__ == "__main__":
