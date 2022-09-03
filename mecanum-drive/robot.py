@@ -5,9 +5,7 @@
 """
 
 import wpilib
-from wpilib.drive import MecanumDrive
-from wpilib import Joystick, PWMSparkMax, TimedRobot
-
+import wpilib.drive
 
 class MyRobot(TimedRobot):
     # Channels on the roboRIO that the motor controllers are plugged in to
@@ -20,24 +18,24 @@ class MyRobot(TimedRobot):
     kJoystickChannel = 0
 
     def robotInit(self):
-        self.frontLeft = PWMSparkMax(self.kFrontLeftChannel)
-        self.rearLeft = PWMSparkMax(self.kRearLeftChannel)
-        self.frontRight = PWMSparkMax(self.kFrontRightChannel)
-        self.rearRight = PWMSparkMax(self.kRearRightChannel)
+        self.frontLeft = wpilib.PWMSparkMax(self.kFrontLeftChannel)
+        self.rearLeft = wpilib.PWMSparkMax(self.kRearLeftChannel)
+        self.frontRight = wpilib.PWMSparkMax(self.kFrontRightChannel)
+        self.rearRight = wpilib.PWMSparkMax(self.kRearRightChannel)
 
         # invert the right side motors
         # you may need to change or remove this to match your robot
         self.frontRight.setInverted(True)
         self.rearRight.setInverted(True)
 
-        self.m_robotDrive = MecanumDrive(self.frontLeft, self.rearLeft, self.frontRight, self.rearRight)
+        self.robotDrive = wpilib.drive.MecanumDrive(self.frontLeft, self.rearLeft, self.frontRight, self.rearRight)
 
-        self.m_stick = Joystick(self.kJoystickChannel)
+        self.stick = wpilib.Joystick(self.kJoystickChannel)
 
     def teleopPeriodic(self):
         # Use the joystick X axis for lateral movement, Y axis for forward
         # movement, and Z axis for rotation.
-        self.m_robotDrive.driveCartesian(-self.m_stick.getY(), self.m_stick.getX(), self.m_stick.getZ(), 0)
+        self.robotDrive.driveCartesian(-self.stick.getY(), self.stick.getX(), self.stick.getZ(), 0)
 
 
 if __name__ == "__main__":
