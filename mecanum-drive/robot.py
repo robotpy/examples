@@ -5,52 +5,41 @@
 """
 
 import wpilib
-from wpilib.drive import MecanumDrive
+import wpilib.drive
 
 
 class MyRobot(wpilib.TimedRobot):
     # Channels on the roboRIO that the motor controllers are plugged in to
-    frontLeftChannel = 2
-    rearLeftChannel = 3
-    frontRightChannel = 1
-    rearRightChannel = 0
+    kFrontLeftChannel = 2
+    kRearLeftChannel = 3
+    kFrontRightChannel = 1
+    kRearRightChannel = 0
 
     # The channel on the driver station that the joystick is connected to
-    joystickChannel = 0
+    kJoystickChannel = 0
 
     def robotInit(self):
-        """Robot initialization function"""
-        self.frontLeftMotor = wpilib.Talon(self.frontLeftChannel)
-        self.rearLeftMotor = wpilib.Talon(self.rearLeftChannel)
-        self.frontRightMotor = wpilib.Talon(self.frontRightChannel)
-        self.rearRightMotor = wpilib.Talon(self.rearRightChannel)
+        self.frontLeft = wpilib.PWMSparkMax(self.kFrontLeftChannel)
+        self.rearLeft = wpilib.PWMSparkMax(self.kRearLeftChannel)
+        self.frontRight = wpilib.PWMSparkMax(self.kFrontRightChannel)
+        self.rearRight = wpilib.PWMSparkMax(self.kRearRightChannel)
 
-        # invert the left side motors
-        self.frontLeftMotor.setInverted(True)
-
+        # invert the right side motors
         # you may need to change or remove this to match your robot
-        self.rearLeftMotor.setInverted(True)
+        self.frontRight.setInverted(True)
+        self.rearRight.setInverted(True)
 
-        self.drive = MecanumDrive(
-            self.frontLeftMotor,
-            self.rearLeftMotor,
-            self.frontRightMotor,
-            self.rearRightMotor,
+        self.robotDrive = wpilib.drive.MecanumDrive(
+            self.frontLeft, self.rearLeft, self.frontRight, self.rearRight
         )
 
-        self.drive.setExpiration(0.1)
-
-        self.stick = wpilib.Joystick(self.joystickChannel)
-
-    def teleopInit(self):
-        self.drive.setSafetyEnabled(True)
+        self.stick = wpilib.Joystick(self.kJoystickChannel)
 
     def teleopPeriodic(self):
-        """Runs the motors with Mecanum drive."""
-        # Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
-        # This sample does not use field-oriented drive, so the gyro input is set to zero.
-        self.drive.driveCartesian(
-            self.stick.getX(), self.stick.getY(), self.stick.getZ(), 0
+        # Use the joystick X axis for lateral movement, Y axis for forward
+        # movement, and Z axis for rotation.
+        self.robotDrive.driveCartesian(
+            -self.stick.getY(), self.stick.getX(), self.stick.getZ(), 0
         )
 
 
