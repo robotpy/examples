@@ -11,6 +11,7 @@ class MyRobot(TimedRobot):
         # LED Data
         self.m_ledData = []
 
+        # Store what the last hue of the first pixel is
         self.m_rainbowFirstPixelHue = 0
 
         # Default to a length of 60, start empty output
