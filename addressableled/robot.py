@@ -10,7 +10,7 @@ class MyRobot(wpilib.TimedRobot):
         self.led = wpilib.AddressableLED(9)
 
         # LED Data
-        self.ledData = [wpilib.AddressableLED.LEDData() for i in range(kLEDBuffer)]
+        self.ledData = [wpilib.AddressableLED.LEDData() for _ in range(kLEDBuffer)]
 
         # Store what the last hue of the first pixel is
         self.rainbowFirstPixelHue = 0
