@@ -44,7 +44,7 @@ class MyRobot(wpilib.TimedRobot):
         self.rainbowFirstPixelHue += 3
 
         # Check bounds
-        self.rainbowFirstPixelHue %= 100
+        self.rainbowFirstPixelHue %= 180
 
 
 if __name__ == "__main__":
