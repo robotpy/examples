@@ -3,6 +3,7 @@
 cd "$(dirname $0)"
 
 BASE_TESTS="
+  addressableled
   arcade-drive
   arm-simulation
   commands-v2/hatchbot
