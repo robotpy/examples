@@ -17,6 +17,7 @@ BASE_TESTS="
   gyro
   mecanum-drive
   mecanum-driveXbox
+  mechanism2d
   motor-control
   physics/src
   physics-4wheel/src
