@@ -1,10 +1,12 @@
 import wpilib
 
-# This sample program shows how to use Mechanism2d - a visual representation of arms, elevators,
-# and other mechanisms on dashboards; driven by a node-based API.
+"""
+This sample program shows how to use Mechanism2d - a visual representation of arms, elevators,
+and other mechanisms on dashboards; driven by a node-based API.
 
-# <p>Ligaments are based on other ligaments or roots, and roots are contained in the base
-# Mechanism2d object.
+<p>Ligaments are based on other ligaments or roots, and roots are contained in the base
+Mechanism2d object.
+"""
 
 
 class MyRobot(wpilib.TimedRobot):
@@ -18,9 +20,6 @@ class MyRobot(wpilib.TimedRobot):
         self.wristPot = wpilib.AnalogPotentiometer(1, 90)
         self.elevatorEncoder = wpilib.Encoder(0, 1)
         self.joystick = wpilib.Joystick(0)
-
-        self.elevator = wpilib.MechanismLigament2d
-        self.wrist = wpilib.MechanismLigament2d
 
         self.elevatorEncoder.setDistancePerPulse(self.kMetersPerPulse)
 
