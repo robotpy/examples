@@ -1,18 +1,25 @@
+# Copyright (c) FIRST and other WPILib contributors.
+# Open Source Software; you can modify and/or share it under the terms of
+# the WPILib BSD license file in the root directory of this project.
+
 import wpilib.interfaces
 import enum
 
-class PIDMode(enum.Enum):
-    kPosition,
-    kVelocity,
-    kMovementWitchcraft
-
 class ExampleSmartMotorController(wpilib.interfaces.MotorController):
-    """Creates a new ExampleSmartMotorController.
-
-    Args:
-        port: The port for the controller.
+    """A simplified stub class that simulates the API of a common "smart" motor controller.
+    Has no actual functionality.
     """
+    class PIDMode(enum.Enum):
+        kPosition,
+        kVelocity,
+        kMovementWitchcraft   
+    
     def __init__(self, port: int) -> None:
+        """Creates a new ExampleSmartMotorController.
+
+        Args:
+            port: The port for the controller.
+        """
         pass
     
     def setPID(self, kp: float, ki: float, kd: float) -> None:
