@@ -1,0 +1,82 @@
+import wpilib.interfaces
+import enum
+
+class PIDMode(enum.Enum):
+    kPosition,
+    kVelocity,
+    kMovementWitchcraft
+
+class ExampleSmartMotorController(wpilib.interfaces.MotorController):
+    """Creates a new ExampleSmartMotorController.
+
+    Args:
+        port: The port for the controller.
+    """
+    def __init__(self, port: int) -> None:
+        pass
+    
+    def setPID(self, kp: float, ki: float, kd: float) -> None:
+        """Example method for setting the PID gains of the smart controller.
+
+        Args:
+            kp: The proportional gain.
+            ki: The integral gain.
+            kd: The derivative gain.
+        """
+        pass
+    
+    def setSetPoint(PIDMode mode, setpoint: float, arbfeedforward: float) -> None:
+        """Example method for setting the setpoint of the smart controller in PID mode.
+
+        Args:
+            mode: The mode of the PID controller.
+            setpoint: The controller setpoint.
+            arbfeedforward: An arbitrary feedforward output (from -1 to 1).
+        """
+        pass
+    
+    def follow(self, leader: ExampleSmartMotorController) -> None:
+        """Places this motor controller in follower mode.
+
+        Args:
+            leader: The leader to follow.
+        """
+        pass
+    
+    def getEncoderDistance(self) -> float:
+        """Returns the encoder distance.
+
+        Returns:
+            The current encoder distance.
+        """
+        return 0
+    
+    def getEncoderRate() -> float:
+        """Returns the encoder rate.
+
+        Returns:
+            The current encoder rate.
+        """        
+        return 0
+
+    def resetEncoder(self) -> None:
+        """Resets the encoder to zero distance."""
+        pass
+
+    def set(self, speed: float) -> None:
+        pass
+    
+    def get(self) -> float:
+        pass
+    
+    def setInverted(isInverted: bool)→ None
+        pass
+    
+    def getInverted() -> bool:
+        pass
+
+    def disable() -> None:
+        pass
+    
+    def stopMotor() -> None:
+        pass
