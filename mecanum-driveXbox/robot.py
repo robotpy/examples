@@ -52,7 +52,6 @@ class MyRobot(wpilib.TimedRobot):
             self.stick.getLeftX(),
             self.stick.getLeftY(),
             self.stick.getRightY(),
-            0,
         )
 
         """Alternatively, to match the driver station enumeration, you may use  ---> self.drive.driveCartesian(

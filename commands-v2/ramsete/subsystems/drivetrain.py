@@ -1,6 +1,6 @@
 from commands2 import SubsystemBase
 
-from wpilib import SpeedControllerGroup, PWMSparkMax, Encoder, AnalogGyro
+from wpilib import MotorControllerGroup, PWMSparkMax, Encoder, AnalogGyro
 from wpilib.drive import DifferentialDrive
 
 from wpimath.geometry import Pose2d, Rotation2d
@@ -15,12 +15,12 @@ class Drivetrain(SubsystemBase):
         super().__init__()
 
         # Create the motor controllers and their respective speed controllers.
-        self.leftMotors = SpeedControllerGroup(
+        self.leftMotors = MotorControllerGroup(
             PWMSparkMax(constants.kLeftMotor1Port),
             PWMSparkMax(constants.kLeftMotor2Port),
         )
 
-        self.rightMotors = SpeedControllerGroup(
+        self.rightMotors = MotorControllerGroup(
             PWMSparkMax(constants.kRightMotor1Port),
             PWMSparkMax(constants.kRightMotor2Port),
         )

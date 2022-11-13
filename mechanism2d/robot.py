@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 This sample program shows how to use Mechanism2d - a visual representation of arms, elevators,
 and other mechanisms on dashboards; driven by a node-based API.
