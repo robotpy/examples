@@ -10,9 +10,9 @@ class ExampleSmartMotorController(wpilib.interfaces.MotorController):
     Has no actual functionality.
     """
     class PIDMode(enum.Enum):
-        kPosition,
-        kVelocity,
-        kMovementWitchcraft   
+        kPosition = enum.auto()
+        kVelocity = enum.auto()
+        kMovementWitchcraft = enum.auto()
     
     def __init__(self, port: int) -> None:
         """Creates a new ExampleSmartMotorController.
@@ -20,6 +20,7 @@ class ExampleSmartMotorController(wpilib.interfaces.MotorController):
         Args:
             port: The port for the controller.
         """
+        super().__init__()
         pass
     
     def setPID(self, kp: float, ki: float, kd: float) -> None:
@@ -32,7 +33,7 @@ class ExampleSmartMotorController(wpilib.interfaces.MotorController):
         """
         pass
     
-    def setSetPoint(PIDMode mode, setpoint: float, arbfeedforward: float) -> None:
+    def setSetPoint(mode : PIDMode, setpoint: float, arbfeedforward: float) -> None:
         """Example method for setting the setpoint of the smart controller in PID mode.
 
         Args:
@@ -42,7 +43,7 @@ class ExampleSmartMotorController(wpilib.interfaces.MotorController):
         """
         pass
     
-    def follow(self, leader: ExampleSmartMotorController) -> None:
+    def follow(self, leader: __qualname__) -> None:
         """Places this motor controller in follower mode.
 
         Args:
@@ -76,7 +77,7 @@ class ExampleSmartMotorController(wpilib.interfaces.MotorController):
     def get(self) -> float:
         pass
     
-    def setInverted(isInverted: bool)→ None
+    def setInverted(isInverted: bool) -> None:
         pass
     
     def getInverted() -> bool:
