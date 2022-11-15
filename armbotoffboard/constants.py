@@ -7,6 +7,8 @@ The constants module is a convenience place for teams to hold robot-wide
 numerical or boolean constants. Don't use this for any other purpose!
 """
 
+import math
+
 # Drive
 
 # The PWM IDs for the drivetrain motor controllers.
@@ -26,7 +28,7 @@ kEncoderCPR = 1024
 kWheelDiameterInches = 6
 
 # Assumes the encoders are directly mounted on the wheel shafts
-kEncoderDistancePerPulse = (kWheelDiameterInches * Math.PI) / kEncoderCPR
+kEncoderDistancePerPulse = (kWheelDiameterInches * math.pi) / kEncoderCPR
 
 # Arm
 
