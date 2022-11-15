@@ -27,12 +27,14 @@ class RobotContainer:
 
         # Set the default drive command
         self.robotDrive.setDefaultCommand(
-            self.robotDrive.arcadeDrive(
-                lambda: -self.driverController.getLeftY(),
-                lambda: self.driverController.getRightX()
+            commands2.RunCommand(
+                self.robotDrive.arcadeDrive(
+                    lambda: -self.driverController.getLeftY(),
+                    lambda: self.driverController.getRightX()
+                ),
+                self.robotDrive
             )
         )
-
 
     def configureButtonBindings(self) -> None:
         """
@@ -40,7 +42,7 @@ class RobotContainer:
         instantiating a :GenericHID or one of its subclasses (Joystick or XboxController),
         and then passing it to a JoystickButton.
         """
-        
+
         # Move the arm to 2 radians above horizontal when the 'A' button is pressed.
         commands2.button.JoystickButton(
             self.driverController, wpilib.XboxController.Button.kA 
@@ -59,3 +61,6 @@ class RobotContainer:
         commands2.button.JoystickButton(
             self.driverController, wpilib.XboxController.Button.kLeftBumper
         ).whenReleased(commands2.InstantCommand(self.robotDrive.setMaxOutput(1)))
+
+    def getAutonomousCommand(self) -> commands2.Command:
+        return commands2.InstantCommand()
