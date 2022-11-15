@@ -2,10 +2,14 @@
 # Open Source Software; you can modify and/or share it under the terms of
 # the WPILib BSD license file in the root directory of this project.
 
+import sys
+sys.path.append('../armbotoffboard')
+
 import commands2
-import ..examplesmartmotorcontroller
-import ..constants
+import examplesmartmotorcontroller
+import constants
 import wpimath.controller
+import wpimath.trajectory
 
 # A robot arm subsystem that moves with a motion profile.
 class ArmSubsystem(commands2.TrapezoidProfileSubsystem):
@@ -13,18 +17,18 @@ class ArmSubsystem(commands2.TrapezoidProfileSubsystem):
     # Create a new ArmSubsystem
     def __init__(self) -> None:
         super().__init__(
-            TrapezoidProfile(
+            wpimath.trajectory.TrapezoidProfile.Constraints(
                 constants.kMaxVelocityRadPerSecond, constants.kMaxAccelerationRadPerSecSquared
             ), constants.kArmOffsetRads
         )
-        self.motor = ExampleSmartMotorController(constants.kMotorPort)
+        self.motor = examplesmartmotorcontroller.ExampleSmartMotorController(constants.kMotorPort)
         self.feedforward = wpimath.controller.ArmFeedforward(
             constants.kSVolts, constants.kGVolts,
-            constants.kVVoltSecondPerRad, ArmConstants.kAVoltSecondSquaredPerRad
+            constants.kVVoltSecondPerRad, constants.kAVoltSecondSquaredPerRad
         )
         self.motor.setPID(constants.kP, 0, 0)
     
-    def useState(self, setpoint: TrapezoidProfile.State) -> None:
+    def useState(self, setpoint: wpimath.trajectory.TrapezoidProfile.State) -> None:
         # Calculate the feedforward from the setpoint
         feedfwd = self.feedforward.calculate(setpoint.position, setpoint.velocity)
 

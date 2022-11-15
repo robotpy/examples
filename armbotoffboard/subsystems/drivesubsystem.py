@@ -2,12 +2,19 @@
 # Open Source Software; you can modify and/or share it under the terms of
 # the WPILib BSD license file in the root directory of this project.
 
+import sys
+sys.path.append('../armbotoffboard')
+
 import commands2
-import ..constants
+import constants
 import wpilib
+import wpilib.drive
+import typing
 
 class DriveSubsystem(commands2.SubsystemBase):
     def __init__(self) -> None:
+        super().__init__()
+
         # The motors on the left side of the drive.
         self.left = wpilib.MotorControllerGroup(
             wpilib.PWMSparkMax(constants.kLeftMotor1Port),
@@ -21,7 +28,7 @@ class DriveSubsystem(commands2.SubsystemBase):
         )
 
         # The robot's drive        
-        self.drive = wpilib.DifferentialDrive(self.left, self.right)
+        self.drive = wpilib.drive.DifferentialDrive(self.left, self.right)
         
         # The left-side drive encoder
         self.left_encoder = wpilib.Encoder(
@@ -46,14 +53,14 @@ class DriveSubsystem(commands2.SubsystemBase):
         # gearbox is constructed, you might have to invert the left side instead.        
         self.right.setInverted(True)
     
-    def arcadeDrive(self, fwd: float, rot: float) -> None:
+    def arcadeDrive(self, fwd: typing.Callable[[], float], rot: typing.Callable[[], float]) -> None:
         """Drives the robot using arcade controls.
         
         Args:
             fwd: The commanded forward movement
             rot: The commanded rotation
         """
-        self.drive.arcadeDrive(fwd, rot)
+        self.drive.arcadeDrive(fwd(), rot(), True)
     
     def resetEncoders(self) -> None:
         """Resets the drive encoders to currently read a position of 0."""
