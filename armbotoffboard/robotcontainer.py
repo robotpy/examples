@@ -21,18 +21,18 @@ class RobotContainer:
         # The driver's controller
         self.driverController = wpilib.XboxController(constants.kDriverControllerPort)
         #self.driverController = wpilib.Joystick(constants.kDriverControllerPort)
-        
+
         # Configure the button bindings
         self.configureButtonBindings()
 
         # Set the default drive command
         self.robotDrive.setDefaultCommand(
             commands2.RunCommand(
-                self.robotDrive.arcadeDrive(
+                lambda: self.robotDrive.arcadeDrive(
                     lambda: -self.driverController.getLeftY(),
                     lambda: self.driverController.getRightX()
                 ),
-                self.robotDrive
+                [self.robotDrive]
             )
         )
 
@@ -61,6 +61,6 @@ class RobotContainer:
         commands2.button.JoystickButton(
             self.driverController, wpilib.XboxController.Button.kLeftBumper
         ).whenReleased(commands2.InstantCommand(self.robotDrive.setMaxOutput(1)))
-
+    
     def getAutonomousCommand(self) -> commands2.Command:
         return commands2.InstantCommand()
