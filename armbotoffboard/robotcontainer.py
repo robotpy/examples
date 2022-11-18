@@ -46,21 +46,21 @@ class RobotContainer:
         # Move the arm to 2 radians above horizontal when the 'A' button is pressed.
         commands2.button.JoystickButton(
             self.driverController, wpilib.XboxController.Button.kA 
-        ).whenPressed(commands2.InstantCommand(self.robotArm.setGoal(2), self.robotArm))
+        ).whenPressed(commands2.InstantCommand(lambda: self.robotArm.setGoal(2), self.robotArm))
 
         # Move the arm to neutral position when the 'B' button is pressed.
         commands2.button.JoystickButton(
             self.driverController, wpilib.XboxController.Button.kB
-        ).whenPressed(commands2.InstantCommand(self.robotArm.setGoal(constants.kArmOffsetRads), self.robotArm))
+        ).whenPressed(commands2.InstantCommand(lambda: self.robotArm.setGoal(constants.kArmOffsetRads), self.robotArm))
 
         # Drive at half speed when some of bumpers are held.
         commands2.button.JoystickButton(
             self.driverController, wpilib.XboxController.Button.kRightBumper
-        ).whenPressed(commands2.InstantCommand(self.robotDrive.setMaxOutput(0.5)))
+        ).whenPressed(commands2.InstantCommand(lambda: self.robotDrive.setMaxOutput(0.5)))
         
         commands2.button.JoystickButton(
             self.driverController, wpilib.XboxController.Button.kLeftBumper
-        ).whenReleased(commands2.InstantCommand(self.robotDrive.setMaxOutput(1)))
+        ).whenReleased(commands2.InstantCommand(lambda: self.robotDrive.setMaxOutput(1)))
     
     def getAutonomousCommand(self) -> commands2.Command:
         return commands2.InstantCommand()
