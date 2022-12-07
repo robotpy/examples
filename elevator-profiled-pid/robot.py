@@ -16,7 +16,9 @@ class MyRobot(wpilib.TimedRobot):
         # Create a PID controller whose setpoint's change is subject to maximum
         # velocity and acceleration constraints.
         self.constraints = wpimath.trajectory.TrapezoidProfile.Constraints(1.75, 0.75)
-        self.controller = wpimath.controller.ProfiledPIDController(1.3, 0, 0.7, self.constraints, self.kDt)
+        self.controller = wpimath.controller.ProfiledPIDController(
+            1.3, 0, 0.7, self.constraints, self.kDt
+        )
 
         self.encoder.setDistancePerPulse(1 / 360 * 2 * math.pi * 1.5)
 
