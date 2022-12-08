@@ -26,6 +26,7 @@ BASE_TESTS="
   physics-spi/src
   tank-drive
   timed/src
+  elevator-profiled-pid
 "
 
 IGNORED_TESTS="
