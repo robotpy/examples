@@ -10,12 +10,14 @@ import typing
 
 from robotcontainer import RobotContainer
 
+
 class MyRobot(commands2.TimedCommandRobot):
     """
     Our default robot class, pass it to wpilib.run
     Command v2 robots are encouraged to inherit from TimedCommandRobot, which
     has an implementation of robotPeriodic which runs the scheduler for you
     """
+
     autonomousCommand: typing.Optional[commands2.Command] = None
 
     def robotInit(self) -> None:
@@ -63,5 +65,6 @@ class MyRobot(commands2.TimedCommandRobot):
         # Cancels all running commands at the start of test mode
         commands2.CommandScheduler.getInstance().cancelAll()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     wpilib.run(MyRobot)

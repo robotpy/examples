@@ -8,6 +8,7 @@ import wpilib
 import wpilib.drive
 import typing
 
+
 class DriveSubsystem(commands2.SubsystemBase):
     def __init__(self) -> None:
         super().__init__()
@@ -15,82 +16,84 @@ class DriveSubsystem(commands2.SubsystemBase):
         # The motors on the left side of the drive.
         self.left = wpilib.MotorControllerGroup(
             wpilib.PWMSparkMax(constants.kLeftMotor1Port),
-            wpilib.PWMSparkMax(constants.kLeftMotor2Port)
+            wpilib.PWMSparkMax(constants.kLeftMotor2Port),
         )
 
         # The motors on the right side of the drive.
         self.right = wpilib.MotorControllerGroup(
             wpilib.PWMSparkMax(constants.kRightMotor1Port),
-            wpilib.PWMSparkMax(constants.kRightMotor2Port)
+            wpilib.PWMSparkMax(constants.kRightMotor2Port),
         )
 
-        # The robot's drive        
+        # The robot's drive
         self.drive = wpilib.drive.DifferentialDrive(self.left, self.right)
-        
+
         # The left-side drive encoder
         self.left_encoder = wpilib.Encoder(
             constants.kLeftEncoderPorts[0],
             constants.kLeftEncoderPorts[1],
-            constants.kLeftEncoderReversed
+            constants.kLeftEncoderReversed,
         )
 
         # The right-side drive encoder
         self.right_encoder = wpilib.Encoder(
             constants.kRightEncoderPorts[0],
             constants.kRightEncoderPorts[1],
-            constants.kRightEncoderReversed
+            constants.kRightEncoderReversed,
         )
 
         # Creates a new drive subsystem
         self.left_encoder.setDistancePerPulse(constants.kEncoderDistancePerPulse)
         self.right_encoder.setDistancePerPulse(constants.kEncoderDistancePerPulse)
-        
+
         # We need to invert one side of the drivetrain so that positive voltages
         # result in both sides moving forward. Depending on how your robot's
-        # gearbox is constructed, you might have to invert the left side instead.        
+        # gearbox is constructed, you might have to invert the left side instead.
         self.right.setInverted(True)
-    
-    def arcadeDrive(self, fwd: typing.Callable[[], float], rot: typing.Callable[[], float]) -> None:
+
+    def arcadeDrive(
+        self, fwd: typing.Callable[[], float], rot: typing.Callable[[], float]
+    ) -> None:
         """Drives the robot using arcade controls.
-        
+
         Args:
             fwd: The commanded forward movement
             rot: The commanded rotation
         """
         self.drive.arcadeDrive(fwd(), rot(), True)
-    
+
     def resetEncoders(self) -> None:
         """Resets the drive encoders to currently read a position of 0."""
         self.left.reset()
         self.right.reset()
-    
+
     def getAverageEncoderDistance(self) -> None:
         """Gets the average distance of the two encoders.
-        
+
         Returns:
             The average of the two encoder readings.
         """
         return (self.left_encoder.getDistance() + self.right_encoder.getDistance()) / 2
-    
+
     def getLeftEncoder(self) -> wpilib.Encoder:
         """Gets the left drive encoder.
-        
+
         Returns:
             The left drive encoder.
         """
         return self.left_encoder
-    
+
     def getRightEncoder(self) -> wpilib.Encoder:
         """Gets the right drive encoder.
-        
+
         Returns:
             The right drive encoder.
         """
         return self.right_encoder
-    
+
     def setMaxOutput(self, maxoutput: float) -> float:
         """Sets the max output of the drive. Useful for scaling the drive to drive more slowly.
-        
+
         Args:
             maxoutput: The maximum output to which the drive will be constrained.
         """
