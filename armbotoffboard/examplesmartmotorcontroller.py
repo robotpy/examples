@@ -21,7 +21,6 @@ class ExampleSmartMotorController(wpilib.interfaces.MotorController):
             port: The port for the controller.
         """
         super().__init__()
-        pass
     
     def setPID(self, kp: float, ki: float, kd: float) -> None:
         """Example method for setting the PID gains of the smart controller.
