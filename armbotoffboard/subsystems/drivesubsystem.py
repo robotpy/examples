@@ -3,7 +3,7 @@
 # the WPILib BSD license file in the root directory of this project.
 
 import commands2
-from armbotoffboard import constants
+import constants
 import wpilib
 import wpilib.drive
 import typing

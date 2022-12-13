@@ -3,7 +3,7 @@
 # the WPILib BSD license file in the root directory of this project.
 
 import commands2
-from armbotoffboard import examplesmartmotorcontroller, constants
+import examplesmartmotorcontroller, constants
 import wpimath.controller
 import wpimath.trajectory
 
