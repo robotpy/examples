@@ -60,7 +60,7 @@ class ExampleSmartMotorController(wpilib.interfaces.MotorController):
         """
         return 0
 
-    def getEncoderRate() -> float:
+    def getEncoderRate(self) -> float:
         """Returns the encoder rate.
 
         Returns:
