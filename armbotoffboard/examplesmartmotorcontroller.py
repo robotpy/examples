@@ -44,7 +44,7 @@ class ExampleSmartMotorController(wpilib.interfaces.MotorController):
         """
         pass
 
-    def follow(self, leader: __qualname__) -> None:
+    def follow(self, leader: "ExampleSmartMotorController") -> None:
         """Places this motor controller in follower mode.
 
         Args:
