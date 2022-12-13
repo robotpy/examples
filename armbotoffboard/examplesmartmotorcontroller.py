@@ -81,7 +81,7 @@ class ExampleSmartMotorController(wpilib.interfaces.MotorController):
     def setInverted(isInverted: bool) -> None:
         pass
 
-    def getInverted() -> bool:
+    def getInverted(self) -> bool:
         pass
 
     def disable() -> None:
