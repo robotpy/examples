@@ -87,5 +87,5 @@ class ExampleSmartMotorController(wpilib.interfaces.MotorController):
     def disable(self) -> None:
         pass
 
-    def stopMotor() -> None:
+    def stopMotor(self) -> None:
         pass
