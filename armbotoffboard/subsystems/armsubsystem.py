@@ -36,7 +36,7 @@ class ArmSubsystem(commands2.TrapezoidProfileSubsystem):
 
         # Add the feedforward to the PID output to get the motor output
         self.motor.setSetPoint(
-            ExampleSmartMotorController.PIDMode.kPosition,
+            examplesmartmotorcontroller.ExampleSmartMotorController.PIDMode.kPosition,
             setpoint.position,
             feedforward / 12.0,
         )
