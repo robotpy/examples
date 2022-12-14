@@ -35,8 +35,8 @@ class RobotContainer:
         self.robotDrive.setDefaultCommand(
             commands2.RunCommand(
                 lambda: self.robotDrive.arcadeDrive(
-                    lambda: -self.driverController.getLeftY(),
-                    lambda: self.driverController.getRightX(),
+                    -self.driverController.getLeftY(),
+                    self.driverController.getRightX(),
                 ),
                 [self.robotDrive],
             )

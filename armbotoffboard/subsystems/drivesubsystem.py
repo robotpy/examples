@@ -52,7 +52,7 @@ class DriveSubsystem(commands2.SubsystemBase):
         self.right.setInverted(True)
 
     def arcadeDrive(
-        self, fwd: typing.Callable[[], float], rot: typing.Callable[[], float]
+        self, fwd: float, rot: float
     ) -> None:
         """Drives the robot using arcade controls.
 
@@ -60,7 +60,7 @@ class DriveSubsystem(commands2.SubsystemBase):
             fwd: The commanded forward movement
             rot: The commanded rotation
         """
-        self.drive.arcadeDrive(fwd(), rot(), True)
+        self.drive.arcadeDrive(fwd, rot, True)
 
     def resetEncoders(self) -> None:
         """Resets the drive encoders to currently read a position of 0."""
