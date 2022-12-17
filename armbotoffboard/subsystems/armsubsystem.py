@@ -43,4 +43,6 @@ class ArmSubsystem(commands2.TrapezoidProfileSubsystem):
         )
 
     def setArmGoalCommand(self, kArmOffsetRads: float) -> commands2.Command:
-        return commands2.cmd.runOnce(lambda: commands2.TrapezoidProfileSubsystem.setGoal(kArmOffsetRads), [self])
+        return commands2.cmd.runOnce(
+            lambda: commands2.TrapezoidProfileSubsystem.setGoal(kArmOffsetRads), [self]
+        )

@@ -11,7 +11,6 @@ from subsystems.drivesubsystem import DriveSubsystem
 
 
 class RobotContainer:
-
     """
     This class is where the bulk of the robot should be declared. Since Command-based is a
     "declarative" paradigm, very little robot logic should actually be handled in the :class:`.Robot`
@@ -25,7 +24,9 @@ class RobotContainer:
         self.robotArm = ArmSubsystem()
 
         # The driver's controller
-        self.driverController = commands2.button.CommandXboxController(constants.kDriverControllerPort)
+        self.driverController = commands2.button.CommandXboxController(
+            constants.kDriverControllerPort
+        )
         # self.driverController = wpilib.Joystick(constants.kDriverControllerPort)
 
         # Configure the button bindings
@@ -35,7 +36,7 @@ class RobotContainer:
         self.robotDrive.setDefaultCommand(
             self.robotDrive.arcadeDriveCommand(
                 lambda: -self.driverController.getLeftY(),
-                lambda: -self.driverController.getRightX()
+                lambda: -self.driverController.getRightX(),
             )
         )
 
@@ -50,11 +51,17 @@ class RobotContainer:
         self.driverController.A().onTrue(self.robotArm.setArmGoalCommand(2))
 
         # Move the arm to neutral position when the 'B' button is pressed.
-        self.driverController.B().onTrue(self.robotArm.setArmGoalCommand(constants.kArmOffsetRads))
+        self.driverController.B().onTrue(
+            self.robotArm.setArmGoalCommand(constants.kArmOffsetRads)
+        )
 
         # Drive at half speed when some of bumpers are held.
-        self.driverController.rightBumper().onTrue(self.robotDrive.limitOutputCommand(0.5))
-        self.driverController.rightBumper().onFalse(self.robotDrive.limitOutputCommand(1))
+        self.driverController.rightBumper().onTrue(
+            self.robotDrive.limitOutputCommand(0.5)
+        )
+        self.driverController.rightBumper().onFalse(
+            self.robotDrive.limitOutputCommand(1)
+        )
 
     def getAutonomousCommand(self) -> commands2.Command:
         return commands2.cmd.nothing()

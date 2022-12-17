@@ -63,7 +63,9 @@ class DriveSubsystem(commands2.SubsystemBase):
             fwd: Supplier for the commanded forward movement
             rot: Supplier for the commanded rotation
         """
-        return commands2.cmd.run(lambda: self.drive.arcadeDrive(fwd(), rot(), True), [self])
+        return commands2.cmd.run(
+            lambda: self.drive.arcadeDrive(fwd(), rot(), True), [self]
+        )
 
     def resetEncoders(self) -> None:
         """Resets the drive encoders to currently read a position of 0."""
@@ -100,4 +102,6 @@ class DriveSubsystem(commands2.SubsystemBase):
         Args:
             maxoutput: The maximum output to which the drive will be constrained.
         """
-        return commands2.cmd.runOnce(lambda: self.drive.setMaxOutput(max_output), [self])
+        return commands2.cmd.runOnce(
+            lambda: self.drive.setMaxOutput(max_output), [self]
+        )
