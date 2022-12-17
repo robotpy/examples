@@ -3,6 +3,7 @@
 # the WPILib BSD license file in the root directory of this project.
 
 import commands2
+import commands2.cmd
 import constants
 import wpilib
 import wpilib.drive
@@ -51,23 +52,25 @@ class DriveSubsystem(commands2.SubsystemBase):
         # gearbox is constructed, you might have to invert the left side instead.
         self.right.setInverted(True)
 
-    def arcadeDrive(
+    def arcadeDriveCommand(
         self, fwd: float, rot: float
-    ) -> None:
-        """Drives the robot using arcade controls.
+    ) -> commands2.Command:
+        """
+        A split-stick arcade command, with forward/backward controlled by the left hand, and turning
+        controlled by the right.
 
         Args:
-            fwd: The commanded forward movement
-            rot: The commanded rotation
+            fwd: supplier for the commanded forward movement
+            rot: supplier for the commanded rotation
         """
-        self.drive.arcadeDrive(fwd, rot, True)
+        return commands2.cmd.run(lambda: self.drive.arcadeDrive(fwd, rot, True), [self])
 
     def resetEncoders(self) -> None:
         """Resets the drive encoders to currently read a position of 0."""
         self.left.reset()
         self.right.reset()
 
-    def getAverageEncoderDistance(self) -> None:
+    def getAverageEncoderDistance(self) -> float:
         """Gets the average distance of the two encoders.
 
         Returns:
@@ -91,10 +94,10 @@ class DriveSubsystem(commands2.SubsystemBase):
         """
         return self.right_encoder
 
-    def setMaxOutput(self, maxoutput: float) -> float:
+    def limitOutputCommand(self, max_output: float) -> commands2.Command:
         """Sets the max output of the drive. Useful for scaling the drive to drive more slowly.
 
         Args:
             maxoutput: The maximum output to which the drive will be constrained.
         """
-        self.drive.setMaxOutput(maxoutput)
+        return commands2.cmd.runOnce(lambda: self.drive.setMaxOutput(max_output), [self])

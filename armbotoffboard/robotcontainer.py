@@ -2,7 +2,6 @@
 # Open Source Software; you can modify and/or share it under the terms of
 # the WPILib BSD license file in the root directory of this project.
 
-import wpilib
 import constants
 import commands2.button
 
@@ -25,7 +24,7 @@ class RobotContainer:
         self.robotArm = ArmSubsystem()
 
         # The driver's controller
-        self.driverController = wpilib.XboxController(constants.kDriverControllerPort)
+        self.driverController = commands2.button.CommandXboxController(constants.kDriverControllerPort)
         # self.driverController = wpilib.Joystick(constants.kDriverControllerPort)
 
         # Configure the button bindings
@@ -33,12 +32,9 @@ class RobotContainer:
 
         # Set the default drive command
         self.robotDrive.setDefaultCommand(
-            commands2.RunCommand(
-                lambda: self.robotDrive.arcadeDrive(
-                    -self.driverController.getLeftY(),
-                    self.driverController.getRightX(),
-                ),
-                [self.robotDrive],
+            self.robotDrive.arcadeDriveCommand(
+                lambda: -self.driverController.getLeftY(),
+                lambda: -self.driverController.getRightX()
             )
         )
 
@@ -50,33 +46,14 @@ class RobotContainer:
         """
 
         # Move the arm to 2 radians above horizontal when the 'A' button is pressed.
-        commands2.button.JoystickButton(
-            self.driverController, wpilib.XboxController.Button.kA
-        ).whenPressed(
-            commands2.InstantCommand(lambda: self.robotArm.setGoal(2), self.robotArm)
-        )
+        self.driverController.A().onTrue(self.robotArm.setArmGoalCommand(2))
 
         # Move the arm to neutral position when the 'B' button is pressed.
-        commands2.button.JoystickButton(
-            self.driverController, wpilib.XboxController.Button.kB
-        ).whenPressed(
-            commands2.InstantCommand(
-                lambda: self.robotArm.setGoal(constants.kArmOffsetRads), self.robotArm
-            )
-        )
+        self.driverController.B().onTrue(self.robotArm.setArmGoalCommand(constants.kArmOffsetRads))
 
         # Drive at half speed when some of bumpers are held.
-        commands2.button.JoystickButton(
-            self.driverController, wpilib.XboxController.Button.kRightBumper
-        ).whenPressed(
-            commands2.InstantCommand(lambda: self.robotDrive.setMaxOutput(0.5))
-        )
-
-        commands2.button.JoystickButton(
-            self.driverController, wpilib.XboxController.Button.kLeftBumper
-        ).whenReleased(
-            commands2.InstantCommand(lambda: self.robotDrive.setMaxOutput(1))
-        )
+        self.driverController.rightBumper().onTrue(self.robotDrive.limitOutputCommand(0.5))
+        self.driverController.rightBumper().onFalse(self.robotDrive.limitOutputCommand(1))
 
     def getAutonomousCommand(self) -> commands2.Command:
-        return commands2.InstantCommand()
+        return commands2.cmd.nothing()

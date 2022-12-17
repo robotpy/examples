@@ -3,6 +3,7 @@
 # the WPILib BSD license file in the root directory of this project.
 
 import commands2
+import commands2.cmd
 import examplesmartmotorcontroller, constants
 import wpimath.controller
 import wpimath.trajectory
@@ -40,3 +41,6 @@ class ArmSubsystem(commands2.TrapezoidProfileSubsystem):
             setpoint.position,
             feedforward / 12.0,
         )
+
+    def setArmGoalCommand(self, kArmOffsetRads: float) -> commands2.Command:
+        return commands2.cmd.runOnce(lambda: commands2.TrapezoidProfileSubsystem.setGoal(kArmOffsetRads), [self])
