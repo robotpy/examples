@@ -53,17 +53,17 @@ class DriveSubsystem(commands2.SubsystemBase):
         self.right.setInverted(True)
 
     def arcadeDriveCommand(
-        self, fwd: float, rot: float
+        self, fwd: typing.Callable[[], float], rot: typing.Callable[[], float]
     ) -> commands2.Command:
         """
         A split-stick arcade command, with forward/backward controlled by the left hand, and turning
         controlled by the right.
 
         Args:
-            fwd: supplier for the commanded forward movement
-            rot: supplier for the commanded rotation
+            fwd: Supplier for the commanded forward movement
+            rot: Supplier for the commanded rotation
         """
-        return commands2.cmd.run(lambda: self.drive.arcadeDrive(fwd, rot, True), [self])
+        return commands2.cmd.run(lambda: self.drive.arcadeDrive(fwd(), rot(), True), [self])
 
     def resetEncoders(self) -> None:
         """Resets the drive encoders to currently read a position of 0."""
