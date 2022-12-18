@@ -27,6 +27,7 @@ BASE_TESTS="
   tank-drive
   timed/src
   elevator-profiled-pid
+  frisbee-bot
 "
 
 IGNORED_TESTS="

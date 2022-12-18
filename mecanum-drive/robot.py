@@ -7,6 +7,7 @@
 import wpilib
 import wpilib.drive
 
+from wpimath.geometry import Rotation2d
 
 class MyRobot(wpilib.TimedRobot):
     # Channels on the roboRIO that the motor controllers are plugged in to
@@ -39,7 +40,7 @@ class MyRobot(wpilib.TimedRobot):
         # Use the joystick X axis for lateral movement, Y axis for forward
         # movement, and Z axis for rotation.
         self.robotDrive.driveCartesian(
-            -self.stick.getY(), self.stick.getX(), self.stick.getZ(), 0
+            -self.stick.getY(), self.stick.getX(), self.stick.getZ(), Rotation2d()
         )
 
 

@@ -3,6 +3,8 @@
 import wpilib
 from wpilib.drive import MecanumDrive
 
+from wpimath.geometry import Rotation2d
+
 
 class MyRobot(wpilib.TimedRobot):
     """Main robot class"""
@@ -49,9 +51,9 @@ class MyRobot(wpilib.TimedRobot):
 
     def autonomousPeriodic(self):
         if self.timer.get() < 2.0:
-            self.drive.driveCartesian(0, -1, 1, 0)
+            self.drive.driveCartesian(0, -1, 1, Rotation2d())
         else:
-            self.drive.driveCartesian(0, 0, 0, 0)
+            self.drive.driveCartesian(0, 0, 0, Rotation2d())
 
     def teleopPeriodic(self):
         """Called when operation control mode is enabled"""
@@ -61,7 +63,7 @@ class MyRobot(wpilib.TimedRobot):
         # )
 
         self.drive.driveCartesian(
-            self.lstick.getX(), -self.lstick.getY(), self.lstick.getRawAxis(2), 0
+            self.lstick.getX(), -self.lstick.getY(), self.lstick.getRawAxis(2), Rotation2d()
         )
 
 

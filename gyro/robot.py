@@ -27,10 +27,10 @@ class MyRobot(wpilib.TimedRobot):
         # gyro value of 360 is set to correspond to one full revolution
         self.voltsPerDegreePerSecond = 0.0128
 
-        self.left = wpilib.SpeedControllerGroup(
+        self.left = wpilib.MotorControllerGroup(
             wpilib.Talon(self.leftMotorChannel), wpilib.Talon(self.leftRearMotorChannel)
         )
-        self.right = wpilib.SpeedControllerGroup(
+        self.right = wpilib.MotorControllerGroup(
             wpilib.Talon(self.rightMotorChannel),
             wpilib.Talon(self.rightRearMotorChannel),
         )
