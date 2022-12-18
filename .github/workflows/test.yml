@@ -6,7 +6,6 @@ on:
   push:
     branches:
     - main
-    - 2023-beta
     tags:
     - '*'
 
@@ -33,7 +32,7 @@ jobs:
     - name: Install deps
       run: |
         pip install -U pip
-        pip install 'robotpy[commands2]<2024.0.0,>=2023.0.0b3' pytest
+        pip install 'robotpy[commands2]<2024.0.0,>=2023.0.0b7' pytest
         #pip install 'robotpy[commands2,romi]<2024.0.0,>=2023.0.0b3' pytest
     - name: Run tests
       run: bash run_tests.sh
