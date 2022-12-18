@@ -63,7 +63,10 @@ class MyRobot(wpilib.TimedRobot):
         # )
 
         self.drive.driveCartesian(
-            self.lstick.getX(), -self.lstick.getY(), self.lstick.getRawAxis(2), Rotation2d()
+            self.lstick.getX(),
+            -self.lstick.getY(),
+            self.lstick.getRawAxis(2),
+            Rotation2d(),
         )
 
 
