@@ -39,7 +39,9 @@ class MyRobot(wpilib.TimedRobot):
         # Use the joystick X axis for lateral movement, Y axis for forward
         # movement, and Z axis for rotation.
         self.robotDrive.driveCartesian(
-            -self.stick.getY(), self.stick.getX(), self.stick.getZ(), 0
+            -self.stick.getY(),
+            self.stick.getX(),
+            self.stick.getZ(),
         )
 
 

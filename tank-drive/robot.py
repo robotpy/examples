@@ -19,8 +19,8 @@ class MyRobot(wpilib.TimedRobot):
         self.frontRightMotor = wpilib.Talon(2)
         self.rearRightMotor = wpilib.Talon(3)
 
-        self.left = wpilib.SpeedControllerGroup(self.frontLeftMotor, self.rearLeftMotor)
-        self.right = wpilib.SpeedControllerGroup(
+        self.left = wpilib.MotorControllerGroup(self.frontLeftMotor, self.rearLeftMotor)
+        self.right = wpilib.MotorControllerGroup(
             self.frontRightMotor, self.rearRightMotor
         )
 

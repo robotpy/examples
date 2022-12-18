@@ -16,8 +16,8 @@ class DriveSubsystem(commands2.SubsystemBase):
 
         # The robot's drive
         self.drive = wpilib.drive.DifferentialDrive(
-            wpilib.SpeedControllerGroup(self.left1, self.left2),
-            wpilib.SpeedControllerGroup(self.right1, self.right2),
+            wpilib.MotorControllerGroup(self.left1, self.left2),
+            wpilib.MotorControllerGroup(self.right1, self.right2),
         )
 
         # The left-side drive encoder

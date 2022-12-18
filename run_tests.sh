@@ -9,7 +9,6 @@ BASE_TESTS="
   arm-simulation
   commands-v2/hatchbot
   commands-v2/ramsete
-  commands-v2/romi
   cscore-intermediate-vision
   cscore-quick-vision
   elevator-simulation
@@ -22,15 +21,17 @@ BASE_TESTS="
   motor-control
   physics/src
   physics-4wheel/src
-  physics-camsim/src
   physics-mecanum/src
   physics-spi/src
   tank-drive
   timed/src
+  elevator-profiled-pid
 "
 
 IGNORED_TESTS="
+  commands-v2/romi
   magicbot-simple
+  physics-camsim/src
   stateful-autonomous
   shuffleboard
 "

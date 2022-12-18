@@ -3,7 +3,7 @@
 Example file showing how to get game-data from your driver station / FMS
 """
 import wpilib
-from networktables import NetworkTables
+import ntcore
 
 PNUE_MOD_TYPE = wpilib.PneumaticsModuleType.CTREPCM
 
@@ -18,7 +18,7 @@ class GameDataRobot(wpilib.TimedRobot):
         # Set game data to empty string by default
         self.gameData = ""
         # Get the SmartDashboard table from networktables
-        self.sd = NetworkTables.getTable("SmartDashboard")
+        self.sd = ntcore.NetworkTableInstance.getDefault().getTable("SmartDashboard")
 
     def teleopPeriodic(self):
         data = wpilib.DriverStation.getGameSpecificMessage()

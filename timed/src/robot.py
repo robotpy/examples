@@ -43,7 +43,7 @@ class MyRobot(wpilib.TimedRobot):
 
         # Print out the number of loop iterations passed every second
         self.loops += 1
-        if self.timer.hasPeriodPassed(1):
+        if self.timer.advanceIfElapsed(1):
             self.logger.info("%d loops / second", self.loops)
             self.loops = 0
 
