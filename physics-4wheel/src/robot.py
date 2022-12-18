@@ -18,8 +18,8 @@ class MyRobot(wpilib.TimedRobot):
         self.rf_motor = wpilib.Jaguar(3)
         self.rr_motor = wpilib.Jaguar(4)
 
-        l_motor = wpilib.SpeedControllerGroup(self.lf_motor, self.lr_motor)
-        r_motor = wpilib.SpeedControllerGroup(self.rf_motor, self.rr_motor)
+        l_motor = wpilib.MotorControllerGroup(self.lf_motor, self.lr_motor)
+        r_motor = wpilib.MotorControllerGroup(self.rf_motor, self.rr_motor)
 
         self.drive = wpilib.drive.DifferentialDrive(l_motor, r_motor)
 

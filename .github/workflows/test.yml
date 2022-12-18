@@ -13,26 +13,27 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: psf/black@stable
 
   test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-18.04]
-        python_version: [3.7, 3.8, 3.9, "3.10"]
+        os: [windows-latest, macos-latest, ubuntu-22.04]
+        python_version: [3.7, 3.8, 3.9, "3.10", "3.11"]
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python_version }}
         architecture: ${{ matrix.architecture }}
     - name: Install deps
       run: |
         pip install -U pip
-        pip install 'robotpy[commands2,romi]<2023.0.0,>=2022.4.0' pytest
+        pip install 'robotpy[commands2]<2024.0.0,>=2023.0.0b7' pytest
+        #pip install 'robotpy[commands2,romi]<2024.0.0,>=2023.0.0b3' pytest
     - name: Run tests
       run: bash run_tests.sh
       shell: bash
