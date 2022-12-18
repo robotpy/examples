@@ -51,7 +51,11 @@ class Drivetrain(SubsystemBase):
 
         # Create the an object for our odometry, which will utilize sensor data to
         # keep a record of our position on the field.
-        self.odometry = DifferentialDriveOdometry(self.gyro.getRotation2d())
+        self.odometry = DifferentialDriveOdometry(
+            self.gyro.getRotation2d(),
+            self.leftEncoder.getDistance(),
+            self.rightEncoder.getDistance(),
+        )
 
         # Reset the encoders upon the initilization of the robot.
         self.resetEncoders()
@@ -81,7 +85,12 @@ class Drivetrain(SubsystemBase):
     def resetOdometry(self, pose):
         """Resets the robot's odometry to a given position."""
         self.resetEncoders()
-        self.odometry.resetPosition(pose, self.gyro.getRotation2d())
+        self.odometry.resetPosition(
+            self.gyro.getRotation2d(),
+            self.leftEncoder.getDistance(),
+            self.rightEncoder.getDistance(),
+            pose,
+        )
 
     def arcadeDrive(self, fwd, rot):
         """Drive the robot with standard arcade controls."""
