@@ -65,5 +65,9 @@ class DriveSubsystem(commands2.SubsystemBase):
     def getRightEncoder(self):
         return self.rightEncoder
     
-    def setMaxOutput(self, maxOutput:float):
-        self.drive.setMaxOutput(maxOutput)
+    def maxOutputHalf(self):
+        print("half")
+        self.drive.setMaxOutput(0.5)
+
+    def maxOutputFull(self):
+        self.drive.setMaxOutput(1)

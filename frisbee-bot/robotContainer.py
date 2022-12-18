@@ -56,7 +56,7 @@ class RobotContainer():
         )
 
         #The driver's controller
-        self.driverController = commands2.button.CommandXboxController(constants.Constants.OIConstants.kDriverControllerPort)
+        self.driverController = commands2.button.CommandJoystick(constants.Constants.OIConstants.kDriverControllerPort)
 
     # The container for the robot. Contains subsystems, OI devices, and commands.
     def robotContainer(self):
@@ -69,8 +69,8 @@ class RobotContainer():
             #A split-stick arcade command, with forward/backward controlled by the left
             #hand, and turning controlled by the right.
             commands2.cmd.run(
-                self.robotDrive.arcadeDrive(
-                    lambda: -self.driverController.getLeftY(), lambda: -self.driverController.getRightX()
+                lambda: self.robotDrive.arcadeDrive(
+                    -self.driverController.getRawAxis(1), self.driverController.getRawAxis(3)
                 ),
                 [self.robotDrive]
             )
@@ -85,10 +85,10 @@ class RobotContainer():
         # We can bind commands while retaining references to them in RobotContainer
 
         # Spin up the shooter when the 'A' button is pressed
-        self.driverController.A().onTrue(self.spinUpShooter)
+        self.driverController.button(1).onTrue(self.spinUpShooter)
 
         # Turn off the shooter when the 'B' button is pressed
-        self.driverController.B().onTrue(self.stopShooter)
+        self.driverController.button(2).onTrue(self.stopShooter)
 
         #We can also write them as temporary variables outside the bindings
 
@@ -100,18 +100,18 @@ class RobotContainer():
             commands2.cmd.nothing(),
             # Determine which of the above to do based on whether the shooter has reached the
             # desired speed
-            self.shooter.getController().atSetpoint()
+            lambda: self.shooter.getController().atSetpoint()
         )
 
-        stopFeeder = commands2.cmd.runOnce(self.shooter.stopFeeder(), [self.shooter])
+        stopFeeder = commands2.cmd.runOnce(self.shooter.stopFeeder, [self.shooter])
 
         # Shoot when the 'X' button is pressed
-        self.driverController.X().onTrue(shoot).onFalse(stopFeeder)
+        self.driverController.button(3).onTrue(shoot).onFalse(stopFeeder)
 
         #We can also define commands inline at the binding!
 
         #While holding the shoulder button, drive at half speed
-        self.driverController.rightBumper().onTrue(commands2.cmd.runOnce(self.robotDrive.setMaxOutput(0.5), [self.robotDrive])).onFalse(commands2.cmd.runOnce(self.robotDrive.setMaxOutput(1), [self.robotDrive]))
+        self.driverController.button(4).onTrue(commands2.cmd.runOnce(self.robotDrive.maxOutputHalf, [self.robotDrive])).onFalse(commands2.cmd.runOnce(self.robotDrive.maxOutputFull, [self.robotDrive]))
     
     # Use this to pass the autonomous command to the main {@link Robot} class.
     def getAutonomousCommand(self) -> commands2.Command:

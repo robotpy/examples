@@ -1,5 +1,6 @@
 import wpilib
 import wpilib.simulation
+import wpimath.controller
 from wpimath.system import LinearSystemId
 from wpimath.system.plant import DCMotor
 
@@ -7,10 +8,13 @@ import constants
 
 from pyfrc.physics.core import PhysicsInterface
 
+from subsystems.ShooterSubsystem import ShooterSubsystem
+
 import typing
 
 if typing.TYPE_CHECKING:
     from robot import MyRobot
+
 
 
 class PhysicsEngine:
@@ -19,12 +23,9 @@ class PhysicsEngine:
     one on each end of the track. Obviously, this is not particularly
     realistic, but it's good enough to illustrate the point
     """
-
     def __init__(self, physics_controller: PhysicsInterface, robot: "MyRobot"):
-
-        self.physics_controller = physics_controller
-
-        print(31)
+        # Motors
+        pass
 
     def update_sim(self, now: float, tm_diff: float) -> None:
         """
