@@ -11,6 +11,7 @@ the package after creating this project, you must also update the build.gradle f
 project.
 """
 
+
 class MyRobot(wpilib.TimedRobot):
     """
     Our default robot class, pass it to wpilib.run
@@ -37,12 +38,11 @@ class MyRobot(wpilib.TimedRobot):
         SmartDashboard integrated updating.
         """
 
-        #Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
-        #commands, running already-scheduled commands, removing finished or interrupted commands,
-        #and running subsystem periodic() methods.  This must be called from the robot's periodic
-        #block in order for anything in the Command-based framework to work.
+        # Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
+        # commands, running already-scheduled commands, removing finished or interrupted commands,
+        # and running subsystem periodic() methods.  This must be called from the robot's periodic
+        # block in order for anything in the Command-based framework to work.
         commands2.CommandScheduler.getInstance().run()
-
 
     def disabledInit(self) -> None:
         """This function is called once each time the robot enters Disabled mode."""
@@ -77,6 +77,7 @@ class MyRobot(wpilib.TimedRobot):
     def testInit(self) -> None:
         # Cancels all running commands at the start of test mode
         commands2.CommandScheduler.getInstance().cancelAll()
+
 
 if __name__ == "__main__":
     wpilib.run(MyRobot)

@@ -1,8 +1,8 @@
 import math
 
-class Constants():
 
-    class DriveConstants():
+class Constants:
+    class DriveConstants:
         kLeftMotor1Port = 0
         kLeftMotor2Port = 1
         kRightMotor1Port = 2
@@ -17,9 +17,9 @@ class Constants():
         kWheelDiameterInches = 6
 
         # Assumes the encoders are directly mounted on the wheel shafts
-        kEncoderDistancePerPulse = (kWheelDiameterInches * math.pi) / kEncoderCPR   
+        kEncoderDistancePerPulse = (kWheelDiameterInches * math.pi) / kEncoderCPR
 
-    class ShooterConstants():
+    class ShooterConstants:
         kEncoderPorts = (4, 5)
         kEncoderReversed = False
         kEncoderCPR = 1024
@@ -46,9 +46,9 @@ class Constants():
 
         kFeederSpeed = 0.5
 
-    class AutoConstants():
+    class AutoConstants:
         kAutoTimeoutSeconds = 12
         kAutoShootTimeSeconds = 7
-    
-    class OIConstants():
+
+    class OIConstants:
         kDriverControllerPort = 0
