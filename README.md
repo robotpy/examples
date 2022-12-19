@@ -26,8 +26,5 @@ found helpful for understanding how to write robot code, we'd love for you
 to take a shot at translating it into python and contributing to this
 repository!
 
-Please follow the following guidelines:
-
-* Retain the original license information
-* They must run! You *must* test your code on either a robot or in simulation
-* Tests for this repository must continue to pass (formatting, unit tests, etc)
+Please check out our [porting guide](CONTRIBUTING.md) for a variety of
+guidelines for new examples.
