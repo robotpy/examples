@@ -5,6 +5,7 @@ cd "$(dirname $0)"
 BASE_TESTS="
   addressableled
   arcade-drive
+  armbotoffboard
   arm-simulation
   commands-v2/hatchbot
   commands-v2/frisbee-bot
