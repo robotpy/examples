@@ -7,6 +7,7 @@ BASE_TESTS="
   arcade-drive
   arm-simulation
   commands-v2/hatchbot
+  commands-v2/frisbee-bot
   commands-v2/ramsete
   cscore-intermediate-vision
   cscore-quick-vision
