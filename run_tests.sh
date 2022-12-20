@@ -27,6 +27,7 @@ BASE_TESTS="
   tank-drive
   timed/src
   elevator-profiled-pid
+  elevator-trapezoid-profile
 "
 
 IGNORED_TESTS="
