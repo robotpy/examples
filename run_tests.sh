@@ -24,6 +24,7 @@ BASE_TESTS="
   physics-4wheel/src
   physics-mecanum/src
   physics-spi/src
+  selectcommand
   tank-drive
   timed/src
   elevator-profiled-pid
