@@ -18,12 +18,12 @@ class MyRobot(wpilib.TimedRobot):
         self.drive = wpilib.drive.DifferentialDrive(self.left_motor, self.right_motor)
         self.stick = wpilib.Joystick(0)
         self.timer = wpilib.Timer()
-        
+
         # We need to invert one side of the drivetrain so that positive voltages
         # result in both sides moving forward. Depending on how your robot's
         # gearbox is constructed, you might have to invert the left side instead.
         self.right_motor.setInverted(True)
-    
+
     def autonomousInit(self):
         """This function is run once each time the robot enters autonomous mode."""
         self.timer.reset()
