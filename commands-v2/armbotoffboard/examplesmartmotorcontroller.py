@@ -34,7 +34,9 @@ class ExampleSmartMotorController(wpilib.interfaces.MotorController):
         """
         pass
 
-    def setSetPoint(self, mode: PIDMode, setpoint: float, arbfeedforward: float) -> None:
+    def setSetPoint(
+        self, mode: PIDMode, setpoint: float, arbfeedforward: float
+    ) -> None:
         """Example method for setting the setpoint of the smart controller in PID mode.
 
         Args:
