@@ -27,11 +27,10 @@ class RobotContainer:
         return self.CommandSelector.ONE
 
     def __init__(self) -> None:
-        """An example selectcommand.  Will select from the three commands based on the value returned
-        by the selector method at runtime.  Note that selectcommand works on Object(), so the
-        selector does not have to be an enum; it could be any desired type (string, integer,
-        boolean, double...)
-        """
+        # An example selectcommand.  Will select from the three commands based on the value returned
+        # by the selector method at runtime.  Note that selectcommand works on Object(), so the
+        # selector does not have to be an enum; it could be any desired type (string, integer,
+        # boolean, double...)
         # Maps selector values to commands
         self.example_select_command = commands2.SelectCommand(
             self.select,
