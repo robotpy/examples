@@ -34,7 +34,7 @@ class RobotContainer:
         """
         # Maps selector values to commands
         self.exampleselectcommand = commands2.SelectCommand(
-            lambda: self.select(),
+            self.select,
             [
                 (
                     self.CommandSelector.ONE,
