@@ -10,6 +10,7 @@ BASE_TESTS="
   commands-v2/hatchbot
   commands-v2/frisbee-bot
   commands-v2/ramsete
+  commands-v2/selectcommand
   cscore-intermediate-vision
   cscore-quick-vision
   elevator-simulation
@@ -24,7 +25,6 @@ BASE_TESTS="
   physics-4wheel/src
   physics-mecanum/src
   physics-spi/src
-  selectcommand
   tank-drive
   timed/src
   elevator-profiled-pid
