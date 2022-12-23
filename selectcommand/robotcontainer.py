@@ -33,7 +33,7 @@ class RobotContainer:
         boolean, double...)
         """
         # Maps selector values to commands
-        self.exampleselectcommand = commands2.SelectCommand(
+        self.example_select_command = commands2.SelectCommand(
             self.select,
             [
                 (
@@ -65,4 +65,4 @@ class RobotContainer:
 
         :returns: the command to run in autonomous
         """
-        return self.exampleselectcommand
+        return self.example_select_command
