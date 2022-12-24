@@ -27,13 +27,13 @@ class RobotContainer:
         return self.CommandSelector.ONE
 
     def __init__(self) -> None:
-        # An example selectcommand.  Will select from the three commands based on the value returned
-        # by the selector method at runtime.  Note that selectcommand works on Object(), so the
+        # An example selectcommand. Will select from the three commands based on the value returned
+        # by the selector method at runtime. Note that selectcommand takes a generic type, so the
         # selector does not have to be an enum; it could be any desired type (string, integer,
         # boolean, double...)
-        # Maps selector values to commands
         self.example_select_command = commands2.SelectCommand(
             self.select,
+            # Maps selector values to commands
             [
                 (
                     self.CommandSelector.ONE,
@@ -55,12 +55,13 @@ class RobotContainer:
 
     def configureButtonBindings(self) -> None:
         """Use this method to define your button->command mappings. Buttons can be created by
-        instantiating a :GenericHID or one of its subclasses (Joystick or XboxController),
-        and then passing it to a JoystickButton.
+        instantiating a {@link GenericHID} or one of its subclasses ({@link
+        edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then calling passing it to a
+        {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
         """
 
     def getAutonomousCommand(self) -> commands2.Command:
-        """Use this to pass the autonomous command to the main :Robot class.
+        """Use this to pass the autonomous command to the main {@link Robot} class.
 
         :returns: the command to run in autonomous
         """
