@@ -28,6 +28,7 @@ BASE_TESTS="
   timed/src
   elevator-profiled-pid
   elevator-trapezoid-profile
+  commands-v2/gyro-drive-commands
 "
 
 IGNORED_TESTS="
