@@ -40,9 +40,10 @@ class DriveConstants:
 
     kMaxTurnRateDegPerS = 100
     kMaxTurnAccelerationDegPerSSquared = 300
-    
+
     kTurnToleranceDeg = 5
-    kTurnRateToleranceDegPerS = 10 # degrees per second
+    kTurnRateToleranceDegPerS = 10  # degrees per second
+
 
 class OIConstants:
     kDriverControllerPort = 0

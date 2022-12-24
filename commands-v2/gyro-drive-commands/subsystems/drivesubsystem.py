@@ -118,12 +118,16 @@ class DriveSubsystem(commands2.SubsystemBase):
 
         :returns: the robot's heading in degrees, from 180 to 180
         """
-        return math.remainder(self.gyro.getAngle(), 180) * (-1 if constants.DriveConstants.kGyroReversed else 1)
-    
+        return math.remainder(self.gyro.getAngle(), 180) * (
+            -1 if constants.DriveConstants.kGyroReversed else 1
+        )
+
     def getTurnRate(self):
         """
         Returns the turn rate of the robot.
 
         :returns: The turn rate of the robot, in degrees per second
         """
-        return self.gyro.getRate() * (-1 if constants.DriveConstants.kGyroReversed else 1)
+        return self.gyro.getRate() * (
+            -1 if constants.DriveConstants.kGyroReversed else 1
+        )

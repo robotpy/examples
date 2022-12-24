@@ -12,6 +12,7 @@ from subsystems.drivesubsystem import DriveSubsystem
 
 import constants
 
+
 class TurnToAngleProfiled(commands2.ProfiledPIDCommand):
     """A command that will turn the robot to the specified angle using a motion profile."""
 
@@ -29,8 +30,8 @@ class TurnToAngleProfiled(commands2.ProfiledPIDCommand):
                 constants.DriveConstants.kTurnD,
                 wpimath.trajectory.TrapezoidProfile.Constraints(
                     constants.DriveConstants.kMaxTurnRateDegPerS,
-                    constants.DriveConstants.kMaxTurnAccelerationDegPerSSquared
-                )
+                    constants.DriveConstants.kMaxTurnAccelerationDegPerSSquared,
+                ),
             ),
             # Close loop on heading
             drive.getHeading,
@@ -39,7 +40,7 @@ class TurnToAngleProfiled(commands2.ProfiledPIDCommand):
             # Pipe output to turn robot
             lambda output, setpoint: drive.arcadeDrive(0, output),
             # Require the drive
-            [drive]
+            [drive],
         )
 
         # Set the controller to be continuous (because it is an angle controller)
@@ -47,7 +48,10 @@ class TurnToAngleProfiled(commands2.ProfiledPIDCommand):
 
         # Set the controller tolerance - the delta tolerance ensures the robot is stationary at the
         # setpoint before it is considered as having reached the reference
-        self.getController().setTolerance(constants.DriveConstants.kTurnToleranceDeg, constants.DriveConstants.kTurnRateToleranceDegPerS)
+        self.getController().setTolerance(
+            constants.DriveConstants.kTurnToleranceDeg,
+            constants.DriveConstants.kTurnRateToleranceDegPerS,
+        )
 
     def isFinished(self) -> bool:
         # End when the controller is at the reference.

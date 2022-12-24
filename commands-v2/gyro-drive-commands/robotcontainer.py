@@ -14,6 +14,7 @@ import subsystems.drivesubsystem
 import commands.turntoangle
 import commands.turntoangleprofiled
 
+
 class RobotContainer:
     """
     This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -29,24 +30,26 @@ class RobotContainer:
         self.robotDrive = subsystems.drivesubsystem.DriveSubsystem()
 
         # The driver's controller
-        self.driverController = commands2.button.CommandPS4Controller(constants.OIConstants.kDriverControllerPort)
+        self.driverController = commands2.button.CommandPS4Controller(
+            constants.OIConstants.kDriverControllerPort
+        )
 
         # Configure the button bindings
         self.configureButtonBindings()
 
         # Configure default commands
-        # Set the default drive command to split-stick arcade drive 
+        # Set the default drive command to split-stick arcade drive
         self.robotDrive.setDefaultCommand(
             # A split-stick arcade command, with forward/backward controlled by the left
             # hand, and turning controlled by the right.
             commands2.RunCommand(
                 lambda: self.robotDrive.arcadeDrive(
-                    -self.driverController.getLeftY(), -self.driverController.getRightX()
+                    -self.driverController.getLeftY(),
+                    -self.driverController.getRightX(),
                 ),
-                [self.robotDrive]
+                [self.robotDrive],
             )
         )
-
 
     def configureButtonBindings(self):
         """
@@ -56,48 +59,52 @@ class RobotContainer:
         """
         # Drive at half speed when the right bumper is held
         commands2.button.JoystickButton(
-            self.driverController,
-            wpilib.PS4Controller.Button.kR1
+            self.driverController, wpilib.PS4Controller.Button.kR1
         ).onTrue(
-            commands2.InstantCommand((lambda: self.robotDrive.setMaxOutput(0.5)), [self.robotDrive])
+            commands2.InstantCommand(
+                (lambda: self.robotDrive.setMaxOutput(0.5)), [self.robotDrive]
+            )
         ).onFalse(
-            commands2.InstantCommand((lambda: self.robotDrive.setMaxOutput(1)), [self.robotDrive])
+            commands2.InstantCommand(
+                (lambda: self.robotDrive.setMaxOutput(1)), [self.robotDrive]
+            )
         )
 
         # Stabilize robot to drive straight with gyro when left bumper is held
         commands2.button.JoystickButton(
-            self.driverController,
-            wpilib.PS4Controller.Button.kL1
+            self.driverController, wpilib.PS4Controller.Button.kL1
         ).whileTrue(
             commands2.PIDCommand(
                 wpimath.controller.PIDController(
                     constants.DriveConstants.kStabilizationP,
                     constants.DriveConstants.kStabilizationI,
-                    constants.DriveConstants.kStabilizationD
+                    constants.DriveConstants.kStabilizationD,
                 ),
                 # Close the loop on the turn rate
                 self.robotDrive.getTurnRate,
                 # Setpoint is 0
                 0,
                 # Pipe the output to the turning controls
-                lambda output: self.robotDrive.arcadeDrive(-self.driverController.getLeftY(), output),
+                lambda output: self.robotDrive.arcadeDrive(
+                    -self.driverController.getLeftY(), output
+                ),
                 # Require the robot drive
-                [self.robotDrive]
+                [self.robotDrive],
             )
         )
 
         # Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
         commands2.button.JoystickButton(
             self.driverController, wpilib.PS4Controller.Button.kCross
-        ).onTrue(
-            commands.turntoangle.TurnToAngle(90, self.robotDrive).withTimeout(5)
-        )
+        ).onTrue(commands.turntoangle.TurnToAngle(90, self.robotDrive).withTimeout(5))
 
         # Turn to -90 degrees with a profile when the Circle button is pressed, with a 5 second timeout
         commands2.button.JoystickButton(
             self.driverController, wpilib.PS4Controller.Button.kCircle
         ).onTrue(
-            commands.turntoangleprofiled.TurnToAngleProfiled(-90, self.robotDrive).withTimeout(5)
+            commands.turntoangleprofiled.TurnToAngleProfiled(
+                -90, self.robotDrive
+            ).withTimeout(5)
         )
 
     def getAutonomousCommand(self) -> commands2.Command:

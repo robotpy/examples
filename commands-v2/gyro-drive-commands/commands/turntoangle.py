@@ -11,6 +11,7 @@ from subsystems.drivesubsystem import DriveSubsystem
 
 import constants
 
+
 class TurnToAngle(commands2.PIDCommand):
     """A command that will turn the robot to the specified angle."""
 
@@ -25,7 +26,7 @@ class TurnToAngle(commands2.PIDCommand):
             wpimath.controller.PIDController(
                 constants.DriveConstants.kTurnP,
                 constants.DriveConstants.kTurnI,
-                constants.DriveConstants.kTurnD
+                constants.DriveConstants.kTurnD,
             ),
             # Close loop on heading
             drive.getHeading,
@@ -34,7 +35,7 @@ class TurnToAngle(commands2.PIDCommand):
             # Pipe output to turn robot
             lambda output: drive.arcadeDrive(0, output),
             # Require the drive
-            [drive]
+            [drive],
         )
 
         # Set the controller to be continuous (because it is an angle controller)
@@ -42,7 +43,10 @@ class TurnToAngle(commands2.PIDCommand):
 
         # Set the controller tolerance - the delta tolerance ensures the robot is stationary at the
         # setpoint before it is considered as having reached the reference
-        self.getController().setTolerance(constants.DriveConstants.kTurnToleranceDeg, constants.DriveConstants.kTurnRateToleranceDegPerS)
+        self.getController().setTolerance(
+            constants.DriveConstants.kTurnToleranceDeg,
+            constants.DriveConstants.kTurnRateToleranceDegPerS,
+        )
 
     def isFinished(self) -> bool:
         # End when the controller is at the reference.
