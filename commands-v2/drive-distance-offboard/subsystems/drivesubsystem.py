@@ -40,7 +40,7 @@ class DriveSubsystem(commands2.SubsystemBase):
         # result in both sides moving forward. Depending on how your robot's
         # gearbox is constructed, you might have to invert the left side instead.
         self.rightLeader.setInverted(True)
-    
+
         # You might need to not do this depending on the specific motor controller
         # that you are using -- contact the respective vendor's documentation for
         # more details.
@@ -57,7 +57,7 @@ class DriveSubsystem(commands2.SubsystemBase):
         self.feedforward = wpimath.controller.SimpleMotorFeedforwardMeters(
             constants.DriveConstants.ksVolts,
             constants.DriveConstants.kvVoltSecondsPerMeter,
-            constants.DriveConstants.kMaxAccelerationMetersPerSecondSquared
+            constants.DriveConstants.kMaxAccelerationMetersPerSecondSquared,
         )
 
         # The robot's drive
@@ -71,8 +71,12 @@ class DriveSubsystem(commands2.SubsystemBase):
         :param rot: the commanded rotation
         """
         self.drive.arcadeDrive(fwd, rot)
-    
-    def setDriveStates(self, left: wpimath.trajectory.TrapezoidProfile.State, right: wpimath.trajectory.TrapezoidProfile.State):
+
+    def setDriveStates(
+        self,
+        left: wpimath.trajectory.TrapezoidProfile.State,
+        right: wpimath.trajectory.TrapezoidProfile.State,
+    ):
         """
         Attempts to follow the given drive states using offboard PID.
 
@@ -82,13 +86,13 @@ class DriveSubsystem(commands2.SubsystemBase):
         self.leftLeader.setSetPoint(
             examplesmartmotorcontroller.ExampleSmartMotorController.PIDMode.kPosition,
             left.position,
-            self.feedforward.calculate(left.velocity)
+            self.feedforward.calculate(left.velocity),
         )
 
         self.rightLeader.setSetPoint(
             examplesmartmotorcontroller.ExampleSmartMotorController.PIDMode.kPosition,
             right.position,
-            self.feedforward.calculate(right.velocity)
+            self.feedforward.calculate(right.velocity),
         )
 
     def getLeftEncoderDistance(self) -> wpilib.Encoder:

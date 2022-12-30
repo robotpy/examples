@@ -10,6 +10,7 @@ import wpimath.trajectory
 
 import constants
 import subsystems.drivesubsystem
+import commands.drivedistanceprofiled
 
 
 class RobotContainer:
@@ -81,13 +82,15 @@ class RobotContainer:
         # Do the same thing as above when the 'B' button is pressed, but defined inline
         self.driverController.B().onTrue(
             commands2.TrapezoidProfileCommand(
-                # Limit the max acceleration and velocity
-                wpimath.trajectory.TrapezoidProfile.Constraints(
-                    constants.DriveConstants.kMaxSpeedMetersPerSecond,
-                    constants.DriveConstants.kMaxAccelerationMetersPerSecondSquared,
+                wpimath.trajectory.TrapezoidProfile(
+                    # Limit the max acceleration and velocity
+                    wpimath.trajectory.TrapezoidProfile.Constraints(
+                        constants.DriveConstants.kMaxSpeedMetersPerSecond,
+                        constants.DriveConstants.kMaxAccelerationMetersPerSecondSquared,
+                    ),
+                    # End at desired position in meters; implicitly starts at 0
+                    wpimath.trajectory.TrapezoidProfile.State(3, 0),
                 ),
-                # End at desired position in meters; implicitly starts at 0
-                wpimath.trajectory.TrapezoidProfile.State(3, 0),
                 # Pipe the profile state to the drive
                 lambda setpointState: self.robotDrive.setDriveStates(
                     setpointState, setpointState
