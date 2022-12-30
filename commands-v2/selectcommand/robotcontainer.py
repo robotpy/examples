@@ -55,13 +55,13 @@ class RobotContainer:
 
     def configureButtonBindings(self) -> None:
         """Use this method to define your button->command mappings. Buttons can be created by
-        instantiating a {@link GenericHID} or one of its subclasses ({@link
-        edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then calling passing it to a
-        {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+        instantiating a {GenericHID} or one of its subclasses ({@link
+        edu.wpi.first.wpilibj.Joystick} or {XboxController}), and then calling passing it to a
+        {edu.wpi.first.wpilibj2.command.button.JoystickButton}.
         """
 
     def getAutonomousCommand(self) -> commands2.Command:
-        """Use this to pass the autonomous command to the main {@link Robot} class.
+        """Use this to pass the autonomous command to the main {Robot} class.
 
         :returns: the command to run in autonomous
         """
