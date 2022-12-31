@@ -19,11 +19,10 @@ class DriveDistanceProfiled(commands2.TrapezoidProfileCommand):
     def __init__(
         self, meters: float, drive: subsystems.drivesubsystem.DriveSubsystem
     ) -> None:
-        """
-        Creates a new DriveDistanceProfiled command.
+        """Creates a new DriveDistanceProfiled command.
 
-        :param: meters The distance to drive.
-        :param: drive The drive subsystem to use.
+        :param meters: The distance to drive.
+        :param drive:  The drive subsystem to use.
         """
         super().__init__(
             wpimath.trajectory.TrapezoidProfile(
