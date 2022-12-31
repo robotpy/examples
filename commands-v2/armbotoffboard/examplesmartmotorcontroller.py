@@ -80,7 +80,7 @@ class ExampleSmartMotorController(wpilib.interfaces.MotorController):
     def get(self) -> float:
         pass
 
-    def setInverted(isInverted: bool) -> None:
+    def setInverted(self, isInverted: bool) -> None:
         pass
 
     def getInverted(self) -> bool:

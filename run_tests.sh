@@ -29,6 +29,7 @@ BASE_TESTS="
   elevator-profiled-pid
   elevator-trapezoid-profile
   commands-v2/gyro-drive-commands
+  commands-v2/drive-distance-offboard
 "
 
 IGNORED_TESTS="
