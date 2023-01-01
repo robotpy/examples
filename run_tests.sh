@@ -32,6 +32,7 @@ BASE_TESTS="
   elevator-trapezoid-profile
   commands-v2/gyro-drive-commands
   commands-v2/drive-distance-offboard
+  commands-v2/hatchbot-inlined
 "
 
 IGNORED_TESTS="
