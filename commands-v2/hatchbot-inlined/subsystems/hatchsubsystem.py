@@ -1,5 +1,6 @@
 import wpilib
 import commands2
+import commands2.cmd
 
 import constants
 
@@ -14,10 +15,10 @@ class HatchSubsystem(commands2.SubsystemBase):
             *constants.kHatchSolenoidPorts
         )
 
-    def grabHatch(self) -> None:
+    def grabHatch(self) -> commands2.Command:
         """Grabs the hatch"""
-        self.hatchSolenoid.set(wpilib.DoubleSolenoid.Value.kForward)
+        return commands2.cmd.runOnce(lambda: self.hatchSolenoid.set(wpilib.DoubleSolenoid.Value.kForward), [self])
 
-    def releaseHatch(self) -> None:
+    def releaseHatch(self) -> commands2.Command:
         """Releases the hatch"""
-        self.hatchSolenoid.set(wpilib.DoubleSolenoid.Value.kReverse)
+        return commands2.cmd.runOnce(lambda: self.hatchSolenoid.set(wpilib.DoubleSolenoid.Value.kReverse), [self])

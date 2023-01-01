@@ -3,15 +3,11 @@ from wpilib.interfaces import GenericHID
 
 import commands2
 import commands2.button
+import commands2.cmd
 
 import constants
 
-from commands.complexauto import ComplexAuto
-from commands.drivedistance import DriveDistance
-from commands.defaultdrive import DefaultDrive
-from commands.grabhatch import GrabHatch
-from commands.halvedrivespeed import HalveDriveSpeed
-from commands.releasehatch import ReleaseHatch
+import commands.autos
 
 from subsystems.drivesubsystem import DriveSubsystem
 from subsystems.hatchsubsystem import HatchSubsystem
@@ -26,24 +22,41 @@ class RobotContainer:
     """
 
     def __init__(self) -> None:
-
-        # The driver's controller
-        # self.driverController = wpilib.XboxController(constants.kDriverControllerPort)
-        self.driverController = wpilib.Joystick(constants.kDriverControllerPort)
-
         # The robot's subsystems
-        self.drive = DriveSubsystem()
-        self.hatch = HatchSubsystem()
+        self.driveSubsystem = DriveSubsystem()
+        self.hatchSubsystem = HatchSubsystem()
 
-        # Autonomous routines
+        # Retained command handles
 
         # A simple auto routine that drives forward a specified distance, and then stops.
-        self.simpleAuto = DriveDistance(
-            constants.kAutoDriveDistanceInches, constants.kAutoDriveSpeed, self.drive
-        )
+        self.simpleAuto = commands.autos.Autos.simpleAuto(self.driveSubsystem)
 
         # A complex auto routine that drives forward, drops a hatch, and then drives backward.
-        self.complexAuto = ComplexAuto(self.drive, self.hatch)
+        self.complexAuto = commands.autos.Autos.complexAuto(
+            self.driveSubsystem, self.hatchSubsystem
+        )
+
+        # The driver's controller
+        self.driverController = commands2.button.CommandPS4Controller(
+            constants.kDriverControllerPort
+        )
+
+        # Configure the button bindings
+        self.configureButtonBindings()
+
+        # Configure default commands
+        # Set the default drive command to split-stick arcade drive
+        self.driveSubsystem.setDefaultCommand(
+            # A split-stick arcade command, with forward/backward controlled by the left
+            # hand, and turning controlled by the right.
+            commands2.cmd.run(
+                lambda: self.driveSubsystem.arcadeDrive(
+                    -self.driverController.getLeftY(),
+                    -self.driverController.getRightX(),
+                ),
+                [self.driveSubsystem],
+            )
+        )
 
         # Chooser
         self.chooser = wpilib.SendableChooser()
@@ -55,17 +68,6 @@ class RobotContainer:
         # Put the chooser on the dashboard
         wpilib.SmartDashboard.putData("Autonomous", self.chooser)
 
-        self.configureButtonBindings()
-
-        # set up default drive command
-        self.drive.setDefaultCommand(
-            DefaultDrive(
-                self.drive,
-                lambda: -self.driverController.getY(),
-                lambda: self.driverController.getX(),
-            )
-        )
-
     def configureButtonBindings(self):
         """
         Use this method to define your button->command mappings. Buttons can be created by
@@ -73,17 +75,16 @@ class RobotContainer:
         and then passing it to a JoystickButton.
         """
 
-        commands2.button.JoystickButton(self.driverController, 1).whenPressed(
-            GrabHatch(self.hatch)
-        )
+        # Grab the hatch when the Circle button is pressed.
+        self.driverController.circle().onTrue(self.hatchSubsystem.grabHatch())
 
-        commands2.button.JoystickButton(self.driverController, 2).whenPressed(
-            ReleaseHatch(self.hatch)
-        )
+        # Release the hatch when the Square button is pressed.
+        self.driverController.square().onTrue(self.hatchSubsystem.releaseHatch())
 
-        commands2.button.JoystickButton(self.driverController, 3).whenHeld(
-            HalveDriveSpeed(self.drive)
-        )
+        # While holding R1, drive at half speed
+        self.driverController.R1().onTrue(
+            commands2.cmd.runOnce(lambda: self.driveSubsystem.setMaxOutput(0.5))
+        ).onFalse(commands2.cmd.runOnce(lambda: self.driveSubsystem.setMaxOutput(1)))
 
     def getAutonomousCommand(self) -> commands2.Command:
         return self.chooser.getSelected()

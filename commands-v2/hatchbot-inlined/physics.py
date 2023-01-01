@@ -37,10 +37,10 @@ class PhysicsEngine:
 
         # Motors
         self.l_motor = wpilib.simulation.PWMSim(
-            robot.container.drive.left1.getChannel()
+            robot.container.driveSubsystem.left1.getChannel()
         )
         self.r_motor = wpilib.simulation.PWMSim(
-            robot.container.drive.right1.getChannel()
+            robot.container.driveSubsystem.right1.getChannel()
         )
 
         self.system = LinearSystemId.identifyDrivetrainSystem(1.98, 0.2, 1.5, 0.3)
@@ -53,10 +53,10 @@ class PhysicsEngine:
         )
 
         self.leftEncoderSim = wpilib.simulation.EncoderSim(
-            robot.container.drive.leftEncoder
+            robot.container.driveSubsystem.leftEncoder
         )
         self.rightEncoderSim = wpilib.simulation.EncoderSim(
-            robot.container.drive.rightEncoder
+            robot.container.driveSubsystem.rightEncoder
         )
 
     def update_sim(self, now: float, tm_diff: float) -> None:
