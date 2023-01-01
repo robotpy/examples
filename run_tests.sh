@@ -10,12 +10,14 @@ BASE_TESTS="
   commands-v2/hatchbot
   commands-v2/frisbee-bot
   commands-v2/ramsete
+  commands-v2/selectcommand
   cscore-intermediate-vision
   cscore-quick-vision
   elevator-simulation
   game-data
   getting-started
   gyro
+  magicbot-simple
   mecanum-drive
   mecanum-driveXbox
   mechanism2d
@@ -34,7 +36,6 @@ BASE_TESTS="
 
 IGNORED_TESTS="
   commands-v2/romi
-  magicbot-simple
   physics-camsim/src
   stateful-autonomous
   shuffleboard
