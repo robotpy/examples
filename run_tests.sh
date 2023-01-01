@@ -17,6 +17,7 @@ BASE_TESTS="
   game-data
   getting-started
   gyro
+  magicbot-simple
   mecanum-drive
   mecanum-driveXbox
   mechanism2d
@@ -35,7 +36,6 @@ BASE_TESTS="
 
 IGNORED_TESTS="
   commands-v2/romi
-  magicbot-simple
   physics-camsim/src
   stateful-autonomous
   shuffleboard
