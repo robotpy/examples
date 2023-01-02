@@ -10,8 +10,9 @@ import wpimath.trajectory
 import constants
 import examplesmartmotorcontroller
 
-# A robot arm subsystem that moves with a motion profile.
+
 class ArmSubsystem(commands2.TrapezoidProfileSubsystem):
+    """A robot arm subsystem that moves with a motion profile."""
 
     # Create a new ArmSubsystem
     def __init__(self) -> None:
