@@ -2,18 +2,23 @@
 
 cd "$(dirname $0)"
 
+# Keep this list alphabetically sorted
 BASE_TESTS="
   addressableled
   arcade-drive
   arm-simulation
   commands-v2/armbotoffboard
-  commands-v2/hatchbot
+  commands-v2/drive-distance-offboard
   commands-v2/frisbee-bot
+  commands-v2/gyro-drive-commands
+  commands-v2/hatchbot
   commands-v2/ramsete
   commands-v2/selectcommand
   cscore-intermediate-vision
   cscore-quick-vision
+  elevator-profiled-pid
   elevator-simulation
+  elevator-trapezoid-profile
   game-data
   getting-started
   gyro
@@ -28,10 +33,6 @@ BASE_TESTS="
   physics-spi/src
   tank-drive
   timed/src
-  elevator-profiled-pid
-  elevator-trapezoid-profile
-  commands-v2/gyro-drive-commands
-  commands-v2/drive-distance-offboard
 "
 
 IGNORED_TESTS="
