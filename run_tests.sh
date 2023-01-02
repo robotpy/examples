@@ -15,8 +15,6 @@ BASE_TESTS="
   commands-v2/hatchbot-inlined
   commands-v2/ramsete
   commands-v2/selectcommand
-  commands-v2/gyro-drive-commands
-  commands-v2/drive-distance-offboard
   cscore-intermediate-vision
   cscore-quick-vision
   elevator-profiled-pid
