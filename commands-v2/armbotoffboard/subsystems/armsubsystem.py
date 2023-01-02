@@ -4,9 +4,11 @@
 
 import commands2
 import commands2.cmd
-import examplesmartmotorcontroller, constants
 import wpimath.controller
 import wpimath.trajectory
+
+import constants
+import examplesmartmotorcontroller
 
 # A robot arm subsystem that moves with a motion profile.
 class ArmSubsystem(commands2.TrapezoidProfileSubsystem):
@@ -33,7 +35,7 @@ class ArmSubsystem(commands2.TrapezoidProfileSubsystem):
 
     def useState(self, setpoint: wpimath.trajectory.TrapezoidProfile.State) -> None:
         # Calculate the feedforward from the setpoint
-        feedfwd = self.feedforward.calculate(setpoint.position, setpoint.velocity)
+        feedforward = self.feedforward.calculate(setpoint.position, setpoint.velocity)
 
         # Add the feedforward to the PID output to get the motor output
         self.motor.setSetPoint(
@@ -43,6 +45,4 @@ class ArmSubsystem(commands2.TrapezoidProfileSubsystem):
         )
 
     def setArmGoalCommand(self, kArmOffsetRads: float) -> commands2.Command:
-        return commands2.cmd.runOnce(
-            lambda: commands2.TrapezoidProfileSubsystem.setGoal(kArmOffsetRads), [self]
-        )
+        return commands2.cmd.runOnce(lambda: self.setGoal(kArmOffsetRads), [self])
