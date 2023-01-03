@@ -26,9 +26,7 @@ if typing.TYPE_CHECKING:
 
 class PhysicsEngine:
     """
-    Simulates a motor moving something that strikes two limit switches,
-    one on each end of the track. Obviously, this is not particularly
-    realistic, but it's good enough to illustrate the point
+    Simulates a Differential Drivetrain using system identification data for the space-state model.
     """
 
     def __init__(self, physics_controller: PhysicsInterface, robot: "MyRobot"):
