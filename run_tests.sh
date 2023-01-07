@@ -32,6 +32,7 @@ BASE_TESTS="
   physics-4wheel/src
   physics-mecanum/src
   physics-spi/src
+  shuffleboard
   tank-drive
   timed/src
 "
@@ -40,7 +41,6 @@ IGNORED_TESTS="
   commands-v2/romi
   physics-camsim/src
   stateful-autonomous
-  shuffleboard
 "
 
 ALL_TESTS="${BASE_TESTS}"
