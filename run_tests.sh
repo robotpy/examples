@@ -12,6 +12,7 @@ BASE_TESTS="
   commands-v2/frisbee-bot
   commands-v2/gyro-drive-commands
   commands-v2/hatchbot
+  commands-v2/hatchbot-inlined
   commands-v2/ramsete
   commands-v2/selectcommand
   cscore-intermediate-vision
