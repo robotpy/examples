@@ -33,6 +33,7 @@ BASE_TESTS="
   physics-mecanum/src
   physics-spi/src
   shuffleboard
+  state-space-flywheel
   tank-drive
   timed/src
 "
