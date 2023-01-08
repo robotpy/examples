@@ -2,6 +2,7 @@
 # Open Source Software; you can modify and/or share it under the terms of
 # the WPILib BSD license file in the root directory of this project.
 
+import wpilib
 import wpilib.shuffleboard
 
 import commands2
@@ -66,11 +67,11 @@ class RobotContainer:
         {edu.wpi.first.wpilibj2.command.button.JoystickButton}.
         """
         # Run instant command 1 when the 'A' button is pressed
-        self.driverController.A().onTrue(self.instantCommand1)
+        commands2.button.JoystickButton(self.driverController, wpilib.XboxController.Button.kA).onTrue(self.instantCommand1)
         # Run instant command 2 when the 'X' button is pressed
-        self.driverController.X().onTrue(self.instantCommand2)
+        commands2.button.JoystickButton(self.driverController, wpilib.XboxController.Button.kX).onTrue(self.instantCommand2)
         # Run instant command 3 when the 'Y' button is held; release early to interrupt
-        self.driverController.Y().whileTrue(self.waitCommand)
+        commands2.button.JoystickButton(self.driverController, wpilib.XboxController.Button.kY).whileTrue(self.waitCommand)
 
     def getAutonomousCommand(self) -> commands2.Command:
         """Use this to pass the autonomous command to the main {Robot} class.
