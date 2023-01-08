@@ -94,13 +94,13 @@ class MyRobot(wpilib.TimedRobot):
     def teleopPeriodic(self) -> None:
         # Sets the target speed of our flywheel. This is similar to setting the setpoint of a
         # PID controller.
-        if self.joystick.getTriggerPressed:
+        if self.joystick.getTriggerPressed():
             # We just pressed the trigger, so let's set our next reference
             self.loop.setNextR(numpy.array([self.kSpinUpRadPerSec]))
 
-        elif self.joystick.getTriggerReleased:
+        elif self.joystick.getTriggerReleased():
             # We just released the trigger, so let's spin down
-            self.loop.setNextR([0])
+            self.loop.setNextR(numpy.array([self.kSpinUpRadPerSec]))
 
         # Correct our Kalman filter's state vector estimate with encoder data.
         self.loop.correct([self.encoder.getRate()])
