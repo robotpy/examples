@@ -13,6 +13,7 @@ import wpimath.system.plant
 import wpimath.estimator
 
 import math
+import numpy
 
 # A simple utility class for converting rpm to radians, as robotPY does not currently have a wpimath.util class.
 import util.units
@@ -95,7 +96,7 @@ class MyRobot(wpilib.TimedRobot):
         # PID controller.
         if self.joystick.getTriggerPressed:
             # We just pressed the trigger, so let's set our next reference
-            self.loop.setNextR([self.kSpinUpRadPerSec])
+            self.loop.setNextR(numpy.array([self.kSpinUpRadPerSec]))
 
         elif self.joystick.getTriggerReleased:
             # We just released the trigger, so let's spin down
