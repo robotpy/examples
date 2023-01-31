@@ -11,6 +11,7 @@ import constants
 from subsystems.armsubsystem import ArmSubsystem
 from subsystems.drivesubsystem import DriveSubsystem
 
+
 class RobotContainer:
     """
     This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -25,11 +26,13 @@ class RobotContainer:
         self.robot_arm = ArmSubsystem()
 
         # The driver's controller
-        self.driver_controller = commands2.button.CommandXboxController(constants.OIConstants.kDriverControllerPort)
+        self.driver_controller = commands2.button.CommandXboxController(
+            constants.OIConstants.kDriverControllerPort
+        )
 
         # Configure the button bindings
         self.configureButtonBindings()
-        
+
         # Set the default drive command
         # Set the default drive command to split-stick arcade drive
         self.robot_drive.setDefaultCommand(
@@ -37,11 +40,13 @@ class RobotContainer:
                 # A split-stick arcade command, with forward/backward controlled by the left
                 # hand, and turning controlled by the right.
                 lambda: self.robot_drive.arcadeDrive(
-                    -self.driver_controller.getLeftY(), -self.driver_controller.getRightX()
-                ), [self.robot_drive]
+                    -self.driver_controller.getLeftY(),
+                    -self.driver_controller.getRightX(),
+                ),
+                [self.robot_drive],
             )
         )
-    
+
     def configureButtonBindings(self) -> None:
         """
         Use this method to define your button->command mappings. Buttons can be created by
@@ -51,17 +56,13 @@ class RobotContainer:
 
         # Move the arm to 2 radians above horizontal when the 'A' button is pressed.
         self.driver_controller.A().onTrue(
-            commands2.cmd.run(
-                self.moveArm(2),
-                [self.robot_arm]
-            )
+            commands2.cmd.run(self.moveArm(2), [self.robot_arm])
         )
 
         # Move the arm to neutral position when the 'B' button is pressed
         self.driver_controller.B().onTrue(
             commands2.cmd.run(
-                self.moveArm(constants.ArmConstants.kArmOffsetRads),
-                [self.robot_arm]
+                self.moveArm(constants.ArmConstants.kArmOffsetRads), [self.robot_arm]
             )
         )
 
@@ -69,7 +70,7 @@ class RobotContainer:
         self.driver_controller.Y().onTrue(
             commands2.cmd.runOnce(lambda: self.robot_arm.disable())
         )
-        
+
         # Drive at half speed when the bumper is held
         self.driver_controller.rightTrigger().onTrue(
             commands2.cmd.runOnce(lambda: self.robot_drive.setMaxOutput(0.5))
@@ -79,10 +80,10 @@ class RobotContainer:
         )
 
     def disablePIDSubsystems(self) -> None:
-        """Disables all ProfiledPIDSubsystem and PIDSubsystem instances. 
+        """Disables all ProfiledPIDSubsystem and PIDSubsystem instances.
         This should be called on robot disable to prevent integral windup."""
         self.robot_arm.disable()
-    
+
     def getAutonomousCommand(self) -> commands2.Command:
         """Use this to pass the autonomous command to the main {@link Robot} class.
 
@@ -90,6 +91,6 @@ class RobotContainer:
         """
         return commands2.cmd.nothing()
 
-    def moveArm(self, radians: int) -> None:  
+    def moveArm(self, radians: int) -> None:
         self.robot_arm.setGoal(radians)
         self.robot_arm.enable()

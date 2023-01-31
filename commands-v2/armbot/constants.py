@@ -9,13 +9,14 @@ numerical or boolean constants. Don't use this for any other purpose!
 
 import math
 
+
 class DriveConstants:
     # The PWM IDs for the drivetrain motor controllers.
     kLeftMotor1Port = 0
     kLeftMotor2Port = 1
     kRightMotor1Port = 2
     kRightMotor2Port = 3
-    
+
     # Encoders and their respective motor controllers.
     kLeftEncoderPorts = (0, 1)
     kRightEncoderPorts = (2, 3)
@@ -29,6 +30,7 @@ class DriveConstants:
     # Assumes the encoders are directly mounted on the wheel shafts
     kEncoderDistancePerPulse = (kWheelDiameterInches * math.pi) / kEncoderCPR
 
+
 class ArmConstants:
     # NOTE: Please do NOT use these values on your robot.
     kMotorPort = 4
@@ -37,10 +39,10 @@ class ArmConstants:
     kGVolts = 1
     kVVoltSecondPerRad = 0.5
     kAVoltSecondSquaredPerRad = 0.1
-    
+
     kMaxVelocityRadPerSecond = 3
     kMaxAccelerationRadPerSecSquared = 10
-    
+
     kEncoderPorts = (4, 5)
     kEncoderPPR = 256
     kEncoderDistancePerPulse = 2.0 * math.pi / kEncoderPPR
@@ -49,9 +51,11 @@ class ArmConstants:
     # measured from the horizontal
     kArmOffsetRads = 0.5
 
+
 class AutoConstants:
     kAutoTimeoutSeconds = 12
     kAutoShootTimeSeconds = 7
+
 
 class OIConstants:
     kDriverControllerPort = 0
