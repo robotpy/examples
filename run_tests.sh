@@ -15,6 +15,7 @@ BASE_TESTS="
   commands-v2/hatchbot
   commands-v2/hatchbot-inlined
   commands-v2/ramsete
+  commands-v2/scheduler-event-logging
   commands-v2/selectcommand
   cscore-intermediate-vision
   cscore-quick-vision
@@ -34,6 +35,7 @@ BASE_TESTS="
   physics-mecanum/src
   physics-spi/src
   shuffleboard
+  state-space-flywheel
   tank-drive
   timed/src
 "
