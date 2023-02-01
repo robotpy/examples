@@ -11,7 +11,6 @@ import wpilib
 
 
 class MyRobot(wpilib.TimedRobot):
-
     kMetersPerPulse = 0.01
     kElevatorMinimumLength = 0.5
 

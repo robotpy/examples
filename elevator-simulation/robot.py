@@ -28,7 +28,6 @@ class MyRobot(wpilib.TimedRobot):
     kElevatorEncoderDistPerPulse = 2.0 * math.pi * kElevatorDrumRadius / 4096.0
 
     def robotInit(self) -> None:
-
         # standard classes for controlling our elevator
         self.controller = wpimath.controller.PIDController(self.kElevatorKp, 0, 0)
         self.encoder = wpilib.Encoder(self.kEncoderAChannel, self.kEncoderBChannel)

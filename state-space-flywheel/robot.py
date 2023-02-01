@@ -24,7 +24,6 @@ flywheel.
 
 
 class MyRobot(wpilib.TimedRobot):
-
     kMotorPort = 0
     kEncoderAChannel = 0
     kEncoderBChannel = 1

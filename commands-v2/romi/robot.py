@@ -94,7 +94,6 @@ class MyRobot(commands2.TimedCommandRobot):
 
 
 if __name__ == "__main__":
-
     # If your ROMI isn't at the default address, set that here
     os.environ["HALSIMWS_HOST"] = "10.0.0.2"
     os.environ["HALSIMWS_PORT"] = "3300"

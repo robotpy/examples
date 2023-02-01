@@ -5,7 +5,6 @@ from magicbot import will_reset_to
 
 
 class Component2:
-
     component1: Component1
     some_motor: wpilib.Talon
 

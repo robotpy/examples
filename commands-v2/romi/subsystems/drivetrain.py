@@ -11,7 +11,6 @@ import romi
 
 
 class Drivetrain(commands2.SubsystemBase):
-
     kCountsPerRevolution = 1440.0
     kWheelDiameterInch = 2.75591
 

@@ -90,7 +90,6 @@ class MyRobot(wpilib.TimedRobot):
         # if trigger is pressed, then center the robot to the camera target
 
         if self.stick.getRawButton(6):
-
             found, timestamp, offset = self.target
             turnSpeed = 0.0
 

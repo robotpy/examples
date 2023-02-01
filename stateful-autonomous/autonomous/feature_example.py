@@ -8,7 +8,6 @@ from robotpy_ext.autonomous import StatefulAutonomous, state, timed_state
 
 
 class FeatureExample(StatefulAutonomous):
-
     MODE_NAME = "Feature Example"
 
     def initialize(self):
