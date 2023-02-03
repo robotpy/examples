@@ -16,7 +16,6 @@ class MyRobot(wpilib.TimedRobot):
     """
 
     def robotInit(self):
-
         # Simple two wheel drive
         self.drive = wpilib.drive.DifferentialDrive(wpilib.Talon(0), wpilib.Talon(1))
 

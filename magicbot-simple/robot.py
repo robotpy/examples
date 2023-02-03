@@ -8,7 +8,6 @@ from components.component2 import Component2
 
 
 class MyRobot(MagicRobot):
-
     #
     # Define components here
     #

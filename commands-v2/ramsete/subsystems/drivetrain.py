@@ -11,7 +11,6 @@ import constants
 
 class Drivetrain(SubsystemBase):
     def __init__(self):
-
         super().__init__()
 
         # Create the motor controllers and their respective speed controllers.

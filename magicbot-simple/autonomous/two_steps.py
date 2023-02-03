@@ -4,7 +4,6 @@ from components.component2 import Component2
 
 
 class TwoSteps(AutonomousStateMachine):
-
     MODE_NAME = "Two Steps"
     DEFAULT = True
 

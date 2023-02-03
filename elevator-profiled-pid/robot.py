@@ -5,7 +5,6 @@ import math
 
 
 class MyRobot(wpilib.TimedRobot):
-
     kDt = 0.02
 
     def robotInit(self) -> None:

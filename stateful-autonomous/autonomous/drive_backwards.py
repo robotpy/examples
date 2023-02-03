@@ -2,11 +2,9 @@ from robotpy_ext.autonomous import StatefulAutonomous, state, timed_state
 
 
 class DriveBackwards(StatefulAutonomous):
-
     MODE_NAME = "Drive Backwards"
 
     def initialize(self):
-
         # This allows you to tune the variable via the SmartDashboard over
         # networktables
         self.register_sd_var("drive_speed", -1)

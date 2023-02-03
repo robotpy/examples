@@ -25,7 +25,6 @@ class RobotContainer:
     """
 
     def __init__(self) -> None:
-
         # The robot's subsystems and commands are defined here...
         self.drivetrain = Drivetrain()
         self.onboardIO = romi.OnBoardIO(

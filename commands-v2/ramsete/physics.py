@@ -37,7 +37,6 @@ class PhysicsEngine:
     """
 
     def __init__(self, physics_controller: PhysicsInterface, robot: "MyRobot"):
-
         self.physics_controller = physics_controller
 
         # Motor simulation definitions. Each correlates to a motor defined in

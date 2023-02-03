@@ -31,7 +31,6 @@ class RobotContainer:
     """
 
     def __init__(self):
-
         # Create the driver's controller.
         self.driverController = XboxController(constants.kDriverControllerPort)
 
