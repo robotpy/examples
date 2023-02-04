@@ -21,10 +21,10 @@ class MyRobot(wpilib.TimedRobot):
         This function is called upon program startup and
         should be used for any initialization code.
         """
-        self.left_drive = wpilib.PWMSparkMax(0)
-        self.right_drive = wpilib.PWMSparkMax(1)
+        self.leftDrive = wpilib.PWMSparkMax(0)
+        self.rightDrive = wpilib.PWMSparkMax(1)
         self.robotDrive = wpilib.drive.DifferentialDrive(
-            self.left_drive, self.right_drive
+            self.leftDrive, self.rightDrive
         )
         self.controller = wpilib.XboxController(0)
         self.timer = wpilib.Timer()
@@ -32,7 +32,7 @@ class MyRobot(wpilib.TimedRobot):
         # We need to invert one side of the drivetrain so that positive voltages
         # result in both sides moving forward. Depending on how your robot's
         # gearbox is constructed, you might have to invert the left side instead.
-        self.right_drive.setInverted(True)
+        self.rightDrive.setInverted(True)
 
     def autonomousInit(self):
         """This function is run once each time the robot enters autonomous mode."""
