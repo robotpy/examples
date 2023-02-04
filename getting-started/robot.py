@@ -8,12 +8,6 @@
 import wpilib
 import wpilib.drive
 
-"""The VM is configured to automatically run this class, and to call the functions corresponding to
-each mode, as described in the TimedRobot documentation. If you change the name of this class or
-the package after creating this project, you must also update the manifest file in the resource
-directory.
-"""
-
 
 class MyRobot(wpilib.TimedRobot):
     def robotInit(self):
