@@ -53,9 +53,7 @@ class PhysicsEngine:
             0.762,
             math.radians(-75),
             math.radians(255),
-            5,
             True,
-            [robot.kArmEncoderDistPerPulse],
         )
         self.encoderSim = wpilib.simulation.EncoderSim(robot.encoder)
         self.motorSim = wpilib.simulation.PWMSim(robot.motor.getChannel())
