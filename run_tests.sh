@@ -7,6 +7,7 @@ BASE_TESTS="
   addressableled
   arcade-drive
   arm-simulation
+  commands-v2/armbot
   commands-v2/armbotoffboard
   commands-v2/drive-distance-offboard
   commands-v2/frisbee-bot
