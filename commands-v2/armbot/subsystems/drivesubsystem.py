@@ -10,7 +10,6 @@ import constants
 
 
 class DriveSubsystem(commands2.SubsystemBase):
-
     # Creates a new DriveSubsystem
     def __init__(self) -> None:
         super().__init__()
