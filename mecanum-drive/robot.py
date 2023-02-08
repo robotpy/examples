@@ -40,8 +40,8 @@ class MyRobot(wpilib.TimedRobot):
         # movement, and Z axis for rotation.
         self.robotDrive.driveCartesian(
             -self.stick.getY(),
-            self.stick.getX(),
-            self.stick.getZ(),
+            -self.stick.getX(),
+            -self.stick.getZ(),
         )
 
 
