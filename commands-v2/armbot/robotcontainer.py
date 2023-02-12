@@ -56,13 +56,13 @@ class RobotContainer:
 
         # Move the arm to 2 radians above horizontal when the 'A' button is pressed.
         self.driver_controller.A().onTrue(
-            commands2.cmd.run(self.moveArm(2), [self.robot_arm])
+            commands2.cmd.run(lambda: self.moveArm(2), [self.robot_arm])
         )
 
         # Move the arm to neutral position when the 'B' button is pressed
         self.driver_controller.B().onTrue(
             commands2.cmd.run(
-                self.moveArm(constants.ArmConstants.kArmOffsetRads), [self.robot_arm]
+                lambda: self.moveArm(constants.ArmConstants.kArmOffsetRads), [self.robot_arm]
             )
         )
 
