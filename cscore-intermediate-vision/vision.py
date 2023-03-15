@@ -14,22 +14,21 @@
 import cv2
 import numpy as np
 
-from cscore import CameraServer
+from cscore import CameraServer as CS
 
 
 def main():
-    cs = CameraServer.getInstance()
-    cs.enableLogging()
+    CS.enableLogging()
 
-    camera = cs.startAutomaticCapture()
+    camera = CS.startAutomaticCapture()
 
     camera.setResolution(320, 240)
 
     # Get a CvSink. This will capture images from the camera
-    cvSink = cs.getVideo()
+    cvSink = CS.getVideo()
 
     # (optional) Setup a CvSource. This will send images back to the Dashboard
-    outputStream = cs.putVideo("Rectangle", 320, 240)
+    outputStream = CS.putVideo("Rectangle", 320, 240)
 
     # Allocating new images is very expensive, always try to preallocate
     img = np.zeros(shape=(240, 320, 3), dtype=np.uint8)
