@@ -4,7 +4,7 @@ import typing
 import wpilib
 import commands2
 
-from robotcontainer import RobotContainer
+from rapidreactcommandbot import RapidReactCommandBot
 
 
 class MyRobot(commands2.TimedCommandRobot):
@@ -23,9 +23,10 @@ class MyRobot(commands2.TimedCommandRobot):
         initialization code.
         """
 
-        # Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-        # autonomous chooser on the dashboard.
-        self.container = RobotContainer()
+        self.robot = RapidReactCommandBot()
+
+        # Configure default commands and condition bindings on robot startup
+        self.robot.configureButtonBindings()
 
     def disabledInit(self) -> None:
         """This function is called once each time the robot enters Disabled mode."""
@@ -35,7 +36,7 @@ class MyRobot(commands2.TimedCommandRobot):
 
     def autonomousInit(self) -> None:
         """This autonomous runs the autonomous command selected by your RobotContainer class."""
-        self.autonomousCommand = self.container.getAutonomousCommand()
+        self.autonomousCommand = self.robot.getAutonomousCommand()
 
         if self.autonomousCommand:
             self.autonomousCommand.schedule()

@@ -16,6 +16,7 @@ It is advised to statically import this class (or one of its inner classes) wher
 constants are needed, to reduce verbosity.
 """
 
+
 class DriveConstants:
     kLeftMotor1Port = 0
     kLeftMotor2Port = 1
@@ -32,12 +33,13 @@ class DriveConstants:
     # Assumes the encoders are directly mounted on the wheel shafts
     kEncoderDistancePerPulse = (kWheelDiameterMeters * math.pi) / kEncoderCPR
 
+
 class ShooterConstants:
     kEncoderPorts = (4, 5)
     kEncoderReversed = False
     kEncoderCPR = 1024
     # Distance units will be rotations
-    kEncoderDistancePerPulse =  1 / kEncoderCPR
+    kEncoderDistancePerPulse = 1 / kEncoderCPR
 
     kShooterMotorPort = 4
     kFeederMotorPort = 5
@@ -52,23 +54,27 @@ class ShooterConstants:
     # On a real robot the feedforward constants should be empirically determined; these are
     # reasonable guesses.
     kSVolts = 0.05
-    #Should have value 12V at free speed...
+    # Should have value 12V at free speed...
     kVVoltSecondsPerRotation = 12.0 / kShooterFreeRPS
 
     kFeederSpeed = 0.5
+
 
 class IntakeConstants:
     kMotorPort = 6
     kSolenoidPorts = (0, 1)
 
+
 class StorageConstants:
     kMotorPort = 7
     kBallSensorPort = 6
+
 
 class AutoConstants:
     kTimeoutSeconds = 3
     kDriveDistanceMeters = 2
     kDriveSpeed = 0.5
+
 
 class OIConstants:
     kDriverControllerPort = 0
