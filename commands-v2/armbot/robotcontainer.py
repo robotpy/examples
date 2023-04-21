@@ -62,7 +62,8 @@ class RobotContainer:
         # Move the arm to neutral position when the 'B' button is pressed
         self.driver_controller.B().onTrue(
             commands2.cmd.run(
-                lambda: self.moveArm(constants.ArmConstants.kArmOffsetRads), [self.robot_arm]
+                lambda: self.moveArm(constants.ArmConstants.kArmOffsetRads),
+                [self.robot_arm],
             )
         )
 
