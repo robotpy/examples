@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-    PWM Drivetrain Demo
+    REV Drivetrain Demo
 """
+
 
 # The first lines should be the import of the needed modules
 import wpilib
@@ -17,8 +18,12 @@ class MyRobot(wpilib.TimedRobot):
         # create motor controller objects
         m_left = rev.CANSparkMax(1, rev.CANSparkMax.MotorType.kBrushless)
         m_right = rev.CANSparkMax(2, rev.CANSparkMax.MotorType.kBrushless)
-        self.robot_drive = wpilib.drive.DifferentialDrive(m_left, m_right)  # object that handles basic drive operations
-        self.robot_drive.setExpiration(0.1)  # Configure protection in case of code slowdown or crash
+        self.robot_drive = wpilib.drive.DifferentialDrive(
+            m_left, m_right
+        )  # object that handles basic drive operations
+        self.robot_drive.setExpiration(
+            0.1
+        )  # Configure protection in case of code slowdown or crash
 
         # joystick #0
         self.stick = wpilib.Joystick(0)

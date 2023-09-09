@@ -3,6 +3,7 @@
     PWM Drivetrain Demo
 """
 
+
 # The first lines should be the import of the needed modules
 import wpilib
 import wpilib.drive
@@ -16,8 +17,12 @@ class MyRobot(wpilib.TimedRobot):
         # create motor controller objects
         m_left = wpilib.Spark(0)
         m_right = wpilib.Spark(1)
-        self.robot_drive = wpilib.drive.DifferentialDrive(m_left, m_right)  # object that handles basic drive operations
-        self.robot_drive.setExpiration(0.1)  # Configure protection in case of code slowdown or crash
+        self.robot_drive = wpilib.drive.DifferentialDrive(
+            m_left, m_right
+        )  # object that handles basic drive operations
+        self.robot_drive.setExpiration(
+            0.1
+        )  # Configure protection in case of code slowdown or crash
 
         # joystick #0
         self.stick = wpilib.Joystick(0)
