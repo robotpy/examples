@@ -4,7 +4,8 @@ RobotPy Example Code
 **NOTE**: The `main` branch contains examples that work with the 2023 version
 of RobotPy. While we don't change all that much every year, if you're looking
 specifically for examples for older years, there are branches for different
-years.
+years. If you are looking for examples that work with the current beta, there
+will be a YEAR-beta branch containing those examples.
 
 This repository contains lots of example code that can be used to learn more
 about creating robots using RobotPy. These examples are for core
