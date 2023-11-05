@@ -13,7 +13,7 @@ import constants
 import examplesmartmotorcontroller
 
 
-class DriveSubsystem(commands2.SubsystemBase):
+class DriveSubsystem(commands2.Subsystem):
     def __init__(self) -> None:
         """Creates a new DriveSubsystem"""
         super().__init__()

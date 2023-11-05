@@ -1,4 +1,4 @@
-from commands2 import SubsystemBase
+from commands2 import Subsystem
 
 from wpilib import MotorControllerGroup, PWMSparkMax, Encoder, AnalogGyro
 from wpilib.drive import DifferentialDrive
@@ -9,7 +9,7 @@ from wpimath.kinematics import DifferentialDriveOdometry, DifferentialDriveWheel
 import constants
 
 
-class Drivetrain(SubsystemBase):
+class Drivetrain(Subsystem):
     def __init__(self):
         super().__init__()
 

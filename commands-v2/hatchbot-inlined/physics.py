@@ -11,8 +11,7 @@
 
 import wpilib
 import wpilib.simulation
-from wpimath.system import LinearSystemId
-from wpimath.system.plant import DCMotor
+from wpimath.system.plant import DCMotor, LinearSystemId
 
 import constants
 

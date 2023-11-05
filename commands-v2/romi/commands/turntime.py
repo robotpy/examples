@@ -8,7 +8,7 @@ import wpilib
 from subsystems.drivetrain import Drivetrain
 
 
-class TurnTime(commands2.CommandBase):
+class TurnTime(commands2.Command):
     """Creates a new TurnTime command. This command will turn your robot for a
     desired rotational speed and time.
     """

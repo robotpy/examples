@@ -4,7 +4,7 @@ import commands2
 import constants
 
 
-class HatchSubsystem(commands2.SubsystemBase):
+class HatchSubsystem(commands2.Subsystem):
     def __init__(self) -> None:
         super().__init__()
 

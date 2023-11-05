@@ -54,7 +54,7 @@ class RobotContainer:
                     -self.driverController.getLeftY(),
                     -self.driverController.getRightX(),
                 ),
-                [self.driveSubsystem],
+                self.driveSubsystem,
             )
         )
 

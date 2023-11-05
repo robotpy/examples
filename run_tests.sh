@@ -7,16 +7,8 @@ BASE_TESTS="
   addressableled
   arcade-drive
   arm-simulation
-  commands-v2/armbot
-  commands-v2/armbotoffboard
-  commands-v2/drive-distance-offboard
-  commands-v2/frisbee-bot
-  commands-v2/gyro-drive-commands
   commands-v2/hatchbot
   commands-v2/hatchbot-inlined
-  commands-v2/ramsete
-  commands-v2/scheduler-event-logging
-  commands-v2/selectcommand
   cscore-intermediate-vision
   cscore-quick-vision
   elevator-profiled-pid
@@ -42,6 +34,14 @@ BASE_TESTS="
 "
 
 IGNORED_TESTS="
+  commands-v2/armbot
+  commands-v2/armbotoffboard
+  commands-v2/drive-distance-offboard
+  commands-v2/frisbee-bot
+  commands-v2/gyro-drive-commands
+  commands-v2/ramsete
+  commands-v2/scheduler-event-logging
+  commands-v2/selectcommand
   commands-v2/romi
   physics-camsim/src
 "

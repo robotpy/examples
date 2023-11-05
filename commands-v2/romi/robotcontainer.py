@@ -73,7 +73,7 @@ class RobotContainer:
         self.chooser.addOption("Auto Routine Time", AutonomousTime(self.drivetrain))
         wpilib.SmartDashboard.putData(self.chooser)
 
-    def getAutonomousCommand(self) -> typing.Optional[commands2.CommandBase]:
+    def getAutonomousCommand(self) -> typing.Optional[commands2.Command]:
         return self.chooser.getSelected()
 
     def getArcadeDriveCommand(self) -> ArcadeDrive:

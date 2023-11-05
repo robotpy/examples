@@ -3,7 +3,7 @@ import commands2
 from subsystems.drivesubsystem import DriveSubsystem
 
 
-class DefaultDrive(commands2.CommandBase):
+class DefaultDrive(commands2.Command):
     def __init__(
         self,
         drive: DriveSubsystem,
@@ -16,7 +16,7 @@ class DefaultDrive(commands2.CommandBase):
         self.forward = forward
         self.rotation = rotation
 
-        self.addRequirements([self.drive])
+        self.addRequirements(self.drive)
 
     def execute(self) -> None:
         self.drive.arcadeDrive(self.forward(), self.rotation())
