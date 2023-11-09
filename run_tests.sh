@@ -15,6 +15,7 @@ BASE_TESTS="
   commands-v2/hatchbot
   commands-v2/hatchbot-inlined
   commands-v2/ramsete
+  commands-v2/rapid-react-command-bot
   commands-v2/scheduler-event-logging
   commands-v2/selectcommand
   cscore-intermediate-vision
