@@ -9,7 +9,7 @@ import commands2
 import constants
 
 
-class DriveSubsystem(commands2.SubsystemBase):
+class DriveSubsystem(commands2.Subsystem):
     # Creates a new DriveSubsystem
     def __init__(self) -> None:
         super().__init__()

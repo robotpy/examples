@@ -46,6 +46,7 @@ class PhysicsEngine:
             robot.kMinElevatorHeight,
             robot.kMaxElevatorHeight,
             True,
+            0,
             [0.01],
         )
         self.encoderSim = wpilib.simulation.EncoderSim(robot.encoder)

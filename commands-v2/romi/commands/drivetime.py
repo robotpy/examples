@@ -8,7 +8,7 @@ import wpilib
 from subsystems.drivetrain import Drivetrain
 
 
-class DriveTime(commands2.CommandBase):
+class DriveTime(commands2.Command):
     """Creates a new DriveTime. This command will drive your robot for a desired speed and time."""
 
     def __init__(self, speed: float, time: float, drive: Drivetrain) -> None:

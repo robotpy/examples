@@ -7,7 +7,7 @@ import commands2
 from subsystems.drivetrain import Drivetrain
 
 
-class DriveDistance(commands2.CommandBase):
+class DriveDistance(commands2.Command):
     def __init__(self, speed: float, inches: float, drive: Drivetrain) -> None:
         """Creates a new DriveDistance. This command will drive your your robot for a desired distance at
         a desired speed.

@@ -7,7 +7,7 @@ import commands2
 from subsystems.drivetrain import Drivetrain
 
 
-class ArcadeDrive(commands2.CommandBase):
+class ArcadeDrive(commands2.Command):
     def __init__(
         self,
         drive: Drivetrain,

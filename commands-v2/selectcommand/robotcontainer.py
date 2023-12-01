@@ -32,22 +32,19 @@ class RobotContainer:
         # selector does not have to be an enum; it could be any desired type (string, integer,
         # boolean, double...)
         self.example_select_command = commands2.SelectCommand(
-            self.select,
             # Maps selector values to commands
-            [
-                (
-                    self.CommandSelector.ONE,
-                    commands2.PrintCommand("Command one was selected!"),
+            {
+                self.CommandSelector.ONE: commands2.PrintCommand(
+                    "Command one was selected!"
                 ),
-                (
-                    self.CommandSelector.TWO,
-                    commands2.PrintCommand("Command two was selected!"),
+                self.CommandSelector.TWO: commands2.PrintCommand(
+                    "Command two was selected!"
                 ),
-                (
-                    self.CommandSelector.THREE,
-                    commands2.PrintCommand("Command three was selected!"),
+                self.CommandSelector.THREE: commands2.PrintCommand(
+                    "Command three was selected!"
                 ),
-            ],
+            },
+            self.select,
         )
 
         # Configure the button bindings

@@ -10,7 +10,7 @@ import wpilib.drive
 import romi
 
 
-class Drivetrain(commands2.SubsystemBase):
+class Drivetrain(commands2.Subsystem):
     kCountsPerRevolution = 1440.0
     kWheelDiameterInch = 2.75591
 

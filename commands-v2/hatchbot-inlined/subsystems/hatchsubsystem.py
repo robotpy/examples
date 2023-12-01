@@ -5,7 +5,7 @@ import commands2.cmd
 import constants
 
 
-class HatchSubsystem(commands2.SubsystemBase):
+class HatchSubsystem(commands2.Subsystem):
     def __init__(self) -> None:
         super().__init__()
 
@@ -18,11 +18,11 @@ class HatchSubsystem(commands2.SubsystemBase):
     def grabHatch(self) -> commands2.Command:
         """Grabs the hatch"""
         return commands2.cmd.runOnce(
-            lambda: self.hatchSolenoid.set(wpilib.DoubleSolenoid.Value.kForward), [self]
+            lambda: self.hatchSolenoid.set(wpilib.DoubleSolenoid.Value.kForward), self
         )
 
     def releaseHatch(self) -> commands2.Command:
         """Releases the hatch"""
         return commands2.cmd.runOnce(
-            lambda: self.hatchSolenoid.set(wpilib.DoubleSolenoid.Value.kReverse), [self]
+            lambda: self.hatchSolenoid.set(wpilib.DoubleSolenoid.Value.kReverse), self
         )

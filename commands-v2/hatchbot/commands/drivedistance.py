@@ -3,7 +3,7 @@ import commands2
 from subsystems.drivesubsystem import DriveSubsystem
 
 
-class DriveDistance(commands2.CommandBase):
+class DriveDistance(commands2.Command):
     def __init__(self, inches: float, speed: float, drive: DriveSubsystem) -> None:
         super().__init__()
         self.distance = inches
