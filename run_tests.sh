@@ -6,6 +6,7 @@ cd "$(dirname $0)"
 BASE_TESTS="
   addressableled
   arcade-drive
+  arcade-drive-xbox-controller
   arm-simulation
   canpdp
   commands-v2/hatchbot
