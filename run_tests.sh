@@ -29,6 +29,7 @@ BASE_TESTS="
   potentiometer-pid
   relay
   shuffleboard
+  solenoid
   stateful-autonomous
   state-space-flywheel
   tank-drive
