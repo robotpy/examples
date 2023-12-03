@@ -18,8 +18,7 @@ class MyRobot(wpilib.TimedRobot):
 
         self.relay = wpilib.Relay(0)
 
-        self.joystickChannel = 0
-        self.joystick = wpilib.Joystick(self.joystickChannel)
+        self.joystick = wpilib.Joystick(0)
 
         self.relayForwardButton = 1
         self.relayReverseButton = 2
