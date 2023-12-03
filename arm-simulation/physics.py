@@ -24,6 +24,8 @@ import typing
 if typing.TYPE_CHECKING:
     from robot import MyRobot
 
+from constants import Constants
+
 
 class PhysicsEngine:
     """
@@ -43,34 +45,39 @@ class PhysicsEngine:
         self.armGearbox = wpimath.system.plant.DCMotor.vex775Pro(2)
 
         # Simulation classes help us simulate what's going on, including gravity.
-        # This sim represents an arm with 2 775s, a 600:1 reduction, a mass of 5kg,
-        # 30in overall arm length, range of motion in [-75, 255] degrees, and noise
-        # with a standard deviation of 1 encoder tick.
+        # This arm sim represents an arm that can travel from -75 degrees (rotated down front)
+        # to 255 degrees (rotated down in the back).
         self.armSim = wpilib.simulation.SingleJointedArmSim(
             self.armGearbox,
-            600.0,
-            wpilib.simulation.SingleJointedArmSim.estimateMOI(0.762, 5),
-            0.762,
-            math.radians(-75),
-            math.radians(255),
+            Constants.kArmReduction,
+            wpilib.simulation.SingleJointedArmSim.estimateMOI(
+                Constants.kArmLength, Constants.kArmMass
+            ),
+            Constants.kArmLength,
+            Constants.kMinAngleRads,
+            Constants.kMaxAngleRads,
             True,
-            0,
+            # Add noise with a std-dev of 1 tick
+            Constants.kArmEncoderDistPerPulse,
         )
-        self.encoderSim = wpilib.simulation.EncoderSim(robot.encoder)
-        self.motorSim = wpilib.simulation.PWMSim(robot.motor.getChannel())
+        self.encoderSim = wpilib.simulation.EncoderSim(robot.arm.encoder)
+        self.motorSim = wpilib.simulation.PWMSim(robot.arm.motor.getChannel())
 
-        # Create a Mechanism2d display of an Arm
+        # Create a Mechanism2d display of an Arm with a fixed ArmTower and moving Arm.
         self.mech2d = wpilib.Mechanism2d(60, 60)
-        self.armBase = self.mech2d.getRoot("ArmBase", 30, 30)
-        self.armTower = self.armBase.appendLigament(
-            "Arm Tower", 30, -90, 6, wpilib.Color8Bit(wpilib.Color.kBlue)
-        )
-        self.arm = self.armBase.appendLigament(
-            "Arm", 30, self.armSim.getAngle(), 6, wpilib.Color8Bit(wpilib.Color.kYellow)
+        self.armPivot = self.mech2d.getRoot("ArmPivot", 30, 30)
+        self.armTower = self.armPivot.appendLigament("Arm Tower", 30, -90)
+        self.arm = self.armPivot.appendLigament(
+            "Arm",
+            30,
+            math.degrees(self.armSim.getAngle()),
+            6,
+            wpilib.Color8Bit(wpilib.Color.kYellow),
         )
 
         # Put Mechanism to SmartDashboard
         wpilib.SmartDashboard.putData("Arm Sim", self.mech2d)
+        self.armTower.setColor(wpilib.Color8Bit(wpilib.Color.kBlue))
 
     def update_sim(self, now: float, tm_diff: float) -> None:
         """
@@ -94,9 +101,9 @@ class PhysicsEngine:
         # voltage
         self.encoderSim.setDistance(self.armSim.getAngle())
         # SimBattery estimates loaded battery voltage
-        # wpilib.simulation.RoboRioSim.setVInVoltage(
-        #     wpilib.simulation.BatterySim
-        # )
+        wpilib.simulation.RoboRioSim.setVInVoltage(
+            wpilib.simulation.BatterySim.calculate([self.armSim.getCurrentDraw()])
+        )
 
         # Update the mechanism arm angle based on the simulated arm angle
         # -> setAngle takes degrees, getAngle returns radians... >_>
