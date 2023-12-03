@@ -26,6 +26,7 @@ BASE_TESTS="
   physics-4wheel/src
   physics-mecanum/src
   physics-spi/src
+  potentiometer-pid
   relay
   shuffleboard
   stateful-autonomous
