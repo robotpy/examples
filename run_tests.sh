@@ -11,6 +11,7 @@ BASE_TESTS="
   commands-v2/hatchbot-inlined
   cscore-intermediate-vision
   cscore-quick-vision
+  differential-drive-bot
   elevator-profiled-pid
   elevator-simulation
   elevator-trapezoid-profile
