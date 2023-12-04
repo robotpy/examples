@@ -7,6 +7,7 @@ BASE_TESTS="
   addressableled
   arcade-drive
   arm-simulation
+  canpdp
   commands-v2/hatchbot
   commands-v2/hatchbot-inlined
   cscore-intermediate-vision
