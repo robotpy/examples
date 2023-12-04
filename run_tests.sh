@@ -34,6 +34,7 @@ BASE_TESTS="
   state-space-flywheel
   tank-drive
   timed/src
+  ultrasonic
 "
 
 IGNORED_TESTS="
