@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
     This is a demo program showing the use of the DifferentialDrive class.
-    Runs the motors with tank steering.
+    Runs the motors with tank steering and an Xbox controller.
 """
 
 import wpilib
@@ -18,9 +18,8 @@ class MyRobot(wpilib.TimedRobot):
 
         self.robotDrive = DifferentialDrive(left, right)
 
-        # joysticks 1 & 2 on the driver station
-        self.leftStick = wpilib.Joystick(0)
-        self.rightStick = wpilib.Joystick(1)
+        # xbox controller 0 on the driver station
+        self.driverController = wpilib.XboxController(0)
 
         # We need to invert one side of the drivetrain so that positive voltages
         # result in both sides moving forward. Depending on how your robot's
@@ -28,8 +27,13 @@ class MyRobot(wpilib.TimedRobot):
         right.setInverted(True)
 
     def teleopPeriodic(self):
-        """Drive with tank style"""
-        self.robotDrive.tankDrive(-self.leftStick.getY(), -self.rightStick.getY())
+        # Drive with tank drive.
+        # That means that the Y axis of the left stick moves the left side
+        # of the robot forward and backward, and the Y axis of the right stick
+        # moves the right side of the robot forward and backward.
+        self.robotDrive.tankDrive(
+            -self.driverController.getLeftY(), -self.driverController.getRightY()
+        )
 
 
 if __name__ == "__main__":

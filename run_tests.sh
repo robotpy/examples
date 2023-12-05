@@ -35,6 +35,7 @@ BASE_TESTS="
   stateful-autonomous
   state-space-flywheel
   tank-drive
+  tank-drive-xbox-controller
   timed/src
 "
 
