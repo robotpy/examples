@@ -21,10 +21,13 @@ class MyRobot(wpilib.TimedRobot):
 
     def teleopPeriodic(self):
         # We can read the distance in millimeters
-        distanceMeters = self.rangeFinder.getRange()
+        distanceMillimeters = self.rangeFinder.getRangeMM()
+        # ... or in inches
+        distanceInches = self.rangeFinder.getRangeInches()
 
         # We can also publish the data itself periodically
-        SmartDashboard.putNumber("Distance[m]", distanceMeters)
+        SmartDashboard.putNumber("Distance[mm]", distanceMillimeters)
+        SmartDashboard.putNumber("Distance[in]", distanceInches)
 
     def testInit(self):
         # By default, the Ultrasonic class polls all ultrasonic sensors every in a round-robin to prevent
@@ -35,7 +38,8 @@ class MyRobot(wpilib.TimedRobot):
     def testPeriodic(self):
         if self.rangeFinder.isRangeValid():
             # Data is valid, publish it
-            SmartDashboard.putNumber("Distance[m]", self.rangeFinder.getRange())
+            SmartDashboard.putNumber("Distance[mm]", self.rangeFinder.getRangeMM())
+            SmartDashboard.putNumber("Distance[in]", self.rangeFinder.getRangeInches())
 
             # Ping for next measurement
             self.rangeFinder.ping()
