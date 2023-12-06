@@ -9,8 +9,8 @@ BASE_TESTS="
   arcade-drive-xbox-controller
   arm-simulation
   canpdp
-  commands-v2/hatchbot
-  commands-v2/hatchbot-inlined
+  hatchbot
+  hatchbot-inlined
   cscore-intermediate-vision
   cscore-quick-vision
   elevator-profiled-pid
@@ -40,15 +40,15 @@ BASE_TESTS="
 "
 
 IGNORED_TESTS="
-  commands-v2/armbot
-  commands-v2/armbotoffboard
-  commands-v2/drive-distance-offboard
-  commands-v2/frisbee-bot
-  commands-v2/gyro-drive-commands
-  commands-v2/ramsete
-  commands-v2/scheduler-event-logging
-  commands-v2/selectcommand
-  commands-v2/romi
+  armbot
+  armbotoffboard
+  drive-distance-offboard
+  frisbee-bot
+  gyro-drive-commands
+  ramsete
+  scheduler-event-logging
+  selectcommand
+  romi
   physics-camsim/src
 "
 
