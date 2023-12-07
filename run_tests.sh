@@ -26,6 +26,7 @@ BASE_TESTS="
   getting-started
   gyro
   gyro-mecanum
+  hid-rumble
   i2c-communication
   magicbot-simple
   mecanum-drive
