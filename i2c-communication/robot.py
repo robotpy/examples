@@ -6,8 +6,6 @@
 
 import wpilib
 
-import string
-
 
 class MyRobot(wpilib.TimedRobot):
     PORT = wpilib.I2C.Port.kOnboard
@@ -18,9 +16,9 @@ class MyRobot(wpilib.TimedRobot):
 
         self.arduino = wpilib.I2C(self.PORT, self.DEVICE_ADDRESS)
 
-    def writeString(self, input: string):
+    def writeString(self, s: str):
         # Creates a char array from the input string
-        chars = bytearray(input, "ascii")
+        chars = s.encode("ascii")
 
         # Writes bytes over I2C
         self.arduino.writeBulk(chars)
@@ -42,14 +40,11 @@ class MyRobot(wpilib.TimedRobot):
                 "R" if alliance == wpilib.DriverStation.Alliance.kRed else "B"
             )
 
-        stateMessage = "".join(
-            [
-                allianceString,
-                "E" if wpilib.DriverStation.isEnabled() else "D",
-                "A" if wpilib.DriverStation.isAutonomous() else "T",
-                "{:03f}".format(wpilib.DriverStation.getMatchTime()),
-            ]
-        )
+        enabledString = "E" if wpilib.DriverStation.isEnabled() else "D"
+        autoString = "A" if wpilib.DriverStation.isAutonomous() else "T"
+        matchTime = wpilib.DriverStation.getMatchTime()
+
+        stateMessage = f"{allianceString}{enabledString}{autoString}{matchTime:03f}"
 
         self.writeString(stateMessage)
 
