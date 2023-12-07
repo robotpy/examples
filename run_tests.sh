@@ -25,6 +25,7 @@ BASE_TESTS="
   game-data
   getting-started
   gyro
+  gyro-mecanum
   i2c-communication
   magicbot-simple
   mecanum-drive
