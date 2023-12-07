@@ -6,66 +6,49 @@
 #
 
 import wpilib
-from wpilib.drive import DifferentialDrive
+import wpilib.drive
 
 
 class MyRobot(wpilib.TimedRobot):
-    """This is a demo program showing how to use Gyro control with the
-    DifferentialDrive class."""
+    """
+    This is a sample program to demonstrate how to use a gyro sensor to make a robot drive straight.
+    This program uses a joystick to drive forwards and backwards while the gyro is used for direction
+    keeping.
+    """
+
+    ANGLE_SETPOINT = 0.0
+    P = 0.005  # propotional turning constant
+
+    # gyro calibration constant, may need to be adjusted;
+    # gyro value of 360 is set to correspond to one full revolution
+    VOLTS_PER_DEGREE_PER_SECOND = 0.0128
+
+    LEFT_MOTOR_PORT = 0
+    RIGHT_MOTOR_PORT = 1
+    GYRO_PORT = 0
+    JOYSTICK_PORT = 0
 
     def robotInit(self):
         """Robot initialization function"""
-        gyroChannel = 0  # analog input
 
-        self.joystickChannel = 0  # usb number in DriverStation
+        self.leftDrive = wpilib.PWMSparkMax(self.LEFT_MOTOR_PORT)
+        self.rightDrive = wpilib.PWMSparkMax(self.RIGHT_MOTOR_PORT)
+        self.myRobot = wpilib.drive.DifferentialDrive(self.leftDrive, self.rightDrive)
+        self.gyro = wpilib.AnalogGyro(self.GYRO_PORT)
+        self.joystick = wpilib.Joystick(self.JOYSTICK_PORT)
 
-        # channels for motors
-        self.leftMotorChannel = 1
-        self.rightMotorChannel = 0
-        self.leftRearMotorChannel = 3
-        self.rightRearMotorChannel = 2
+        self.gyro.setSensitivity(self.VOLTS_PER_DEGREE_PER_SECOND)
 
-        self.angleSetpoint = 0.0
-        self.pGain = 1  # propotional turning constant
-
-        # gyro calibration constant, may need to be adjusted
-        # gyro value of 360 is set to correspond to one full revolution
-        self.voltsPerDegreePerSecond = 0.0128
-
-        self.left = wpilib.MotorControllerGroup(
-            wpilib.Talon(self.leftMotorChannel), wpilib.Talon(self.leftRearMotorChannel)
-        )
-        self.right = wpilib.MotorControllerGroup(
-            wpilib.Talon(self.rightMotorChannel),
-            wpilib.Talon(self.rightRearMotorChannel),
-        )
-        self.myRobot = DifferentialDrive(self.left, self.right)
-
-        self.gyro = wpilib.AnalogGyro(gyroChannel)
-        self.joystick = wpilib.Joystick(self.joystickChannel)
-
-    def teleopInit(self):
-        """
-        Runs at the beginning of the teleop period
-        """
-        self.gyro.setSensitivity(
-            self.voltsPerDegreePerSecond
-        )  # calibrates gyro values to equal degrees
+        # We need to invert one side of the drivetrain so that positive voltages
+        # result in both sides moving forward. Depending on how your robot's
+        # gearbox is constructed, you might have to invert the left side instead.
+        self.rightDrive.setInverted(True)
 
     def teleopPeriodic(self):
-        """
-        Sets the gyro sensitivity and drives the robot when the joystick is pushed. The
-        motor speed is set from the joystick while the RobotDrive turning value is assigned
-        from the error between the setpoint and the gyro angle.
-        """
-
-        turningValue = (self.angleSetpoint - self.gyro.getAngle()) * self.pGain
-        if self.joystick.getY() <= 0:
-            # forwards
-            self.myRobot.arcadeDrive(self.joystick.getY(), turningValue)
-        elif self.joystick.getY() > 0:
-            # backwards
-            self.myRobot.arcadeDrive(self.joystick.getY(), -turningValue)
+        # The motor speed is set from the joystick while the DifferentialDrive turning value is assigned
+        # from the error between the setpoint and the gyro angle.
+        turningValue = (self.ANGLE_SETPOINT - self.gyro.getAngle()) * self.P
+        self.myRobot.arcadeDrive(-self.joystick.getY(), -turningValue)
 
 
 if __name__ == "__main__":

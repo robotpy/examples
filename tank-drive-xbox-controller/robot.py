@@ -6,7 +6,7 @@
 #
 
 import wpilib
-from wpilib.drive import DifferentialDrive
+import wpilib.drive
 
 
 class MyRobot(wpilib.TimedRobot):
@@ -18,19 +18,15 @@ class MyRobot(wpilib.TimedRobot):
     def robotInit(self):
         """Robot initialization function"""
 
-        # object that handles basic drive operations
-        left = wpilib.PWMSparkMax(0)
-        right = wpilib.PWMSparkMax(1)
-
-        self.robotDrive = DifferentialDrive(left, right)
-
-        # xbox controller 0 on the driver station
+        leftMotor = wpilib.PWMSparkMax(0)
+        rightMotor = wpilib.PWMSparkMax(1)
+        self.robotDrive = wpilib.drive.DifferentialDrive(leftMotor, rightMotor)
         self.driverController = wpilib.XboxController(0)
 
         # We need to invert one side of the drivetrain so that positive voltages
         # result in both sides moving forward. Depending on how your robot's
         # gearbox is constructed, you might have to invert the left side instead.
-        right.setInverted(True)
+        rightMotor.setInverted(True)
 
     def teleopPeriodic(self):
         # Drive with tank drive.
