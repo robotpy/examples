@@ -21,6 +21,7 @@ BASE_TESTS="
   elevator-simulation
   elevator-trapezoid-profile
   encoder
+  flywheel-bangbang-controller
   game-data
   getting-started
   gyro
