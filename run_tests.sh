@@ -15,6 +15,7 @@ BASE_TESTS="
   cscore-quick-vision
   differential-drive-bot
   digital-communication
+  dutycycle-encoder
   elevator-profiled-pid
   elevator-simulation
   elevator-trapezoid-profile
