@@ -18,7 +18,6 @@ import math
 
 
 class MyRobot(wpilib.TimedRobot):
-
     def robotInit(self):
         """Robot initialization function"""
 

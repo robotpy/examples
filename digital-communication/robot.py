@@ -8,7 +8,6 @@ import wpilib
 
 
 class MyRobot(wpilib.TimedRobot):
-
     # define ports for digitalcommunication with light controller
     ALLIANCE_PORT = 0
     ENABLED_PORT = 1

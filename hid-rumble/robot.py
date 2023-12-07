@@ -7,7 +7,6 @@ import wpilib
 
 
 class MyRobot(wpilib.TimedRobot):
-
     def robotInit(self):
         """Robot initialization function"""
 

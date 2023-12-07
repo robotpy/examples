@@ -9,7 +9,6 @@ import wpilib.drive
 
 
 class MyRobot(wpilib.TimedRobot):
-
     # gyro calibration constant, may need to be adjusted;
     # gyro value of 360 is set to correspond to one full revolution
     VOLTS_PER_DEGREE_PER_SECOND = 0.0128
@@ -43,8 +42,10 @@ class MyRobot(wpilib.TimedRobot):
 
     def teleopPeriodic(self):
         self.robotDrive.driveCartesian(
-            -self.joystick.getY(), -self.joystick.getX(), -self.joystick.getZ(),
-            self.gyro.getRotation2d()
+            -self.joystick.getY(),
+            -self.joystick.getX(),
+            -self.joystick.getZ(),
+            self.gyro.getRotation2d(),
         )
 
 
