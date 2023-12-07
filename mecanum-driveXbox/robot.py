@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
-"""
-    This is a demo program showing how to use Mecanum control with the
-    MecanumDrive class.
-"""
+#
+# Copyright (c) FIRST and other WPILib contributors.
+# Open Source Software; you can modify and/or share it under the terms of
+# the WPILib BSD license file in the root directory of this project.
+#
 
 import wpilib
 from wpilib.drive import MecanumDrive
 
 
 class MyRobot(wpilib.TimedRobot):
+    """
+    This is a demo program showing how to use Mecanum control with the
+    MecanumDrive class.
+    """
+
     # Channels on the roboRIO that the motor controllers are plugged in to
     frontLeftChannel = 2
     rearLeftChannel = 3

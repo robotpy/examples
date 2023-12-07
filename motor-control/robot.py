@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
-"""
+#
+# Copyright (c) FIRST and other WPILib contributors.
+# Open Source Software; you can modify and/or share it under the terms of
+# the WPILib BSD license file in the root directory of this project.
+#
+
+import wpilib
+
+
+class MyRobot(wpilib.TimedRobot):
+    """
     This sample program shows how to control a motor using a joystick. In the
     operator control part of the program, the joystick is read and the value
     is written to the motor.
@@ -9,12 +19,8 @@
     a short time in the loop to allow other threads to run. This is generally
     a good idea, especially since the joystick values are only transmitted
     from the Driver Station once every 20ms.
-"""
+    """
 
-import wpilib
-
-
-class MyRobot(wpilib.TimedRobot):
     #: update every 0.005 seconds/5 milliseconds (200Hz)
     kUpdatePeriod = 0.005
 

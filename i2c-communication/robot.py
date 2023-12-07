@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
-"""
-    This is a sample program demonstrating how to communicate to a light controller from the robot
-    code using the roboRIO's I2C port.
-"""
+#
+# Copyright (c) FIRST and other WPILib contributors.
+# Open Source Software; you can modify and/or share it under the terms of
+# the WPILib BSD license file in the root directory of this project.
+#
 
 import wpilib
 
 
 class MyRobot(wpilib.TimedRobot):
+    """
+    This is a sample program demonstrating how to communicate to a light controller from the robot
+    code using the roboRIO's I2C port.
+    """
+
     PORT = wpilib.I2C.Port.kOnboard
     DEVICE_ADDRESS = 4
 
