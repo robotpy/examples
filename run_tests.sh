@@ -16,6 +16,7 @@ BASE_TESTS="
   differential-drive-bot
   digital-communication
   dutycycle-encoder
+  dutycycle-input
   elevator-profiled-pid
   elevator-simulation
   elevator-trapezoid-profile
