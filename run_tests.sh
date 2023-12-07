@@ -20,6 +20,7 @@ BASE_TESTS="
   elevator-profiled-pid
   elevator-simulation
   elevator-trapezoid-profile
+  encoder
   game-data
   getting-started
   gyro
