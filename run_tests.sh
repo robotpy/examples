@@ -22,6 +22,7 @@ BASE_TESTS="
   gyro
   i2c-communication
   magicbot-simple
+  mecanum-bot
   mecanum-drive
   mecanum-driveXbox
   mechanism2d
