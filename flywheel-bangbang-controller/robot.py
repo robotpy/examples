@@ -14,24 +14,24 @@ import math
 
 
 class MyRobot(wpilib.TimedRobot):
-    MOTOR_PORT = 0
-    ENCODER_A_CHANNEL = 0
-    ENCODER_B_CHANNEL = 1
+    kMotorPort = 0
+    kEncoderAChannel = 0
+    kEncoderBChannel = 1
 
     # Max setpoint for joystick control in RPM
-    MAX_SETPOINT_VALUE = 6000.0
+    kMaxSetpointValue = 6000.0
 
     # Gains are for example purposes only - must be determined for your own robot!
-    FLYWHEEL_KS = 0.0001  # V
-    FLYWHEEL_KV = 0.000195  # V/RPM
-    FLYWHEEL_KA = 0.0003  # V/(RPM/s)
+    kFlywheelKs = 0.0001  # V
+    kFlywheelKv = 0.000195  # V/RPM
+    kFlywheelKa = 0.0003  # V/(RPM/s)
 
     # Reduction between motors and encoder, as output over input. If the flywheel
     # spins slower than the motors, this number should be greater than one.
-    FLYWHEEL_GEARING = 1.0
+    kFlywheelGearing = 1.0
 
     # 1/2 MR²
-    FLYWHEEL_MOMENT_OF_INERTIA = (
+    kFlywheelMomentOfInertia = (
         0.5
         * wpimath.units.lbsToKilograms(1.5)
         * math.pow(wpimath.units.inchesToMeters(4), 2)
@@ -41,20 +41,20 @@ class MyRobot(wpilib.TimedRobot):
         """Robot initialization function"""
 
         self.feedforward = wpimath.controller.SimpleMotorFeedforwardMeters(
-            self.FLYWHEEL_KS, self.FLYWHEEL_KV, self.FLYWHEEL_KA
+            self.kFlywheelKs, self.kFlywheelKv, self.kFlywheelKa
         )
 
         # Joystick to control setpoint
         self.joystick = wpilib.Joystick(0)
 
-        self.flywheelMotor = wpilib.PWMSparkMax(self.MOTOR_PORT)
-        self.encoder = wpilib.Encoder(self.ENCODER_A_CHANNEL, self.ENCODER_B_CHANNEL)
+        self.flywheelMotor = wpilib.PWMSparkMax(self.kMotorPort)
+        self.encoder = wpilib.Encoder(self.kEncoderAChannel, self.kEncoderBChannel)
 
         self.bangBangControler = wpimath.controller.BangBangController()
 
         # Simulation classes help us simulate our robot
         self.flywheelSim = wpilib.simulation.FlywheelSim(
-            DCMotor.NEO(1), self.FLYWHEEL_GEARING, self.FLYWHEEL_MOMENT_OF_INERTIA
+            DCMotor.NEO(1), self.kFlywheelGearing, self.kFlywheelMomentOfInertia
         )
         self.encoderSim = wpilib.simulation.EncoderSim(self.encoder)
 
@@ -69,7 +69,7 @@ class MyRobot(wpilib.TimedRobot):
             0.0,
             self.joystick.getRawAxis(0)
             * wpimath.units.rotationsPerMinuteToRadiansPerSecond(
-                self.MAX_SETPOINT_VALUE
+                self.kMaxSetpointValue
             ),
         )
 

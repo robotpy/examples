@@ -16,28 +16,28 @@ class MyRobot(wpilib.TimedRobot):
     keeping.
     """
 
-    ANGLE_SETPOINT = 0.0
-    P = 0.005  # propotional turning constant
+    kAngleSetpoint = 0.0
+    kP = 0.005  # propotional turning constant
 
     # gyro calibration constant, may need to be adjusted;
     # gyro value of 360 is set to correspond to one full revolution
-    VOLTS_PER_DEGREE_PER_SECOND = 0.0128
+    kVoltsPerDegreePerSecond = 0.0128
 
-    LEFT_MOTOR_PORT = 0
-    RIGHT_MOTOR_PORT = 1
-    GYRO_PORT = 0
-    JOYSTICK_PORT = 0
+    kLeftMotorPort = 0
+    kRightMotorPort = 1
+    kGyroPort = 0
+    kJoystickPort = 0
 
     def robotInit(self):
         """Robot initialization function"""
 
-        self.leftDrive = wpilib.PWMSparkMax(self.LEFT_MOTOR_PORT)
-        self.rightDrive = wpilib.PWMSparkMax(self.RIGHT_MOTOR_PORT)
+        self.leftDrive = wpilib.PWMSparkMax(self.kLeftMotorPort)
+        self.rightDrive = wpilib.PWMSparkMax(self.kRightMotorPort)
         self.myRobot = wpilib.drive.DifferentialDrive(self.leftDrive, self.rightDrive)
-        self.gyro = wpilib.AnalogGyro(self.GYRO_PORT)
-        self.joystick = wpilib.Joystick(self.JOYSTICK_PORT)
+        self.gyro = wpilib.AnalogGyro(self.kGyroPort)
+        self.joystick = wpilib.Joystick(self.kJoystickPort)
 
-        self.gyro.setSensitivity(self.VOLTS_PER_DEGREE_PER_SECOND)
+        self.gyro.setSensitivity(self.kVoltsPerDegreePerSecond)
 
         # We need to invert one side of the drivetrain so that positive voltages
         # result in both sides moving forward. Depending on how your robot's
@@ -47,7 +47,7 @@ class MyRobot(wpilib.TimedRobot):
     def teleopPeriodic(self):
         # The motor speed is set from the joystick while the DifferentialDrive turning value is assigned
         # from the error between the setpoint and the gyro angle.
-        turningValue = (self.ANGLE_SETPOINT - self.gyro.getAngle()) * self.P
+        turningValue = (self.kAngleSetpoint - self.gyro.getAngle()) * self.kP
         self.myRobot.arcadeDrive(-self.joystick.getY(), -turningValue)
 
 

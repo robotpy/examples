@@ -11,25 +11,25 @@ import wpilib.drive
 class MyRobot(wpilib.TimedRobot):
     # gyro calibration constant, may need to be adjusted;
     # gyro value of 360 is set to correspond to one full revolution
-    VOLTS_PER_DEGREE_PER_SECOND = 0.0128
+    kVoltsPerDegreePerSecond = 0.0128
 
-    FRONT_LEFT_CHANNEL = 0
-    REAR_LEFT_CHANNEL = 1
-    FRONT_RIGHT_CHANNEL = 2
-    REAR_RIGHT_CHANNEL = 3
-    GYRO_PORT = 0
-    JOYSTICK_PORT = 0
+    kFrontLeftChannel = 0
+    kRearLeftChannel = 1
+    kFrontRightChannel = 2
+    kRearRightChannel = 3
+    kGyroPort = 0
+    kJoystickPort = 0
 
     def robotInit(self):
         """Robot initialization function"""
 
-        self.gyro = wpilib.AnalogGyro(self.GYRO_PORT)
-        self.joystick = wpilib.Joystick(self.JOYSTICK_PORT)
+        self.gyro = wpilib.AnalogGyro(self.kGyroPort)
+        self.joystick = wpilib.Joystick(self.kJoystickPort)
 
-        frontLeft = wpilib.PWMSparkMax(self.FRONT_LEFT_CHANNEL)
-        rearLeft = wpilib.PWMSparkMax(self.REAR_LEFT_CHANNEL)
-        frontRight = wpilib.PWMSparkMax(self.FRONT_RIGHT_CHANNEL)
-        rearRight = wpilib.PWMSparkMax(self.REAR_RIGHT_CHANNEL)
+        frontLeft = wpilib.PWMSparkMax(self.kFrontLeftChannel)
+        rearLeft = wpilib.PWMSparkMax(self.kRearLeftChannel)
+        frontRight = wpilib.PWMSparkMax(self.kFrontRightChannel)
+        rearRight = wpilib.PWMSparkMax(self.kRearRightChannel)
 
         frontRight.setInverted(True)
         rearRight.setInverted(True)
@@ -38,7 +38,7 @@ class MyRobot(wpilib.TimedRobot):
             frontLeft, rearLeft, frontRight, rearRight
         )
 
-        self.gyro.setSensitivity(self.VOLTS_PER_DEGREE_PER_SECOND)
+        self.gyro.setSensitivity(self.kVoltsPerDegreePerSecond)
 
     def teleopPeriodic(self):
         self.robotDrive.driveCartesian(

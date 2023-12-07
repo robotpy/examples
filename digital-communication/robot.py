@@ -9,18 +9,18 @@ import wpilib
 
 class MyRobot(wpilib.TimedRobot):
     # define ports for digitalcommunication with light controller
-    ALLIANCE_PORT = 0
-    ENABLED_PORT = 1
-    AUTONOMOUS_PORT = 2
-    ALERT_PORT = 3
+    kAlliancePort = 0
+    kEnabledPort = 1
+    kAutonomousPort = 2
+    kAlertPort = 3
 
     def robotInit(self):
         """Robot initialization function"""
 
-        self.allianceOutput = wpilib.DigitalOutput(self.ALLIANCE_PORT)
-        self.enabledOutput = wpilib.DigitalOutput(self.ENABLED_PORT)
-        self.autonomousOutput = wpilib.DigitalOutput(self.AUTONOMOUS_PORT)
-        self.alertOutput = wpilib.DigitalOutput(self.ALERT_PORT)
+        self.allianceOutput = wpilib.DigitalOutput(self.kAlliancePort)
+        self.enabledOutput = wpilib.DigitalOutput(self.kEnabledPort)
+        self.autonomousOutput = wpilib.DigitalOutput(self.kAutonomousPort)
+        self.alertOutput = wpilib.DigitalOutput(self.kAlertPort)
 
     def robotPeriodic(self):
         setAlliance = False

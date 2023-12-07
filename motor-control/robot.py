@@ -22,17 +22,17 @@ class MyRobot(wpilib.TimedRobot):
     to the Dashboard.
     """
 
-    MOTOR_PORT = 0
-    JOYSTICK_PORT = 0
-    ENCODER_PORT_A = 0
-    ENCODER_PORT_B = 1
+    kMotorPort = 0
+    kJoystickPort = 0
+    kEncoderPortA = 0
+    kEncoderPortB = 1
 
     def robotInit(self):
         """Robot initialization function"""
 
-        self.motor = wpilib.PWMSparkMax(self.MOTOR_PORT)
-        self.joystick = wpilib.Joystick(self.JOYSTICK_PORT)
-        self.encoder = wpilib.Encoder(self.ENCODER_PORT_A, self.ENCODER_PORT_B)
+        self.motor = wpilib.PWMSparkMax(self.kMotorPort)
+        self.joystick = wpilib.Joystick(self.kJoystickPort)
+        self.encoder = wpilib.Encoder(self.kEncoderPortA, self.kEncoderPortB)
         # Use SetDistancePerPulse to set the multiplier for GetDistance
         # This is set up assuming a 6 inch wheel with a 360 CPR encoder.
         self.encoder.setDistancePerPulse((math.pi * 6) / 360.0)
