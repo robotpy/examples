@@ -46,7 +46,9 @@ class Drivetrain:
             frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation
         )
 
-        self.odometry = wpimath.kinematics.MecanumDriveOdometry(self.kinematics, self.gyro.getRotation2d(), self.getCurrentDistances())
+        self.odometry = wpimath.kinematics.MecanumDriveOdometry(
+            self.kinematics, self.gyro.getRotation2d(), self.getCurrentDistances()
+        )
 
         # Gains are for example purposes only - must be determined for your own robot!
         self.feedforward = wpimath.controller.SimpleMotorFeedforwardMeters(1, 3)
@@ -104,14 +106,21 @@ class Drivetrain:
         self.backLeftMotor.setVoltage(backLeftOutput + backLeftFeedforward)
         self.backRightMotor.setVoltage(backRightOutput + backRightFeedforward)
 
-    def drive(self, xSpeed: float, ySpeed: float, rot: float, fieldRelative: bool, periodSeconds: float):
+    def drive(
+        self,
+        xSpeed: float,
+        ySpeed: float,
+        rot: float,
+        fieldRelative: bool,
+        periodSeconds: float,
+    ):
         """Method to drive the robot using joystick info."""
         mecanumDriveWheelSpeeds = self.kinematics.toWheelSpeeds(
             ChassisSpeeds.fromFieldRelativeSpeeds(
                 xSpeed, ySpeed, rot, self.gyro.getRotation2d()
-            ) if fieldRelative else (
-                ChassisSpeeds(xSpeed, ySpeed, rot)
             )
+            if fieldRelative
+            else ChassisSpeeds(xSpeed, ySpeed, rot)
             # ChassisSpeeds.discretize(
             #    ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, self.gyro.getRotation2d()) if fieldRelative else ChassisSpeeds(xSpeed, ySpeed, rot),
             #    periodSeconds
