@@ -116,15 +116,14 @@ class Drivetrain:
     ):
         """Method to drive the robot using joystick info."""
         mecanumDriveWheelSpeeds = self.kinematics.toWheelSpeeds(
-            ChassisSpeeds.fromFieldRelativeSpeeds(
-                xSpeed, ySpeed, rot, self.gyro.getRotation2d()
+            ChassisSpeeds.discretize(
+                ChassisSpeeds.fromFieldRelativeSpeeds(
+                    xSpeed, ySpeed, rot, self.gyro.getRotation2d()
+                )
+                if fieldRelative
+                else ChassisSpeeds(xSpeed, ySpeed, rot),
+                periodSeconds,
             )
-            if fieldRelative
-            else ChassisSpeeds(xSpeed, ySpeed, rot)
-            # ChassisSpeeds.discretize(
-            #    ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, self.gyro.getRotation2d()) if fieldRelative else ChassisSpeeds(xSpeed, ySpeed, rot),
-            #    periodSeconds
-            # )
         )
         mecanumDriveWheelSpeeds.desaturate(self.MAX_SPEED)
         self.setSpeeds(mecanumDriveWheelSpeeds)
