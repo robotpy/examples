@@ -35,7 +35,7 @@ class MyRobot(wpilib.TimedRobot):
         # alliance, enabled in teleop mode, with 43 seconds left in the match.
         allianceString = "U"
         alliance = wpilib.DriverStation.getAlliance()
-        if alliance:
+        if alliance is not None:
             allianceString = (
                 "R" if alliance == wpilib.DriverStation.Alliance.kRed else "B"
             )
