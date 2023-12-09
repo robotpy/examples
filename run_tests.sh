@@ -39,6 +39,7 @@ BASE_TESTS="
   tank-drive
   tank-drive-xbox-controller
   timed/src
+  ultrasonic
 "
 
 IGNORED_TESTS="
