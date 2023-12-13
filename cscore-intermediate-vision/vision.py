@@ -1,4 +1,10 @@
 #
+# Copyright (c) FIRST and other WPILib contributors.
+# Open Source Software; you can modify and/or share it under the terms of
+# the WPILib BSD license file in the root directory of this project.
+#
+
+#
 # This is a demo program showing CameraServer usage with OpenCV to do image
 # processing. The image is acquired from the USB camera, then a rectangle
 # is put on the image and sent to the dashboard. OpenCV has many methods

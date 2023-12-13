@@ -1,4 +1,10 @@
 #
+# Copyright (c) FIRST and other WPILib contributors.
+# Open Source Software; you can modify and/or share it under the terms of
+# the WPILib BSD license file in the root directory of this project.
+#
+
+#
 # This is a pytest based testing system. Anything you can do with
 # pytest, you can do with this too. There are a few magic parameters
 # provided as fixtures that will allow your tests to access the robot
