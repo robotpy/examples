@@ -11,9 +11,8 @@ import wpimath.controller
 
 class MyRobot(wpilib.TimedRobot):
     """
-    This is a sample program to demonstrate how to use a soft potentiometer and
-    a PID controller to reach and maintain position setpoints on an elevator
-    mechanism.
+    This is a sample program to demonstrate how to use a soft potentiometer and a PID controller to
+    reach and maintain position setpoints on an elevator mechanism.
     """
 
     kPotChannel = 1

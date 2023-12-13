@@ -38,6 +38,8 @@ BASE_TESTS="
   physics-mecanum/src
   physics-spi/src
   potentiometer-pid
+  quick-vision
+  ramsete-controller
   relay
   shuffleboard
   solenoid
