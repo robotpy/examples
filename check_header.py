@@ -22,14 +22,6 @@ def check_file_content(file_path):
                 "#\n",
                 "\n",
             ]
-        elif file.name.endswith("__init__.py"):
-            expected_lines = [
-                "#\n",
-                "# Copyright (c) FIRST and other WPILib contributors.\n",
-                "# Open Source Software; you can modify and/or share it under the terms of\n",
-                "# the WPILib BSD license file in the root directory of this project.\n",
-                "#\n",
-            ]
         else:
             expected_lines = [
                 "#\n",
@@ -65,7 +57,7 @@ def main():
     python_files = [
         x
         for x in current_directory.glob("./**/*.py")
-        if not x.parent == current_directory
+        if not x.parent == current_directory and x.stat().st_size != 0
     ]
 
     non_compliant_files = [
