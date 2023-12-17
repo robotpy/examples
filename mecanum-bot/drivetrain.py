@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+#
+# Copyright (c) FIRST and other WPILib contributors.
+# Open Source Software; you can modify and/or share it under the terms of
+# the WPILib BSD license file in the root directory of this project.
+#
 
 import wpilib.drive
 import wpimath.controller
@@ -12,12 +16,8 @@ import math
 class Drivetrain:
     """Represents a differential drive style drivetrain."""
 
-    MAX_SPEED = 3.0  # 3 meters per second
-    MAX_ANGULAR_SPEED = math.pi  # 1/2 rotation per second
-
-    # TRACK_WIDTH = 0.381 * 2  # meters
-    # WHEEL_RADIUS = 0.0508  # meters
-    # ENCODER_RESOLUTION = 4096  # counts per revolution
+    kMaxSpeed = 3.0  # 3 meters per second
+    kMaxAngularSpeed = math.pi  # 1/2 rotation per second
 
     def __init__(self):
         self.frontLeftMotor = wpilib.PWMSparkMax(1)
@@ -125,7 +125,7 @@ class Drivetrain:
                 periodSeconds,
             )
         )
-        mecanumDriveWheelSpeeds.desaturate(self.MAX_SPEED)
+        mecanumDriveWheelSpeeds.desaturate(self.kMaxSpeed)
         self.setSpeeds(mecanumDriveWheelSpeeds)
 
     def updateOdometry(self):

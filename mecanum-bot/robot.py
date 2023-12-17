@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+#
+# Copyright (c) FIRST and other WPILib contributors.
+# Open Source Software; you can modify and/or share it under the terms of
+# the WPILib BSD license file in the root directory of this project.
+#
 
 import wpilib
 import wpilib.drive
@@ -29,7 +34,7 @@ class MyRobot(wpilib.TimedRobot):
         # negative values when we push forward.
         xSpeed = (
             -self.xspeedLimiter.calculate(self.controller.getLeftY())
-            * Drivetrain.MAX_SPEED
+            * Drivetrain.kMaxSpeed
         )
 
         # Get the y speed or sideways/strafe speed. We are inverting this because
@@ -37,7 +42,7 @@ class MyRobot(wpilib.TimedRobot):
         # return positive values when you pull to the right by default.
         ySpeed = (
             -self.yspeedLimiter.calculate(self.controller.getLeftX())
-            * Drivetrain.MAX_SPEED
+            * Drivetrain.kMaxSpeed
         )
 
         # Get the rate of angular rotation. We are inverting this because we want a
@@ -46,7 +51,7 @@ class MyRobot(wpilib.TimedRobot):
         # the right by default.
         rot = (
             -self.rotLimiter.calculate(self.controller.getRightX())
-            * Drivetrain.MAX_ANGULAR_SPEED
+            * Drivetrain.kMaxAngularSpeed
         )
 
         self.mecanum.drive(xSpeed, ySpeed, rot, fieldRelative, self.getPeriod())
