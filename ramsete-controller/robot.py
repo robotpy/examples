@@ -16,7 +16,6 @@ from drivetrain import Drivetrain
 
 
 class MyRobot(wpilib.TimedRobot):
-
     def robotInit(self):
         self.controller = wpilib.XboxController(0)
         self.drive = Drivetrain()
