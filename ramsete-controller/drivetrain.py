@@ -110,7 +110,7 @@ class Drivetrain:
             self.gyro.getRotation2d(),
             self.leftEncoder.getDistance(),
             self.rightEncoder.getDistance(),
-            pose
+            pose,
         )
 
     def getPose(self) -> wpimath.geometry.Pose2d:

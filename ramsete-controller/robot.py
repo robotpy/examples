@@ -40,7 +40,7 @@ class MyRobot(wpilib.TimedRobot):
             wpimath.geometry.Pose2d(3, 0, wpimath.geometry.Rotation2d.fromDegrees(0)),
             wpimath.trajectory.TrajectoryConfig(
                 wpimath.units.feetToMeters(3.0), wpimath.units.feetToMeters(3.0)
-            )
+            ),
         )
 
         # The Ramsete Controller to follow the trajectory.
@@ -78,7 +78,9 @@ class MyRobot(wpilib.TimedRobot):
             desiredPose = self.trajectory.sample(self.timer.get())
 
             # Get the reference chassis speeds from the Ramsete controller.
-            refChassisSpeeds = self.ramseteController.calculate(self.drive.getPose(), desiredPose)
+            refChassisSpeeds = self.ramseteController.calculate(
+                self.drive.getPose(), desiredPose
+            )
 
             # Set the linear and angular speeds.
             self.drive.drive(refChassisSpeeds.vx, refChassisSpeeds.omega)
@@ -88,13 +90,19 @@ class MyRobot(wpilib.TimedRobot):
     def teleopPeriodic(self):
         # Get the x speed. We are inverting this because Xbox controllers return
         # negative values when we push forward.
-        xSpeed = -self.speedLimiter.calculate(self.controller.getLeftY()) * Drivetrain.kMaxSpeed
+        xSpeed = (
+            -self.speedLimiter.calculate(self.controller.getLeftY())
+            * Drivetrain.kMaxSpeed
+        )
 
         # Get the rate of angular rotation. We are inverting this because we want a
         # positive value when we pull to the left (remember, CCW is positive in
         # mathematics). Xbox controllers return positive values when you pull to
         # the right by default.
-        rot = -self.rotLimiter.calculate(self.controller.getRightX()) * Drivetrain.kMaxAngularSpeed
+        rot = (
+            -self.rotLimiter.calculate(self.controller.getRightX())
+            * Drivetrain.kMaxAngularSpeed
+        )
 
         self.drive.drive(xSpeed, rot)
 
