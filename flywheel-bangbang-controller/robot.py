@@ -8,7 +8,6 @@
 import wpilib
 import wpilib.simulation
 import wpimath.controller
-from wpimath.system.plant import DCMotor
 import wpimath.units
 
 import math
@@ -58,12 +57,6 @@ class MyRobot(wpilib.TimedRobot):
 
         self.bangBangControler = wpimath.controller.BangBangController()
 
-        # Simulation classes help us simulate our robot
-        self.flywheelSim = wpilib.simulation.FlywheelSim(
-            DCMotor.NEO(1), self.kFlywheelGearing, self.kFlywheelMomentOfInertia
-        )
-        self.encoderSim = wpilib.simulation.EncoderSim(self.encoder)
-
         # Add bang-bang controler to SmartDashboard and networktables.
         wpilib.SmartDashboard.putData(self.bangBangControler)
 
@@ -90,17 +83,6 @@ class MyRobot(wpilib.TimedRobot):
         self.flywheelMotor.setVoltage(
             bangOutput + 0.9 * self.feedforward.calculate(setpoint)
         )
-
-    def _simulationPeriodic(self):
-        """Update our simulation. This should be run every robot loop in simulation."""
-
-        # To update our simulation, we set motor voltage inputs, update the
-        # simulation, and write the simulated velocities to our simulated encoder
-        self.flywheelSim.setInputVoltage(
-            self.flywheelMotor.get() * wpilib.RobotController.getInputVoltage()
-        )
-        self.flywheelSim.update(0.02)
-        self.encoderSim.setRate(self.flywheelSim.getAngularVelocity())
 
 
 if __name__ == "__main__":
