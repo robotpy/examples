@@ -1,3 +1,9 @@
+#
+# Copyright (c) FIRST and other WPILib contributors.
+# Open Source Software; you can modify and/or share it under the terms of
+# the WPILib BSD license file in the root directory of this project.
+#
+
 """
     This autonomous mode doesn't do anything particularly useful, it's just
     here to test out features and make sure that things work.

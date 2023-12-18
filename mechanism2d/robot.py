@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
-"""
-This sample program shows how to use Mechanism2d - a visual representation of arms, elevators,
-and other mechanisms on dashboards; driven by a node-based API.
-
-Ligaments are based on other ligaments or roots, and roots are contained in the base
-Mechanism2d object.
-"""
+#
+# Copyright (c) FIRST and other WPILib contributors.
+# Open Source Software; you can modify and/or share it under the terms of
+# the WPILib BSD license file in the root directory of this project.
+#
 
 import wpilib
 
 
 class MyRobot(wpilib.TimedRobot):
+    """
+    This sample program shows how to use Mechanism2d - a visual representation of arms, elevators,
+    and other mechanisms on dashboards; driven by a node-based API.
+
+    Ligaments are based on other ligaments or roots, and roots are contained in the base
+    Mechanism2d object.
+    """
+
     kMetersPerPulse = 0.01
     kElevatorMinimumLength = 0.5
 

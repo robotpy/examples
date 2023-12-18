@@ -18,12 +18,13 @@ import numpy
 # A simple utility class for converting rpm to radians, as robotPY does not currently have a wpimath.util class.
 import util.units
 
-"""This is a sample program to demonstrate how to use a state-space controller to control a
-flywheel.
-"""
-
 
 class MyRobot(wpilib.TimedRobot):
+    """
+    This is a sample program to demonstrate how to use a state-space controller to control a
+    flywheel.
+    """
+
     kMotorPort = 0
     kEncoderAChannel = 0
     kEncoderBChannel = 1
