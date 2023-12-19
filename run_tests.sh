@@ -14,12 +14,19 @@ BASE_TESTS="
   cscore-intermediate-vision
   cscore-quick-vision
   differential-drive-bot
+  digital-communication
+  dutycycle-encoder
+  dutycycle-input
   elevator-profiled-pid
   elevator-simulation
   elevator-trapezoid-profile
+  encoder
+  flywheel-bangbang-controller
   game-data
   getting-started
   gyro
+  gyro-mecanum
+  hid-rumble
   i2c-communication
   magicbot-simple
   mecanum-drive
@@ -31,6 +38,8 @@ BASE_TESTS="
   physics-mecanum/src
   physics-spi/src
   potentiometer-pid
+  quick-vision
+  ramsete-controller
   relay
   shuffleboard
   solenoid
