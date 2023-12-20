@@ -14,10 +14,10 @@ from robotcontainer import RobotContainer
 
 class MyRobot(commands2.TimedCommandRobot):
     """
-    Our default robot class, pass it to wpilib.run
-
-    Command v2 robots are encouraged to inherit from TimedCommandRobot, which
-    has an implementation of robotPeriodic which runs the scheduler for you
+    The VM is configured to automatically run this class, and to call the functions corresponding to
+    each mode, as described in the TimedRobot documentation. If you change the name of this class or
+    the package after creating this project, you must also update the build.gradle file in the
+    project.
     """
 
     autonomousCommand: typing.Optional[commands2.Command] = None
@@ -30,20 +30,19 @@ class MyRobot(commands2.TimedCommandRobot):
 
         # Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         # autonomous chooser on the dashboard.
-        self.container = RobotContainer()
+        self.robotContainer = RobotContainer()
 
     def disabledInit(self) -> None:
         """This function is called once each time the robot enters Disabled mode."""
-        if self.autonomousCommand:
-            self.autonomousCommand.cancel()
 
     def disabledPeriodic(self) -> None:
         """This function is called periodically when disabled"""
 
     def autonomousInit(self) -> None:
         """This autonomous runs the autonomous command selected by your RobotContainer class."""
-        self.autonomousCommand = self.container.getAutonomousCommand()
+        self.autonomousCommand = self.robotContainer.getAutonomousCommand()
 
+        # schedule the autonomous command (example)
         if self.autonomousCommand:
             self.autonomousCommand.schedule()
 
@@ -64,6 +63,9 @@ class MyRobot(commands2.TimedCommandRobot):
     def testInit(self) -> None:
         # Cancels all running commands at the start of test mode
         commands2.CommandScheduler.getInstance().cancelAll()
+
+    def testPeriodic(self) -> None:
+        """This function is called periodically during test mode"""
 
 
 if __name__ == "__main__":

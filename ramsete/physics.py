@@ -22,8 +22,7 @@ from wpilib.simulation import (
     EncoderSim,
     AnalogGyroSim,
 )
-from wpimath.system import LinearSystemId
-from wpimath.system.plant import DCMotor
+from wpimath.system.plant import DCMotor, LinearSystemId
 
 import constants
 
@@ -74,10 +73,10 @@ class PhysicsEngine:
             (constants.kWheelDiameterMeters / 2),
         )
 
-        self.leftEncoderSim = EncoderSim(robot.container.robotDrive.leftEncoder)
-        self.rightEncoderSim = EncoderSim(robot.container.robotDrive.rightEncoder)
+        self.leftEncoderSim = EncoderSim(robot.robotContainer.robotDrive.leftEncoder)
+        self.rightEncoderSim = EncoderSim(robot.robotContainer.robotDrive.rightEncoder)
 
-        self.gyro = AnalogGyroSim(robot.container.robotDrive.gyro)
+        self.gyro = AnalogGyroSim(robot.robotContainer.robotDrive.gyro)
 
     def update_sim(self, now: float, tm_diff: float) -> None:
         """
