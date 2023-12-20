@@ -50,6 +50,7 @@ BASE_TESTS="
   tank-drive-xbox-controller
   timed/src
   ultrasonic
+  ultrasonic-pid
 "
 
 IGNORED_TESTS="
