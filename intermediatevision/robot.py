@@ -10,11 +10,13 @@ import wpilib
 
 class MyRobot(wpilib.TimedRobot):
     """
-    This is a good foundation to build your robot code on
+    This is a demo program showing the use of OpenCV to do vision processing. The image is acquired
+    from the USB camera, then a rectangle is put on the image and sent to the dashboard. OpenCV has
+    many methods for different types of processing.
     """
 
     def robotInit(self):
-        wpilib.CameraServer.launch()
+        wpilib.CameraServer.launch("vision.py:main")
 
 
 if __name__ == "__main__":

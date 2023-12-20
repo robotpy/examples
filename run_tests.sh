@@ -5,65 +5,64 @@ cd "$(dirname $0)"
 # Keep this list alphabetically sorted
 BASE_TESTS="
   addressableled
-  arcade-drive
-  arcade-drive-xbox-controller
-  arm-simulation
+  arcadedrive
+  arcadedrivexboxcontroller
+  armsimulation
   canpdp
-  hatchbot
-  hatchbot-inlined
-  cscore-intermediate-vision
-  cscore-quick-vision
-  differential-drive-bot
-  digital-communication
-  dutycycle-encoder
-  dutycycle-input
-  elevator-profiled-pid
-  elevator-simulation
-  elevator-trapezoid-profile
+  differentialdrivebot
+  digitalcommunication
+  dutycycleencoder
+  dutycycleinput
+  elevatorprofiledpid
+  elevatorsimulation
+  elevatortrapezoidprofile
   encoder
-  flywheel-bangbang-controller
-  game-data
-  getting-started
+  flywheelbangbangcontroller
+  gamedata
+  gettingstarted
   gyro
-  gyro-mecanum
-  hid-rumble
-  i2c-communication
-  magicbot-simple
-  mecanum-bot
-  mecanum-drive
-  mecanum-driveXbox
+  gyromecanum
+  hatchbot
+  hatchbotinlined
+  hidrumble
+  i2ccommunication
+  intermediatevision
+  magicbotsimple
+  mecanumbot
+  mecanumdrive
+  mecanumdriveXbox
   mechanism2d
-  motor-control
+  motorcontrol
   physics/src
-  physics-4wheel/src
-  physics-mecanum/src
-  physics-spi/src
-  potentiometer-pid
-  quick-vision
-  ramsete-controller
+  physics4wheel/src
+  physicsmecanum/src
+  physicsspi/src
+  potentiometerpid
+  quickvision
+  ramsetecontroller
   relay
   shuffleboard
   solenoid
-  stateful-autonomous
-  state-space-flywheel
-  tank-drive
-  tank-drive-xbox-controller
+  statefulautonomous
+  statespaceflywheel
+  tankdrive
+  tankdrivexboxcontroller
   timed/src
   ultrasonic
-  ultrasonic-pid
+  ultrasonicpid
 "
 
 IGNORED_TESTS="
   armbot
   armbotoffboard
-  drive-distance-offboard
-  frisbee-bot
-  gyro-drive-commands
-  ramsete
-  scheduler-event-logging
+  drivedistanceoffboard
+  frisbeebot
+  gyrodrivecommands
+  ramsetecommand
+  schedulereventlogging
   selectcommand
   romi
-  physics-camsim/src
+  physicscamsim/src
 "
 
 ALL_TESTS="${BASE_TESTS}"
