@@ -56,9 +56,8 @@ class RobotContainer:
     def configureButtons(self):
         """
         Use this method to define your button->command mappings. Buttons can be created by
-        instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its subclasses ({@link
-        edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then calling passing it to a
-        {@link JoystickButton}.
+        instantiating a GenericHID or one of its subclasses (Joystick or XboxController),
+        and then calling passing it to a JoystickButton.
         """
 
         # Drive at half speed when the right bumper is held

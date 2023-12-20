@@ -14,10 +14,10 @@ from robotcontainer import RobotContainer
 
 class MyRobot(commands2.TimedCommandRobot):
     """
-    The VM is configured to automatically run this class, and to call the functions corresponding to
-    each mode, as described in the TimedRobot documentation. If you change the name of this class or
-    the package after creating this project, you must also update the build.gradle file in the
-    project.
+    Our default robot class, pass it to wpilib.run
+
+    Command v2 robots are encouraged to inherit from TimedCommandRobot, which
+    has an implementation of robotPeriodic which runs the scheduler for you
     """
 
     autonomousCommand: typing.Optional[commands2.Command] = None
