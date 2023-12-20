@@ -16,7 +16,7 @@ class MyRobot(wpilib.TimedRobot):
     This is a sample program to demonstrate the use of a PIDController with an ultrasonic sensor to
     reach and maintain a set distance from an object.
     """
-    
+
     # distance the robot wants to stay from an object
     # (one meter)
     kHoldDistanceMillimeters = 1.0e3
@@ -40,10 +40,14 @@ class MyRobot(wpilib.TimedRobot):
         # so measurements are filtered with a 5-sample median filter
         self.filter = wpimath.filter.MedianFilter(5)
 
-        self.ultrasonic = wpilib.Ultrasonic(self.kUltrasonicPingPort, self.kUltrasonicEchoPort)
+        self.ultrasonic = wpilib.Ultrasonic(
+            self.kUltrasonicPingPort, self.kUltrasonicEchoPort
+        )
         self.leftMotor = wpilib.PWMSparkMax(self.kLeftMotorPort)
         self.rightMotor = wpilib.PWMSparkMax(self.kRightMotorPort)
-        self.robotDrive = wpilib.drive.DifferentialDrive(self.leftMotor, self.rightMotor)
+        self.robotDrive = wpilib.drive.DifferentialDrive(
+            self.leftMotor, self.rightMotor
+        )
         self.pidController = wpimath.controller.PIDController(self.kP, self.kI, self.kD)
 
     def autonomousInit(self):
