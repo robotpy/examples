@@ -5,7 +5,11 @@
 #
 
 from wpilib import XboxController
-from wpimath.controller import RamseteController, PIDController, SimpleMotorFeedforwardMeters
+from wpimath.controller import (
+    RamseteController,
+    PIDController,
+    SimpleMotorFeedforwardMeters,
+)
 from wpimath.geometry import Pose2d, Rotation2d, Translation2d
 from wpimath.trajectory.constraint import DifferentialDriveVoltageConstraint
 from wpimath.trajectory import TrajectoryConfig, TrajectoryGenerator
@@ -121,7 +125,11 @@ class RobotContainer:
         # Reset odometry to the initial pose of the trajectory, run path following
         # command, then stop at the end.
         (
-            cmd.runOnce(lambda: self.robotDrive.resetOdometry(self.exampleTrajectory.initialPose()))
+            cmd.runOnce(
+                lambda: self.robotDrive.resetOdometry(
+                    self.exampleTrajectory.initialPose()
+                )
+            )
             .andThen(ramseteCommand)
             .andThen(cmd.runOnce(lambda: self.robotDrive.tankDriveVolts(0, 0)))
         )
