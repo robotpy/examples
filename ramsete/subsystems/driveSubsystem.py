@@ -6,70 +6,69 @@
 
 from commands2 import Subsystem
 
-from wpilib import MotorControllerGroup, PWMSparkMax, Encoder, AnalogGyro
+from wpilib import MotorControllerGroup, PWMSparkMax, Encoder, ADXRS450_Gyro
 from wpilib.drive import DifferentialDrive
 
-from wpimath.geometry import Pose2d, Rotation2d
 from wpimath.kinematics import DifferentialDriveOdometry, DifferentialDriveWheelSpeeds
 
 import constants
 
 
-class Drivetrain(Subsystem):
+class DriveSubsystem(Subsystem):
     def __init__(self):
         super().__init__()
 
-        # Create the motor controllers and their respective speed controllers.
+        # The motors on the left side of the drive.
         self.leftMotors = MotorControllerGroup(
             PWMSparkMax(constants.kLeftMotor1Port),
             PWMSparkMax(constants.kLeftMotor2Port),
         )
 
+        # The motors on the right side of the drive.
         self.rightMotors = MotorControllerGroup(
             PWMSparkMax(constants.kRightMotor1Port),
             PWMSparkMax(constants.kRightMotor2Port),
         )
 
-        # Create the differential drivetrain object, allowing for easy motor control.
+        # The robot's drive
         self.drive = DifferentialDrive(self.leftMotors, self.rightMotors)
 
-        # Create the encoder objects.
+        # The left-side drive encoder
         self.leftEncoder = Encoder(
             constants.kLeftEncoderPorts[0],
             constants.kLeftEncoderPorts[1],
             constants.kLeftEncoderReversed,
         )
 
+        # The right-side drive encoder
         self.rightEncoder = Encoder(
             constants.kRightEncoderPorts[0],
             constants.kRightEncoderPorts[1],
             constants.kRightEncoderReversed,
         )
 
-        # Configure the encoder so it knows how many encoder units are in one rotation.
+        # The gyro sensor
+        self.gyro = ADXRS450_Gyro()
+
+        # We need to invert one side of the drivetrain so that positive voltages
+        # result in both sides moving forward. Depending on how your robot's
+        # gearbox is constructed, you might have to invert the left side instead.
+        self.rightMotors.setInverted(True)
+
+        # Sets the distance per pulse for the encoders
         self.leftEncoder.setDistancePerPulse(constants.kEncoderDistancePerPulse)
         self.rightEncoder.setDistancePerPulse(constants.kEncoderDistancePerPulse)
 
-        # Create the gyro, a sensor which can indicate the heading of the robot relative
-        # to a customizable position.
-        self.gyro = AnalogGyro(1)
+        self.resetEncoders()
 
-        # Create the an object for our odometry, which will utilize sensor data to
-        # keep a record of our position on the field.
         self.odometry = DifferentialDriveOdometry(
             self.gyro.getRotation2d(),
             self.leftEncoder.getDistance(),
             self.rightEncoder.getDistance(),
         )
 
-        # Reset the encoders upon the initilization of the robot.
-        self.resetEncoders()
-
     def periodic(self):
-        """
-        Called periodically when it can be called. Updates the robot's
-        odometry with sensor data.
-        """
+        # Update the odometry in the periodic block
         self.odometry.update(
             self.gyro.getRotation2d(),
             self.leftEncoder.getDistance(),
@@ -77,18 +76,17 @@ class Drivetrain(Subsystem):
         )
 
     def getPose(self):
-        """Returns the current position of the robot using it's odometry."""
+        """Returns the currently-estimated pose of the robot."""
         return self.odometry.getPose()
 
     def getWheelSpeeds(self):
-        """Return an object which represents the wheel speeds of our drivetrain."""
-        speeds = DifferentialDriveWheelSpeeds(
+        """Returns the current wheel speeds of the robot."""
+        return DifferentialDriveWheelSpeeds(
             self.leftEncoder.getRate(), self.rightEncoder.getRate()
         )
-        return speeds
 
     def resetOdometry(self, pose):
-        """Resets the robot's odometry to a given position."""
+        """Resets the odometry to the specified pose."""
         self.resetEncoders()
         self.odometry.resetPosition(
             self.gyro.getRotation2d(),
@@ -98,56 +96,44 @@ class Drivetrain(Subsystem):
         )
 
     def arcadeDrive(self, fwd, rot):
-        """Drive the robot with standard arcade controls."""
+        """Drives the robot using arcade controls."""
         self.drive.arcadeDrive(fwd, rot)
 
     def tankDriveVolts(self, leftVolts, rightVolts):
-        """Control the robot's drivetrain with voltage inputs for each side."""
-        # Set the voltage of the left side.
+        """Controls the left and right sides of the drive directly with voltages."""
         self.leftMotors.setVoltage(leftVolts)
-
-        # Set the voltage of the right side. It's
-        # inverted with a negative sign because it's motors need to spin in the negative direction
-        # to move forward.
-        self.rightMotors.setVoltage(-rightVolts)
-
-        # Resets the timer for this motor's MotorSafety
+        self.rightMotors.setVoltage(rightVolts)
         self.drive.feed()
 
     def resetEncoders(self):
-        """Resets the encoders of the drivetrain."""
+        """Resets the drive encoders to currently read a position of 0."""
         self.leftEncoder.reset()
         self.rightEncoder.reset()
 
     def getAverageEncoderDistance(self):
-        """
-        Take the sum of each encoder's traversed distance and divide it by two,
-        since we have two encoder values, to find the average value of the two.
-        """
+        """Gets the average distance of the two encoders."""
         return (self.leftEncoder.getDistance() + self.rightEncoder.getDistance()) / 2
 
     def getLeftEncoder(self):
-        """Returns the left encoder object."""
+        """Gets the left drive encoder."""
         return self.leftEncoder
 
     def getRightEncoder(self):
-        """Returns the right encoder object."""
+        """Gets the right drive encoder."""
         return self.rightEncoder
 
     def setMaxOutput(self, maxOutput):
-        """Set the max percent output of the drivetrain, allowing for slower control."""
+        """Sets the max output of the drive. Useful for scaling the drive to drive more slowly."""
         self.drive.setMaxOutput(maxOutput)
 
     def zeroHeading(self):
-        """Zeroes the gyro's heading."""
+        """Zeroes the heading of the robot."""
         self.gyro.reset()
 
     def getHeading(self):
-        """Return the current heading of the robot."""
-        return self.gyro.getRotation2d().getDegrees()
+        """Returns the heading of the robot."""
+        return self.gyro.getRotation2d().degrees()
 
     def getTurnRate(self):
-        """Returns the turning rate of the robot using the gyro."""
-
-        # The minus sign negates the value.
+        """Returns the turn rate of the robot."""
         return -self.gyro.getRate()

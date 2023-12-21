@@ -37,25 +37,26 @@ kDriveKinematics = DifferentialDriveKinematics(kTrackWidthMeters)
 kEncoderCPR = 1024
 kWheelDiameterMeters = 0.15
 
-# The following works assuming the encoders are directly mounted to the wheel shafts.
+# Assumes the encoders are directly mounted on the wheel shafts
 kEncoderDistancePerPulse = (kWheelDiameterMeters * math.pi) / kEncoderCPR
 
-# NOTE: Please do NOT use these values on your robot. Rather, characterize your
-# drivetrain using the FRC Characterization tool. These are for demo purposes
-# only!
+# These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
+# These characterization values MUST be determined either experimentally or theoretically
+# for *your* robot's drive.
+# The Robot Characterization Toolsuite provides a convenient tool for obtaining these
+# values for your robot.
 ksVolts = 0.22
 kvVoltSecondsPerMeter = 1.98
 kaVoltSecondsSquaredPerMeter = 0.2
 
-# The P gain for our turn controllers.
+# Example value only - as above, this must be tuned for your drive!
 kPDriveVel = 8.5
 
 # The max velocity and acceleration for our autonomous.
 kMaxSpeedMetersPerSecond = 3
-kMaxAccelerationMetersPerSecondSquared = 3
+kMaxAccelerationMetersPerSecondSquared = 1
 
-# Baseline values for a RAMSETE follower in units of meters
-# and seconds. These are recommended, but may be changes if wished.
+# Reasonable baseline values for a RAMSETE follower in units of meters and seconds.
 kRamseteB = 2
 kRamseteZeta = 0.7
 
