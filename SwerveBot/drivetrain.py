@@ -9,6 +9,7 @@ import wpimath.geometry
 import wpimath.kinematics
 import swervemodule
 
+
 class Drivetrain:
     """
     Represents a swerve drive style drivetrain.
@@ -84,11 +85,11 @@ class Drivetrain:
     def updateOdometry(self) -> None:
         """Updates the field relative position of the robot."""
         self.odometry.update(
-			self.gyro.getRotation2d(), 
+            self.gyro.getRotation2d(),
             (
                 self.frontLeft.getPosition(),
                 self.frontRight.getPosition(),
                 self.backLeft.getPosition(),
                 self.backRight.getPosition(),
             ),
-		)
+        )
