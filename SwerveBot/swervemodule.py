@@ -4,13 +4,17 @@
 # the WPILib BSD license file in the root directory of this project.
 #
 
-import constants
 import math
 import wpilib
 import wpimath.kinematics
 import wpimath.geometry
 import wpimath.controller
 import wpimath.trajectory
+
+kWheelRadius = 0.0508
+kEncoderResolution = 4096
+kModuleMaxAngularVelocity = math.pi
+kModuleMaxAngularAcceleration = math.tau
 
 
 class SwerveModule:
@@ -49,8 +53,8 @@ class SwerveModule:
             0,
             0,
             wpimath.trajectory.TrapezoidProfile.Constraints(
-                constants.kModuleMaxAngularVelocity,
-                constants.kModuleMaxAngularAcceleration,
+                kModuleMaxAngularVelocity,
+                kModuleMaxAngularAcceleration,
             ),
         )
 
@@ -62,15 +66,13 @@ class SwerveModule:
         # distance traveled for one rotation of the wheel divided by the encoder
         # resolution.
         self.driveEncoder.setDistancePerPulse(
-            2 * math.pi * constants.kWheelRadius / constants.kEncoderResolution
+            math.tau * kWheelRadius / kEncoderResolution
         )
 
         # Set the distance (in this case, angle) in radians per pulse for the turning encoder.
         # This is the the angle through an entire rotation (2 * pi) divided by the
         # encoder resolution.
-        self.turningEncoder.setDistancePerPulse(
-            2 * math.pi / constants.kEncoderResolution
-        )
+        self.turningEncoder.setDistancePerPulse(math.tau / kEncoderResolution)
 
         # Limit the PID Controller's input range between -pi and pi and set the input
         # to be continuous.

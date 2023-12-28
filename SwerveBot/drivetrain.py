@@ -4,11 +4,14 @@
 # the WPILib BSD license file in the root directory of this project.
 #
 
-import constants
+import math
 import wpilib
 import wpimath.geometry
 import wpimath.kinematics
 import swervemodule
+
+kMaxSpeed = 3.0  # 3 meters per second
+kMaxAngularSpeed = math.pi  # 1/2 rotation per second
 
 
 class Drivetrain:
@@ -76,7 +79,7 @@ class Drivetrain:
             )
         )
         wpimath.kinematics.SwerveDrive4Kinematics.desaturateWheelSpeeds(
-            swerveModuleStates, constants.kMaxSpeed
+            swerveModuleStates, kMaxSpeed
         )
         self.frontLeft.setDesiredState(swerveModuleStates[0])
         self.frontRight.setDesiredState(swerveModuleStates[1])

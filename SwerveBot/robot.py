@@ -11,7 +11,6 @@ import wpilib.drive
 import wpimath.filter
 import wpimath.controller
 import drivetrain
-import constants
 
 
 class MyRobot(wpilib.TimedRobot):
@@ -39,7 +38,7 @@ class MyRobot(wpilib.TimedRobot):
             -self.xspeedLimiter.calculate(
                 wpimath.applyDeadband(self.controller.getLeftY(), 0.02)
             )
-            * constants.kMaxSpeed
+            * drivetrain.kMaxSpeed
         )
 
         # Get the y speed or sideways/strafe speed. We are inverting this because
@@ -49,7 +48,7 @@ class MyRobot(wpilib.TimedRobot):
             -self.yspeedLimiter.calculate(
                 wpimath.applyDeadband(self.controller.getLeftX(), 0.02)
             )
-            * constants.kMaxSpeed
+            * drivetrain.kMaxSpeed
         )
 
         # Get the rate of angular rotation. We are inverting this because we want a
@@ -60,7 +59,7 @@ class MyRobot(wpilib.TimedRobot):
             -self.rotLimiter.calculate(
                 wpimath.applyDeadband(self.controller.getRightX(), 0.02)
             )
-            * constants.kMaxSpeed
+            * drivetrain.kMaxSpeed
         )
 
         self.swerve.drive(xSpeed, ySpeed, rot, fieldRelative, self.getPeriod())
