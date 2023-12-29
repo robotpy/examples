@@ -45,6 +45,7 @@ BASE_TESTS="
   Solenoid
   StatefulAutonomous
   StateSpaceFlywheel
+  StateSpaceFlywheelSysId
   SwerveBot
   TankDrive
   TankDriveXboxController
