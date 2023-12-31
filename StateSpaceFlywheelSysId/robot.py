@@ -5,24 +5,20 @@
 # the WPILib BSD license file in the root directory of this project.
 #
 
+import math
 import wpilib
 import wpimath
+import wpimath.units
 import wpimath.controller
 import wpimath.system
 import wpimath.system.plant
 import wpimath.estimator
 
-import math
-import numpy
-
-# A simple utility class for converting rpm to radians, as robotPY does not currently have a wpimath.util class.
-import util.units
-
 kMotorPort = 0
 kEncoderAChannel = 0
 kEncoderBChannel = 1
 kJoystickPort = 0
-kSpinupRadPerSec = util.units.Units.rotationsPerMinuteToRadiansPerSecond(500.0)
+kSpinupRadPerSec = wpimath.units.rotationsPerMinuteToRadiansPerSecond(500.0)
 
 # Volts per (radian per second)
 kFlywheelKv = 0.023
@@ -91,11 +87,11 @@ class MyRobot(wpilib.TimedRobot):
         # PID controller.
         if self.joystick.getTriggerPressed():
             # We just pressed the trigger, so let's set our next reference
-            self.loop.setNextR(numpy.array([kSpinUpRadPerSec]))
+            self.loop.setNextR([kSpinUpRadPerSec])
 
         elif self.joystick.getTriggerReleased():
             # We just released the trigger, so let's spin down
-            self.loop.setNextR(numpy.array([0]))
+            self.loop.setNextR([0])
 
         # Correct our Kalman filter's state vector estimate with encoder data.
         self.loop.correct([self.encoder.getRate()])
