@@ -12,6 +12,7 @@ import robotpy_apriltag
 from cscore import CameraServer
 import cv2
 
+
 #
 # This code will work both on a RoboRIO and on other platforms. The exact mechanism
 # to run it differs depending on whether you’re on a RoboRIO or a coprocessor
@@ -53,14 +54,14 @@ def main():
 
     # Mats are very memory expensive. Let's reuse these.
 
-    mat = cv2.UMat()
+    mat = numpy.zeros((480, 640, 3), dtype="uint8")
     grayMat = cv2.UMat()
 
     # Instantiate once
 
     tags = []  # The list where the tags will be stored
-    outlineColor = numpy.ScalarType((0, 255, 0))  # Color of Tag Outline
-    crossColor = numpy.ScalarType((0, 0, 255))  # Color of Cross
+    outlineColor = (0, 255, 0)  # Color of Tag Outline
+    crossColor = (0, 0, 25)  # Color of Cross
 
     # Output the list to Network Tables
 
