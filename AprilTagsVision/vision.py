@@ -1,17 +1,22 @@
+#!/usr/bin/env python3
+#
+# Copyright (c) FIRST and other WPILib contributors.
+# Open Source Software; you can modify and/or share it under the terms of
+# the WPILib BSD license file in the root directory of this project.
+#
+
+
 import ntcore
 import numpy
 import robotpy_apriltag
 from cscore import CameraServer
+import cv2
 
 #
 # This code will work both on a RoboRIO and on other platforms. The exact mechanism
 # to run it differs depending on whether you’re on a RoboRIO or a coprocessor
 #
 # https://robotpy.readthedocs.io/en/stable/vision/code.html
-
-# py -m pip install opencv-python
-
-import cv2
 
 
 def main():
