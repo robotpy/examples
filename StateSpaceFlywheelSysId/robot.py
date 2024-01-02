@@ -77,7 +77,7 @@ class MyRobot(wpilib.TimedRobot):
         self.joystick = wpilib.Joystick(kJoystickPort)
 
         # We go 2 pi radians per 4096 clicks.
-        self.encoder.setDistancePerPulse(2 * math.pi / 4096)
+        self.encoder.setDistancePerPulse(math.tau / 4096)
 
     def teleopInit(self) -> None:
         self.loop.reset([self.encoder.getRate()])
