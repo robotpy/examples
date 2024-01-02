@@ -24,6 +24,7 @@ kFlywheelMomentOfInertia = 0.00032  # kg/m^2
 # the motors, this number should be greater than one.
 kFlywheelGearing = 1
 
+
 class MyRobot(wpilib.TimedRobot):
     """
     This is a sample program to demonstrate how to use a state-space controller to control a
@@ -31,9 +32,7 @@ class MyRobot(wpilib.TimedRobot):
     """
 
     def robotInit(self) -> None:
-        self.kSpinUpRadPerSec = wpimath.units.rotationsPerMinuteToRadiansPerSecond(
-            500
-        )
+        self.kSpinUpRadPerSec = wpimath.units.rotationsPerMinuteToRadiansPerSecond(500)
 
         # The plant holds a state-space model of our flywheel. This system has the following properties:
         #
