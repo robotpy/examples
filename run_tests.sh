@@ -44,6 +44,7 @@ BASE_TESTS="
   ShuffleBoard
   Solenoid
   StatefulAutonomous
+  StateSpaceElevator
   StateSpaceFlywheel
   StateSpaceFlywheelSysId
   SwerveBot
