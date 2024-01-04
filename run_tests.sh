@@ -5,6 +5,7 @@ cd "$(dirname $0)"
 # Keep this list alphabetically sorted
 BASE_TESTS="
   AddressableLED
+  AprilTagsVision
   ArcadeDrive
   ArcadeDriveXboxController
   ArmSimulation
