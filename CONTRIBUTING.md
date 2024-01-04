@@ -27,6 +27,7 @@ General:
 * We always try to stay as close to the original examples as possible
 * `Main.java` is never needed, it is equivalent to `wpilib.run(MyRobot)`
 * `robot.py` should have `#!/usr/bin/env python3` as the very first line
+  * Note: Other files such as `vision.py` or `robotcontainer.py` should not start with `#!/usr/bin/env python3`
 * Don't ever check in files for your IDE (.vscode, .idea, etc)
 * Copy over the copyright statement from the original file
 
