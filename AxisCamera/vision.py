@@ -20,25 +20,21 @@ import cv2
 
 def main():
     # Get the Axis camera from CameraServer
-
     camera = CameraServer.addAxisCamera("axis-camera.local")
-    # Set the resolution
 
+    # Set the resolution
     camera.setResolution(640, 480)
 
     # Get a CvSink. This will capture Mats from the camera
-
     cvSink = CameraServer.getVideo()
-    # Setup a CvSource. This will send images back to the Dashboard
 
+    # Setup a CvSource. This will send images back to the Dashboard
     outputStream = CameraServer.putVideo("Rectangle", 640, 480)
 
     # Mats are very memory expensive. Lets reuse this Mat.
-
     mat = numpy.zeros((480, 640, 3), dtype="uint8")
 
     # Declare the color of the rectangle
-
     rectColor = (255, 255, 255)
 
     # The camera code will be killed when the robot.py program exits. If you wish to perform cleanup,
@@ -51,13 +47,12 @@ def main():
 
         if cvSink.grabFrame(mat) == 0:
             # Send the output the error.
-
             outputStream.notifyError(cvSink.getError())
+
             # skip the rest of the current iteration
-
             continue
-        # Put a rectangle on the image
 
+        # Put a rectangle on the image
         mat = cv2.rectangle(
             img=mat,
             pt1=(100, 100),
@@ -65,6 +60,6 @@ def main():
             color=rectColor,
             lineType=5,
         )
-        # Give the output stream a new image to display
 
+        # Give the output stream a new image to display
         outputStream.putFrame(mat)
