@@ -20,7 +20,7 @@ Testing:
 * New examples must run! You *must* test your code on either a robot or in
   simulation. If there's something broken in RobotPy, file an issue to get it
   fixed
-  * To test a vision file, run `python -m cscore vision.py` in the directory of the vision file
+  * You can find instructions on how to test a vision file [here](https://robotpy.readthedocs.io/en/stable/vision/other.html#vision-other-runcustom)!
 * Format your code with black
 
 General:
