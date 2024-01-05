@@ -33,10 +33,12 @@ class MyRobot(wpilib.TimedRobot):
         self.kCarriageMass = 4.5  # kilograms
 
         # A 1.5in diameter drum has a radius of 0.75in, or 0.019in.
+
         self.kDrumRadius = 1.5 / 2.0 * 25.4 / 1000.0
 
         # Reduction between motors and encoder, as output over input. If the elevator spins slower than
         # the motors, this number should be greater than one.
+
         self.kElevatorGearing = 6.0
 
         self.profile = wpimath.trajectory.TrapezoidProfile(
@@ -55,6 +57,7 @@ class MyRobot(wpilib.TimedRobot):
         # Outputs (what we can measure): [position], in meters.
         #
         # This elevator is driven by two NEO motors.
+
         self.elevatorPlant = wpimath.system.LinearSystemId.elevatorSystem(
             wpimath.system.plant.DCMotor.NEO(2),
             self.kCarriageMass,
@@ -63,6 +66,7 @@ class MyRobot(wpilib.TimedRobot):
         )
 
         # The observer fuses our encoder data and voltage inputs to reject noise.
+
         self.observer = wpimath.estimator.KalmanFilter_2_1_1(
             self.elevatorPlant,
             (
@@ -78,6 +82,7 @@ class MyRobot(wpilib.TimedRobot):
         )
 
         # A LQR uses feedback to create voltage commands.
+
         self.controller = wpimath.controller.LinearQuadraticRegulator_2_1(
             self.elevatorPlant,
             (
@@ -97,27 +102,33 @@ class MyRobot(wpilib.TimedRobot):
         )
 
         # The state-space loop combines a controller, observer, feedforward and plant for easy control.
+
         self.loop = wpimath.system.LinearSystemLoop_2_1_1(
             self.elevatorPlant, self.controller, self.observer, 12.0, 0.020
         )
 
         # An encoder set up to measure elevator height in meters
+
         self.encoder = wpilib.Encoder(self.kEncoderAChannel, self.kEncoderBChannel)
 
         self.motor = wpilib.PWMSparkMax(self.kMotorPort)
 
         # A joystick to read the trigger
+
         self.joystick = wpilib.Joystick(self.kJoystickPort)
 
         # Circumference = pi * d, so distance per click = pi * d / counts
+
         self.encoder.setDistancePerPulse(math.pi * 2 * self.kDrumRadius / 4096.0)
 
     def teleopInit(self):
 
         # Reset our loop to make sure it's in a known state.
+
         self.loop.reset((self.encoder.getDistance(), self.encoder.getRate()))
 
         # Reset our last reference to the current state.
+
         self.lastProfiledReference = wpimath.trajectory.TrapezoidProfile.State(
             self.encoder.getDistance(), self.encoder.getRate()
         )
@@ -126,28 +137,33 @@ class MyRobot(wpilib.TimedRobot):
         if self.joystick.getTrigger():
 
             # the trigger is pressed, so we go to the high goal.
+
             goal = wpimath.trajectory.TrapezoidProfile.State(
                 self.kHighGoalPosition, 0.0
             )
         else:
 
             # Otherwise, we go to the low goal
-            goal = wpimath.trajectory.TrapezoidProfile.State(self.kLowGoalPosition, 0.0)
 
+            goal = wpimath.trajectory.TrapezoidProfile.State(self.kLowGoalPosition, 0.0)
         # Step our TrapezoidalProfile forward 20ms and set it as our next reference
+
         self.lastProfiledReference = self.profile.calculate(0.020)
         self.loop.setNextR(self.lastProfiledReference.position)
 
         # Correct our Kalman filter's state vector estimate with encoder data.
+
         self.loop.correct((self.encoder.getDistance()))
 
         # Update our LQR to generate new voltage commands and use the voltages to predict the next state with out
         # Kalman filter.
+
         self.loop.predict(0.020)
 
         # Send the new calculated voltage to the motors.
         # voltage = duty cycle * battery voltage, so
         # duty cycle = voltage / battery voltage
+
         nextVoltage = self.loop.U(0)
         self.motor.setVoltage(nextVoltage)
 
