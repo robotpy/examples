@@ -122,7 +122,6 @@ class MyRobot(wpilib.TimedRobot):
         self.encoder.setDistancePerPulse(math.pi * 2 * self.kDrumRadius / 4096.0)
 
     def teleopInit(self):
-
         # Reset our loop to make sure it's in a known state.
 
         self.loop.reset((self.encoder.getDistance(), self.encoder.getRate()))
@@ -135,14 +134,12 @@ class MyRobot(wpilib.TimedRobot):
 
     def teleopPeriodic(self):
         if self.joystick.getTrigger():
-
             # the trigger is pressed, so we go to the high goal.
 
             goal = wpimath.trajectory.TrapezoidProfile.State(
                 self.kHighGoalPosition, 0.0
             )
         else:
-
             # Otherwise, we go to the low goal
 
             goal = wpimath.trajectory.TrapezoidProfile.State(self.kLowGoalPosition, 0.0)
