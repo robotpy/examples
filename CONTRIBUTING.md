@@ -20,6 +20,7 @@ Testing:
 * New examples must run! You *must* test your code on either a robot or in
   simulation. If there's something broken in RobotPy, file an issue to get it
   fixed
+  * You can find instructions on how to test a vision file [here](https://robotpy.readthedocs.io/en/stable/vision/other.html#vision-other-runcustom)!
 * Format your code with black
 
 General:
