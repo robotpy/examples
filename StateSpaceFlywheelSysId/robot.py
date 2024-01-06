@@ -105,7 +105,3 @@ class MyRobot(wpilib.TimedRobot):
         # duty cycle = voltage / battery voltage
         nextVoltage = self.loop.U()
         self.motor.setVoltage(nextVoltage)
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

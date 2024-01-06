@@ -63,7 +63,3 @@ class MyRobot(wpilib.TimedRobot):
         """Alternatively, to match the driver station enumeration, you may use  ---> self.drive.driveCartesian(
             self.stick.getRawAxis(1), self.stick.getRawAxis(3), self.stick.getRawAxis(2), 0
         )"""
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

@@ -68,7 +68,3 @@ class MyRobot(wpilib.TimedRobot):
         self.drive.driveCartesian(
             self.lstick.getX(), -self.lstick.getY(), self.lstick.getRawAxis(2)
         )
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

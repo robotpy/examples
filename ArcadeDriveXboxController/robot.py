@@ -35,7 +35,3 @@ class MyRobot(wpilib.TimedRobot):
         self.robotDrive.arcadeDrive(
             -self.driverController.getLeftY(), -self.driverController.getRightX()
         )
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

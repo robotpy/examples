@@ -49,7 +49,3 @@ class MyRobot(wpilib.TimedRobot):
         # from the error between the setpoint and the gyro angle.
         turningValue = (self.kAngleSetpoint - self.gyro.getAngle()) * self.kP
         self.myRobot.arcadeDrive(-self.joystick.getY(), -turningValue)
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

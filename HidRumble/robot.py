@@ -27,7 +27,3 @@ class MyRobot(wpilib.TimedRobot):
         # Stop the rumble when entering disabled
         self.hid.setRumble(wpilib.XboxController.RumbleType.kLeftRumble, 0.0)
         self.hid.setRumble(wpilib.XboxController.RumbleType.kRightRumble, 0.0)
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

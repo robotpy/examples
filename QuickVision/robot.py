@@ -18,7 +18,3 @@ class MyRobot(wpilib.TimedRobot):
 
     def robotInit(self):
         CameraServer().launch()
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

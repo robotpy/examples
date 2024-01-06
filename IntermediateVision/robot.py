@@ -17,7 +17,3 @@ class MyRobot(wpilib.TimedRobot):
 
     def robotInit(self):
         wpilib.CameraServer.launch("vision.py:main")
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

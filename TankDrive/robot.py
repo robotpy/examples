@@ -31,7 +31,3 @@ class MyRobot(wpilib.TimedRobot):
 
     def teleopPeriodic(self):
         self.robotDrive.tankDrive(-self.leftStick.getY(), -self.rightStick.getY())
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

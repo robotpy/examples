@@ -56,7 +56,3 @@ class MyRobot(wpilib.TimedRobot):
     def teleopPeriodic(self):
         self.elevatorMotor.set(self.joystick.getRawAxis(0))
         self.wristMotor.set(self.joystick.getRawAxis(1))
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

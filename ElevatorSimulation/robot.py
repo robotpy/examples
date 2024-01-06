@@ -49,7 +49,3 @@ class MyRobot(wpilib.TimedRobot):
     def disabledInit(self) -> None:
         # This just makes sure that our simulation code knows that the motor is off
         self.motor.set(0)
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

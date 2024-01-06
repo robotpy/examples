@@ -51,7 +51,3 @@ class MyRobot(wpilib.TimedRobot):
     def teleopPeriodic(self):
         wpilib.SmartDashboard.putNumber("Encoder Distance", self.encoder.getDistance())
         wpilib.SmartDashboard.putNumber("Encoder Rate", self.encoder.getRate())
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

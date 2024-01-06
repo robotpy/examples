@@ -63,7 +63,3 @@ class MyRobot(wpilib.TimedRobot):
         )
 
         self.swerve.drive(xSpeed, ySpeed, rot, fieldRelative, self.getPeriod())
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

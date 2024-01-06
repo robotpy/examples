@@ -51,7 +51,3 @@ class MyRobot(wpilib.TimedRobot):
             self.setpoint.position,
             self.feedforward.calculate(self.setpoint.velocity) / 12,
         )
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)
