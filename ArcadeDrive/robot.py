@@ -33,7 +33,3 @@ class MyRobot(wpilib.TimedRobot):
         # That means that the Y axis drives forward
         # and backward, and the X turns left and right.
         self.robotDrive.arcadeDrive(self.stick.getY(), self.stick.getX())
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

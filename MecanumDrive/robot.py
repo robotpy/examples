@@ -49,7 +49,3 @@ class MyRobot(wpilib.TimedRobot):
             -self.stick.getX(),
             -self.stick.getZ(),
         )
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

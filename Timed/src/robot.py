@@ -51,7 +51,3 @@ class MyRobot(wpilib.TimedRobot):
         if self.timer.advanceIfElapsed(1):
             self.logger.info("%d loops / second", self.loops)
             self.loops = 0
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

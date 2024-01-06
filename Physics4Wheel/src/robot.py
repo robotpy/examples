@@ -46,7 +46,3 @@ class MyRobot(wpilib.TimedRobot):
     def teleopPeriodic(self):
         """Called when operation control mode is enabled"""
         self.drive.tankDrive(-self.lstick.getY(), -self.rstick.getY())
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

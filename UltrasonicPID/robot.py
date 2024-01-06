@@ -61,7 +61,3 @@ class MyRobot(wpilib.TimedRobot):
 
         # disable input squaring -- PID output is linear
         self.robotDrive.arcadeDrive(pidOutput, 0, False)
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

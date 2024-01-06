@@ -53,7 +53,3 @@ class MyRobot(wpilib.TimedRobot):
         stateMessage = f"{allianceString}{enabledString}{autoString}{matchTime:03f}"
 
         self.writeString(stateMessage)
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

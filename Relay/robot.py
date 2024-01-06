@@ -48,7 +48,3 @@ class MyRobot(wpilib.TimedRobot):
             self.relay.set(wpilib.Relay.Value.kReverse)
         else:
             self.relay.set(wpilib.Relay.Value.kOff)
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

@@ -33,7 +33,3 @@ class MyRobot(wpilib.TimedRobot):
         wpilib.SmartDashboard.putNumber("Frequency", frequency)
         wpilib.SmartDashboard.putNumber("Output", output)
         wpilib.SmartDashboard.putNumber("Distance", distance)
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

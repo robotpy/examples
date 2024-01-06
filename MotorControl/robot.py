@@ -43,7 +43,3 @@ class MyRobot(wpilib.TimedRobot):
 
     def teleopPeriodic(self):
         self.motor.set(self.joystick.getY())
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

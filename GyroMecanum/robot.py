@@ -54,7 +54,3 @@ class MyRobot(wpilib.TimedRobot):
             -self.joystick.getZ(),
             self.gyro.getRotation2d(),
         )
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

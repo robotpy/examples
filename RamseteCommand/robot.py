@@ -14,8 +14,6 @@ from robotcontainer import RobotContainer
 
 class MyRobot(commands2.TimedCommandRobot):
     """
-    Our default robot class, pass it to wpilib.run
-
     Command v2 robots are encouraged to inherit from TimedCommandRobot, which
     has an implementation of robotPeriodic which runs the scheduler for you
     """
@@ -66,7 +64,3 @@ class MyRobot(commands2.TimedCommandRobot):
 
     def testPeriodic(self) -> None:
         """This function is called periodically during test mode"""
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

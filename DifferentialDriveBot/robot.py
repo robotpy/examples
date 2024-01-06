@@ -43,7 +43,3 @@ class MyRobot(wpilib.TimedRobot):
         )
 
         self.drive.drive(xSpeed, rot)
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

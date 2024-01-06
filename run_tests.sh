@@ -93,7 +93,7 @@ fi
 for t in ${TESTS}; do
   pushd $t > /dev/null
   pwd
-  if ! python3 robot.py test --builtin "${@:2}"; then
+  if ! python3 -m robotpy test --builtin "${@:2}"; then
     EC=$?
     echo "Test in $(pwd) failed"
     exit 1

@@ -62,7 +62,3 @@ class MyRobot(wpilib.TimedRobot):
             self.index = (self.index + 1) % len(self.kSetpointMeters)
             print(f"m_index = {self.index}")
             self.pidController.setSetpoint(self.kSetpointMeters[self.index])
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

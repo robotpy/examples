@@ -52,7 +52,3 @@ class MyRobot(wpilib.TimedRobot):
 
         # Check bounds
         self.rainbowFirstPixelHue %= 180
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

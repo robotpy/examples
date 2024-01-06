@@ -116,7 +116,3 @@ class MyRobot(wpilib.TimedRobot):
             self.robot_drive.arcadeDrive(
                 self.stick.getY() * -1, self.stick.getX(), squareInputs=True
             )
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)
