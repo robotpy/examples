@@ -10,14 +10,12 @@ import wpilib
 import wpilib.cameraserver
 
 
-"""
-This is a demo program showing the detection of AprilTags. The image is acquired from the USB
-camera, then any detected AprilTags are marked up on the image and sent to the dashboard.
-Be aware that the performance on this is much worse than a coprocessor solution!
-"""
-
-
 class MyRobot(wpilib.TimedRobot):
+    """
+    This is a demo program showing the detection of AprilTags. The image is acquired from the USB
+    camera, then any detected AprilTags are marked up on the image and sent to the dashboard.
+    Be aware that the performance on this is much worse than a coprocessor solution!"""
+
     def robotInit(self):
         # Your image processing code will be launched via a stub that will set up logging and initialize NetworkTables
         # to talk to your robot code.
