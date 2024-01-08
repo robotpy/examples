@@ -24,7 +24,3 @@ class MyRobot(wpilib.TimedRobot):
 
         wpilib.SmartDashboard.putNumber("Frequency", frequency)
         wpilib.SmartDashboard.putNumber("Duty Cycle", output)
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

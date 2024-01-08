@@ -46,7 +46,3 @@ class MyRobot(wpilib.TimedRobot):
         # pull alert port high if match time remaining is between 30 and 25 seconds
         matchTime = wpilib.DriverStation.getMatchTime()
         self.alertOutput.set(30 >= matchTime >= 25)
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

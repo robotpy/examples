@@ -83,7 +83,3 @@ class MyRobot(wpilib.TimedRobot):
         self.flywheelMotor.setVoltage(
             bangOutput + 0.9 * self.feedforward.calculate(setpoint)
         )
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

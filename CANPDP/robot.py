@@ -53,7 +53,3 @@ class MyRobot(wpilib.TimedRobot):
         # Energy is the power summed over time with units Joules.
         totalEnergy = self.pdp.getTotalEnergy()
         wpilib.SmartDashboard.putNumber("Total Energy", totalEnergy)
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

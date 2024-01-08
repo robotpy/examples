@@ -69,7 +69,3 @@ class MyRobot(wpilib.TimedRobot):
     def autonomousInit(self):
         # Read the value of the 'max speed' widget from the dashboard
         self.robotDrive.setMaxOutput(self.maxSpeed.getDouble(1.0))
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

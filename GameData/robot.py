@@ -39,7 +39,3 @@ class MyRobot(wpilib.TimedRobot):
         self.red.set(self.gameData == "R")
         self.green.set(self.gameData == "G")
         self.yellow.set(self.gameData == "Y")
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

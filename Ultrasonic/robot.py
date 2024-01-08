@@ -52,7 +52,3 @@ class MyRobot(wpilib.TimedRobot):
     def testExit(self):
         # Enable automatic mode
         self.rangeFinder.setAutomaticMode(True)
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

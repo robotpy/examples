@@ -36,7 +36,3 @@ class MyRobot(wpilib.TimedRobot):
 
         # Run controller and update motor output
         self.motor.set(self.controller.calculate(self.encoder.getDistance()))
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)

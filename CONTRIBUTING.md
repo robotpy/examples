@@ -20,13 +20,15 @@ Testing:
 * New examples must run! You *must* test your code on either a robot or in
   simulation. If there's something broken in RobotPy, file an issue to get it
   fixed
+  * You can find instructions on how to test a vision file [here](https://robotpy.readthedocs.io/en/stable/vision/other.html#vision-other-runcustom)!
 * Format your code with black
 
 General:
 
 * We always try to stay as close to the original examples as possible
-* `Main.java` is never needed, it is equivalent to `wpilib.run(MyRobot)`
+* `Main.java` is never needed
 * `robot.py` should have `#!/usr/bin/env python3` as the very first line
+  * This will go away soon as it is no longer needed in 2024
   * Note: Other files such as `vision.py` or `robotcontainer.py` should not start with `#!/usr/bin/env python3`
 * Don't ever check in files for your IDE (.vscode, .idea, etc)
 * Copy over the copyright statement from the original file
