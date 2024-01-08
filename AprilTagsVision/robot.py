@@ -24,7 +24,3 @@ class MyRobot(wpilib.TimedRobot):
         # https://robotpy.readthedocs.io/en/stable/vision/roborio.html#important-notes
 
         wpilib.CameraServer.launch("vision.py:main")
-
-
-if __name__ == "__main__":
-    wpilib.run(MyRobot)
