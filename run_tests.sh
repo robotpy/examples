@@ -9,6 +9,7 @@ BASE_TESTS="
   ArcadeDrive
   ArcadeDriveXboxController
   ArmSimulation
+  AxisCamera
   CANPDP
   DifferentialDriveBot
   DigitalCommunication
