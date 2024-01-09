@@ -26,29 +26,35 @@ class SwerveModule:
         )
 
         self.m_turningPIDController = ProfiledPIDController(
-            ModuleConstants.kPModuleTurningController,
+            constants.ModuleConstants.kPModuleTurningController,
             0,
             0,
             TrapezoidProfile.Constraints(
-                ModuleConstants.kMaxModuleAngularSpeedRadiansPerSecond,
-                ModuleConstants.kMaxModuleAngularAccelerationRadiansPerSecondSquared,
+                constants.ModuleConstants.kMaxModuleAngularSpeedRadiansPerSecond,
+                constants.ModuleConstants.kMaxModuleAngularAccelerationRadiansPerSecondSquared,
             ),
         )
 
-        # Set the distance per pulse for the drive encoder.
+        """
+        Set the distance per pulse for the drive encoder.
+        """
         self.m_driveEncoder.setDistancePerPulse(
-            ModuleConstants.kDriveEncoderDistancePerPulse
+            constants.ModuleConstants.kDriveEncoderDistancePerPulse
         )
         self.m_driveEncoder.setReverseDirection(driveEncoderReversed)
 
-        # Set the distance in radians per pulse for the turning encoder.
+        """
+        Set the distance in radians per pulse for the turning encoder.
+        """
         self.m_turningEncoder.setDistancePerPulse(
-            ModuleConstants.kTurningEncoderDistancePerPulse
+            constants.ModuleConstants.kTurningEncoderDistancePerPulse
         )
         self.m_turningEncoder.setReverseDirection(turningEncoderReversed)
 
-        # Limit the PID Controller's input range between -pi and pi and set the input
-        # to be continuous.
+        """
+        Limit the PID Controller's input range between -pi and pi and set the input
+        to be continuous.
+        """
         self.m_turningPIDController.enableContinuousInput(-3.14159, 3.14159)
 
     def getState(self):
@@ -66,23 +72,33 @@ class SwerveModule:
     def setDesiredState(self, desiredState):
         encoderRotation = Rotation2d(self.m_turningEncoder.getDistance())
 
-        # Optimize the reference state to avoid spinning further than 90 degrees
+        """
+        Optimize the reference state to avoid spinning further than 90 degrees
+        """
         state = SwerveModuleState.optimize(desiredState, encoderRotation)
 
-        # Scale speed by cosine of angle error.
+        """
+        Scale speed by cosine of angle error.
+        """
         state.speedMetersPerSecond *= state.angle.minus(encoderRotation).getCos()
 
-        # Calculate the drive output from the drive PID controller.
+        """
+        Calculate the drive output from the drive PID controller.
+        """
         driveOutput = self.m_drivePIDController.calculate(
             self.m_driveEncoder.getRate(), state.speedMetersPerSecond
         )
 
-        # Calculate the turning motor output from the turning PID controller.
+        """
+        Calculate the turning motor output from the turning PID controller.
+        """
         turnOutput = self.m_turningPIDController.calculate(
             self.m_turningEncoder.getDistance(), state.angle.getRadians()
         )
 
-        # Set motor outputs
+        """
+        Set motor outputs
+        """
         self.m_driveMotor.set(driveOutput)
         self.m_turningMotor.set(turnOutput)
 
