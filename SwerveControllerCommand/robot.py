@@ -4,26 +4,25 @@
  the WPILib BSD license file in the root directory of this project.
 """
 
-from wpilib import TimedRobot
-import commands2
+from commands2 import TimedCommandRobot, CommandScheduler
 from robotcontainer import RobotContainer
 
-class Robot(TimedRobot):
+
+class Robot(TimedCommandRobot):
     def robotInit(self):
         """
-         Instantiate our RobotContainer. This will perform all our button bindings, and put our
-         autonomous chooser on the dashboard.
+        Instantiate our RobotContainer. This will perform all our button bindings, and put our
+        autonomous chooser on the dashboard.
         """
         self.m_robotContainer = RobotContainer()
 
     def robotPeriodic(self):
         """
-         Runs the Scheduler. This is responsible for polling buttons, adding newly-scheduled
-         commands, running already-scheduled commands, removing finished or interrupted commands,
-         and running subsystem periodic() methods. This must be called from the robot's periodic
-         block in order for anything in the Command-based framework to work.
+        Runs the Scheduler. This is responsible for polling buttons, adding newly-scheduled
+        commands, running already-scheduled commands, removing finished or interrupted commands,
+        and running subsystem periodic() methods. This must be called from the robot's periodic
+        block in order for anything in the Command-based framework to work.
         """
-        commands2.CommandScheduler.getInstance().run()
 
     def disabledInit(self):
         pass
@@ -60,7 +59,7 @@ class Robot(TimedRobot):
         """
         Cancels all running commands at the start of test mode.
         """
-        commands2.CommandScheduler.getInstance().cancelAll()
+        CommandScheduler.getInstance().cancelAll()
 
     def testPeriodic(self):
         pass

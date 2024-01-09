@@ -10,6 +10,7 @@ from wpimath.kinematics import SwerveDrive4Kinematics
 from wpimath.trajectory import TrapezoidProfile
 import math
 
+
 class Constants:
     class DriveConstants:
         kFrontLeftDriveMotorPort = 0
@@ -50,7 +51,7 @@ class Constants:
             Translation2d(kWheelBase / 2, kTrackWidth / 2),
             Translation2d(kWheelBase / 2, -kTrackWidth / 2),
             Translation2d(-kWheelBase / 2, kTrackWidth / 2),
-            Translation2d(-kWheelBase / 2, -kTrackWidth / 2)
+            Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
         )
 
         kGyroReversed = False
