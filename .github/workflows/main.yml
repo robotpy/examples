@@ -1,0 +1,53 @@
+name: dist
+
+on:
+  pull_request:
+  push:
+    branches:
+    - main
+    tags:
+    - '*'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: psf/black@stable
+
+  check-file-headers:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v4
+      with:
+        python-version: 3.12
+    - name: Check header
+      run: python ./check_header.py
+      shell: bash
+
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ["ubuntu-22.04", "macos-12", "windows-2022"]
+        python_version:
+        - '3.8'
+        - '3.9'
+        - '3.10'
+        - '3.11'
+        - '3.12'
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python_version }}
+        architecture: ${{ matrix.architecture }}
+    - name: Install deps
+      run: |
+        pip install -U pip
+        pip install 'robotpy[commands2]<2025.0.0,>=2024.0.0b4.post1' numpy pytest
+    - name: Run tests
+      run: bash run_tests.sh
+      shell: bash
