@@ -17,7 +17,7 @@ class DriveSubsystem:
         """
         Robot swerve modules
         """
-        self.m_frontLeft = SwerveModule(
+        self.frontLeft = SwerveModule(
             Constants.DriveConstants.kFrontLeftDriveMotorPort,
             Constants.DriveConstants.kFrontLeftTurningMotorPort,
             Constants.DriveConstants.kFrontLeftDriveEncoderPorts,
@@ -26,7 +26,7 @@ class DriveSubsystem:
             Constants.DriveConstants.kFrontLeftTurningEncoderReversed,
         )
 
-        self.m_rearLeft = SwerveModule(
+        self.rearLeft = SwerveModule(
             Constants.DriveConstants.kRearLeftDriveMotorPort,
             Constants.DriveConstants.kRearLeftTurningMotorPort,
             Constants.DriveConstants.kRearLeftDriveEncoderPorts,
@@ -35,7 +35,7 @@ class DriveSubsystem:
             Constants.DriveConstants.kRearLeftTurningEncoderReversed,
         )
 
-        self.m_frontRight = SwerveModule(
+        self.frontRight = SwerveModule(
             Constants.DriveConstants.kFrontRightDriveMotorPort,
             Constants.DriveConstants.kFrontRightTurningMotorPort,
             Constants.DriveConstants.kFrontRightDriveEncoderPorts,
@@ -44,7 +44,7 @@ class DriveSubsystem:
             Constants.DriveConstants.kFrontRightTurningEncoderReversed,
         )
 
-        self.m_rearRight = SwerveModule(
+        self.rearRight = SwerveModule(
             Constants.DriveConstants.kRearRightDriveMotorPort,
             Constants.DriveConstants.kRearRightTurningMotorPort,
             Constants.DriveConstants.kRearRightDriveEncoderPorts,
@@ -55,18 +55,18 @@ class DriveSubsystem:
 
         # The gyro sensor
 
-        self.m_gyro = ADXRS450_Gyro()
+        self.gyro = ADXRS450_Gyro()
 
         # Odometry class for tracking robot pose
 
-        self.m_odometry = SwerveDrive3Odometry(
+        self.odometry = SwerveDrive3Odometry(
             Constants.DriveConstants.kDriveKinematics,
-            self.m_gyro.getRotation2d(),
+            self.gyro.getRotation2d(),
             [
-                self.m_frontLeft.getPosition(),
-                self.m_frontRight.getPosition(),
-                self.m_rearLeft.getPosition(),
-                self.m_rearRight.getPosition(),
+                self.frontLeft.getPosition(),
+                self.frontRight.getPosition(),
+                self.rearLeft.getPosition(),
+                self.rearRight.getPosition(),
             ],
         )
 
@@ -74,13 +74,13 @@ class DriveSubsystem:
         """
         Update the odometry in the periodic block
         """
-        self.m_odometry.update(
-            self.m_gyro.getRotation2d(),
+        self.odometry.update(
+            self.gyro.getRotation2d(),
             [
-                self.m_frontLeft.getPosition(),
-                self.m_frontRight.getPosition(),
-                self.m_rearLeft.getPosition(),
-                self.m_rearRight.getPosition(),
+                self.frontLeft.getPosition(),
+                self.frontRight.getPosition(),
+                self.rearLeft.getPosition(),
+                self.rearRight.getPosition(),
             ],
         )
 
@@ -88,19 +88,19 @@ class DriveSubsystem:
         """
         Returns the currently-estimated pose of the robot.
         """
-        return self.m_odometry.getPoseMeters()
+        return self.odometry.getPoseMeters()
 
     def resetOdometry(self, pose):
         """
         Resets the odometry to the specified pose.
         """
-        self.m_odometry.resetPosition(
-            self.m_gyro.getRotation2d(),
+        self.odometry.resetPosition(
+            self.gyro.getRotation2d(),
             [
-                self.m_frontLeft.getPosition(),
-                self.m_frontRight.getPosition(),
-                self.m_rearLeft.getPosition(),
-                self.m_rearRight.getPosition(),
+                self.frontLeft.getPosition(),
+                self.frontRight.getPosition(),
+                self.rearLeft.getPosition(),
+                self.rearRight.getPosition(),
             ],
             pose,
         )
@@ -114,7 +114,7 @@ class DriveSubsystem:
                 ChassisSpeeds.discretize(
                     (
                         ChassisSpeeds.fromFieldRelativeSpeeds(
-                            xSpeed, ySpeed, rot, self.m_gyro.getRotation2d()
+                            xSpeed, ySpeed, rot, self.gyro.getRotation2d()
                         )
                         if fieldRelative
                         else ChassisSpeeds(xSpeed, ySpeed, rot)
@@ -126,10 +126,10 @@ class DriveSubsystem:
         SwerveDrive3Kinematics.desaturateWheelSpeeds(
             swerveModuleStates, Constants.DriveConstants.kMaxSpeedMetersPerSecond
         )
-        self.m_frontLeft.setDesiredState(swerveModuleStates[0])
-        self.m_frontRight.setDesiredState(swerveModuleStates[1])
-        self.m_rearLeft.setDesiredState(swerveModuleStates[2])
-        self.m_rearRight.setDesiredState(swerveModuleStates[3])
+        self.frontLeft.setDesiredState(swerveModuleStates[0])
+        self.frontRight.setDesiredState(swerveModuleStates[1])
+        self.rearLeft.setDesiredState(swerveModuleStates[2])
+        self.rearRight.setDesiredState(swerveModuleStates[3])
 
     def setModuleStates(self, desiredStates):
         """
@@ -138,40 +138,40 @@ class DriveSubsystem:
         SwerveDrive3Kinematics.desaturateWheelSpeeds(
             desiredStates, Constants.DriveConstants.kMaxSpeedMetersPerSecond
         )
-        self.m_frontLeft.setDesiredState(desiredStates[0])
-        self.m_frontRight.setDesiredState(desiredStates[1])
-        self.m_rearLeft.setDesiredState(desiredStates[2])
-        self.m_rearRight.setDesiredState(desiredStates[3])
+        self.frontLeft.setDesiredState(desiredStates[0])
+        self.frontRight.setDesiredState(desiredStates[1])
+        self.rearLeft.setDesiredState(desiredStates[2])
+        self.rearRight.setDesiredState(desiredStates[3])
 
 
 def resetEncoders(self):
     """
     Resets the drive encoders to currently read a position of 0.
     """
-    self.m_frontLeft.resetEncoders()
-    self.m_rearLeft.resetEncoders()
-    self.m_frontRight.resetEncoders()
-    self.m_rearRight.resetEncoders()
+    self.frontLeft.resetEncoders()
+    self.rearLeft.resetEncoders()
+    self.frontRight.resetEncoders()
+    self.rearRight.resetEncoders()
 
 
 def zeroHeading(self):
     """
     Zeroes the heading of the robot.
     """
-    self.m_gyro.reset()
+    self.gyro.reset()
 
 
 def getHeading(self):
     """
     Returns the heading of the robot.
     """
-    return self.m_gyro.getRotation2d().getDegrees()
+    return self.gyro.getRotation2d().getDegrees()
 
 
 def getTurnRate(self):
     """
     Returns the turn rate of the robot.
     """
-    return self.m_gyro.getRate() * (
+    return self.gyro.getRate() * (
         -1.0 if Constants.DriveConstants.kGyroReversed else 1.0
     )

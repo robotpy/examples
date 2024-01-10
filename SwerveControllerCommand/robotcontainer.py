@@ -19,33 +19,33 @@ class RobotContainer:
         """
         The robot's subsystems
         """
-        self.m_robotDrive = drivesubsystems()
+        self.robotDrive = drivesubsystems()
 
         # Driver Controller
-        self.m_driverController = XboxController(
+        self.driverController = XboxController(
             Constants.OIConstants.kDriverControllerPort
         )
 
         """
         Configure default commands
         """
-        self.m_robotDrive.setDefaultCommand(
+        self.robotDrive.setDefaultCommand(
             # The left stick controls translation of the robot.
             # turning is controlled by the X axis of the right stick.
             commands2.RunCommand(
-                lambda: self.m_robotDrive.drive(
+                lambda: self.robotDrive.drive(
                     # Multiply by max speed to map the joystick unitless inputs to actual units.
                     # This will map the [-1, 1] to [max speed backwards, max speed forwards],
                     # converting them to actual units.
-                    self.m_driverController.getYChannel()
+                    self.driverController.getYChannel()
                     * Constants.DriveConstants.kMaxSpeedMetersPerSecond,
-                    self.m_driverController.getXChannel()
+                    self.driverController.getXChannel()
                     * Constants.DriveConstants.kMaxSpeedMetersPerSecond,
-                    self.m_driverController.getX(Constants.Hand.kRight)
+                    self.driverController.getX(Constants.Hand.kRight)
                     * Constants.ModuleConstants.kMaxModuleAngularSpeedRadiansPerSecond,
                     False,
                 ),
-                self.m_robotDrive,
+                self.robotDrive,
             )
         )
 
@@ -83,15 +83,15 @@ class RobotContainer:
 
         swerve_controller_command = commands2.Swerve4ControllerCommand(
             example_trajectory,
-            self.m_robotDrive.getPose,
+            self.robotDrive.getPose,
             # Functional interface to feed supplier
             Constants.DriveConstants.kDriveKinematics,
             # Position controllers
             PIDController(Constants.AutoConstants.kPXController, 0, 0),
             PIDController(Constants.AutoConstants.kPYController, 0, 0),
             theta_controller,
-            self.m_robotDrive.setModuleStates,
-            self.m_robotDrive,
+            self.robotDrive.setModuleStates,
+            self.robotDrive,
         )
 
         """
@@ -100,10 +100,10 @@ class RobotContainer:
         """
         return commands2.Commands.sequence(
             commands2.InstantCommand(
-                lambda: self.m_robotDrive.resetOdometry(
+                lambda: self.robotDrive.resetOdometry(
                     example_trajectory.getInitialPose()
                 )
             ),
             swerve_controller_command,
-            commands2.InstantCommand(lambda: self.m_robotDrive.drive(0, 0, 0, False)),
+            commands2.InstantCommand(lambda: self.robotDrive.drive(0, 0, 0, False)),
         )

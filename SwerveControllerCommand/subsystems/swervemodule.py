@@ -26,17 +26,17 @@ class SwerveModule:
         driveEncoderReversed,
         turningEncoderReversed,
     ):
-        self.m_driveMotor = Spark(driveMotorChannel)
-        self.m_turningMotor = Spark(turningMotorChannel)
+        self.driveMotor = Spark(driveMotorChannel)
+        self.turningMotor = Spark(turningMotorChannel)
 
-        self.m_driveEncoder = Encoder(*driveEncoderChannels)
-        self.m_turningEncoder = Encoder(*turningEncoderChannels)
+        self.driveEncoder = Encoder(*driveEncoderChannels)
+        self.turningEncoder = Encoder(*turningEncoderChannels)
 
-        self.m_drivePIDController = PIDController(
+        self.drivePIDController = PIDController(
             constants.ModuleConstants.kPModuleDriveController, 0, 0
         )
 
-        self.m_turningPIDController = ProfiledPIDController(
+        self.turningPIDController = ProfiledPIDController(
             constants.ModuleConstants.kPModuleTurningController,
             0,
             0,
@@ -48,30 +48,30 @@ class SwerveModule:
 
         # Set the distance per pulse for the drive encoder.
 
-        self.m_driveEncoder.setDistancePerPulse(
+        self.driveEncoder.setDistancePerPulse(
             constants.ModuleConstants.kDriveEncoderDistancePerPulse
         )
-        self.m_driveEncoder.setReverseDirection(driveEncoderReversed)
+        self.driveEncoder.setReverseDirection(driveEncoderReversed)
 
         # Set the distance in radians per pulse for the turning encoder.
 
-        self.m_turningEncoder.setDistancePerPulse(
+        self.turningEncoder.setDistancePerPulse(
             constants.ModuleConstants.kTurningEncoderDistancePerPulse
         )
-        self.m_turningEncoder.setReverseDirection(turningEncoderReversed)
+        self.turningEncoder.setReverseDirection(turningEncoderReversed)
 
         # Limit the PID Controller's input range between -pi and pi and set the input
         # to be continuous.
 
-        self.m_turningPIDController.enableContinuousInput(-3.14159, 3.14159)
+        self.turningPIDController.enableContinuousInput(-3.14159, 3.14159)
 
     def getState(self):
         """
         Returns the state of the module
         """
         return SwerveModuleState(
-            self.m_driveEncoder.getRate(),
-            Rotation2d(self.m_turningEncoder.getDistance()),
+            self.driveEncoder.getRate(),
+            Rotation2d(self.turningEncoder.getDistance()),
         )
 
     def getPosition(self):
@@ -80,8 +80,8 @@ class SwerveModule:
         """
 
         return SwerveModulePosition(
-            self.m_driveEncoder.getDistance(),
-            Rotation2d(self.m_turningEncoder.getDistance()),
+            self.driveEncoder.getDistance(),
+            Rotation2d(self.turningEncoder.getDistance()),
         )
 
     def setDesiredState(self, desiredState):
@@ -89,7 +89,7 @@ class SwerveModule:
         Using desiredState, calculate the drive and turn output
         """
 
-        encoderRotation = Rotation2d(self.m_turningEncoder.getDistance())
+        encoderRotation = Rotation2d(self.turningEncoder.getDistance())
 
         # Optimize the reference state to avoid spinning further than 90 degrees
 
@@ -101,24 +101,24 @@ class SwerveModule:
 
         # Calculate the drive output from the drive PID controller.
 
-        driveOutput = self.m_drivePIDController.calculate(
-            self.m_driveEncoder.getRate(), state.speedMetersPerSecond
+        driveOutput = self.drivePIDController.calculate(
+            self.driveEncoder.getRate(), state.speedMetersPerSecond
         )
 
         # Calculate the turning motor output from the turning PID controller.
 
-        turnOutput = self.m_turningPIDController.calculate(
-            self.m_turningEncoder.getDistance(), state.angle.getRadians()
+        turnOutput = self.turningPIDController.calculate(
+            self.turningEncoder.getDistance(), state.angle.getRadians()
         )
 
         # Set motor outputs
 
-        self.m_driveMotor.set(driveOutput)
-        self.m_turningMotor.set(turnOutput)
+        self.driveMotor.set(driveOutput)
+        self.turningMotor.set(turnOutput)
 
     def resetEncoders(self):
         """
         Resets the drive encoders
         """
-        self.m_driveEncoder.reset()
-        self.m_turningEncoder.reset()
+        self.driveEncoder.reset()
+        self.turningEncoder.reset()

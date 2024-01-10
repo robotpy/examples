@@ -14,7 +14,7 @@ class Robot(TimedCommandRobot):
         Instantiate our RobotContainer. This will perform all our button bindings, and put our
         autonomous chooser on the dashboard.
         """
-        self.m_robotContainer = RobotContainer()
+        self.robotContainer = RobotContainer()
 
     def robotPeriodic(self):
         """
@@ -31,13 +31,13 @@ class Robot(TimedCommandRobot):
         pass
 
     def autonomousInit(self):
-        self.m_autonomousCommand = self.m_robotContainer.getAutonomousCommand()
+        self.autonomousCommand = self.robotContainer.getAutonomousCommand()
 
         """
         schedule the autonomous command (example)
         """
-        if self.m_autonomousCommand is not None:
-            self.m_autonomousCommand.schedule()
+        if self.autonomousCommand is not None:
+            self.autonomousCommand.schedule()
 
     def autonomousPeriodic(self):
         pass
@@ -49,8 +49,8 @@ class Robot(TimedCommandRobot):
         continue until interrupted by another command, remove
         this line or comment it out.
         """
-        if self.m_autonomousCommand is not None:
-            self.m_autonomousCommand.cancel()
+        if self.autonomousCommand is not None:
+            self.autonomousCommand.cancel()
 
     def teleopPeriodic(self):
         pass
