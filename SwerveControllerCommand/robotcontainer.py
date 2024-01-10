@@ -7,7 +7,7 @@
 from wpilib import XboxController
 import commands2
 import constants as Constants
-import subsystems.drivesubsystems as drivesubsystems
+from subsystems.drivesubsystems import DriveSubsystem
 from wpimath.trajectory import Trajectory, TrajectoryConfig, TrajectoryGenerator
 from wpimath.geometry import Translation2d, Pose2d, Rotation2d
 from wpimath.controller import ProfiledPIDController, PIDController
@@ -19,7 +19,7 @@ class RobotContainer:
         """
         The robot's subsystems
         """
-        self.robotDrive = drivesubsystems()
+        self.robotDrive = DriveSubsystem()
 
         # Driver Controller
         self.driverController = XboxController(
