@@ -5,11 +5,11 @@
 #
 
 from wpilib import ADXRS450_Gyro
-from subsystems.swervemodule import SwerveModule
+from swervemodule import SwerveModule
 from wpimath.kinematics import ChassisSpeeds
 from wpimath.kinematics import SwerveDrive3Kinematics, SwerveDrive3Odometry
 from wpimath.geometry import Pose2d, Rotation2d
-import constants as Constants
+import constants
 
 
 class DriveSubsystem:
@@ -18,39 +18,39 @@ class DriveSubsystem:
         Robot swerve modules
         """
         self.frontLeft = SwerveModule(
-            Constants.DriveConstants.kFrontLeftDriveMotorPort,
-            Constants.DriveConstants.kFrontLeftTurningMotorPort,
-            Constants.DriveConstants.kFrontLeftDriveEncoderPorts,
-            Constants.DriveConstants.kFrontLeftTurningEncoderPorts,
-            Constants.DriveConstants.kFrontLeftDriveEncoderReversed,
-            Constants.DriveConstants.kFrontLeftTurningEncoderReversed,
+            constants.DriveConstants.kFrontLeftDriveMotorPort,
+            constants.DriveConstants.kFrontLeftTurningMotorPort,
+            constants.DriveConstants.kFrontLeftDriveEncoderPorts,
+            constants.DriveConstants.kFrontLeftTurningEncoderPorts,
+            constants.DriveConstants.kFrontLeftDriveEncoderReversed,
+            constants.DriveConstants.kFrontLeftTurningEncoderReversed,
         )
 
         self.rearLeft = SwerveModule(
-            Constants.DriveConstants.kRearLeftDriveMotorPort,
-            Constants.DriveConstants.kRearLeftTurningMotorPort,
-            Constants.DriveConstants.kRearLeftDriveEncoderPorts,
-            Constants.DriveConstants.kRearLeftTurningEncoderPorts,
-            Constants.DriveConstants.kRearLeftDriveEncoderReversed,
-            Constants.DriveConstants.kRearLeftTurningEncoderReversed,
+            constants.DriveConstants.kRearLeftDriveMotorPort,
+            constants.DriveConstants.kRearLeftTurningMotorPort,
+            constants.DriveConstants.kRearLeftDriveEncoderPorts,
+            constants.DriveConstants.kRearLeftTurningEncoderPorts,
+            constants.DriveConstants.kRearLeftDriveEncoderReversed,
+            constants.DriveConstants.kRearLeftTurningEncoderReversed,
         )
 
         self.frontRight = SwerveModule(
-            Constants.DriveConstants.kFrontRightDriveMotorPort,
-            Constants.DriveConstants.kFrontRightTurningMotorPort,
-            Constants.DriveConstants.kFrontRightDriveEncoderPorts,
-            Constants.DriveConstants.kFrontRightTurningEncoderPorts,
-            Constants.DriveConstants.kFrontRightDriveEncoderReversed,
-            Constants.DriveConstants.kFrontRightTurningEncoderReversed,
+            constants.DriveConstants.kFrontRightDriveMotorPort,
+            constants.DriveConstants.kFrontRightTurningMotorPort,
+            constants.DriveConstants.kFrontRightDriveEncoderPorts,
+            constants.DriveConstants.kFrontRightTurningEncoderPorts,
+            constants.DriveConstants.kFrontRightDriveEncoderReversed,
+            constants.DriveConstants.kFrontRightTurningEncoderReversed,
         )
 
         self.rearRight = SwerveModule(
-            Constants.DriveConstants.kRearRightDriveMotorPort,
-            Constants.DriveConstants.kRearRightTurningMotorPort,
-            Constants.DriveConstants.kRearRightDriveEncoderPorts,
-            Constants.DriveConstants.kRearRightTurningEncoderPorts,
-            Constants.DriveConstants.kRearRightDriveEncoderReversed,
-            Constants.DriveConstants.kRearRightTurningEncoderReversed,
+            constants.DriveConstants.kRearRightDriveMotorPort,
+            constants.DriveConstants.kRearRightTurningMotorPort,
+            constants.DriveConstants.kRearRightDriveEncoderPorts,
+            constants.DriveConstants.kRearRightTurningEncoderPorts,
+            constants.DriveConstants.kRearRightDriveEncoderReversed,
+            constants.DriveConstants.kRearRightTurningEncoderReversed,
         )
 
         # The gyro sensor
@@ -60,7 +60,7 @@ class DriveSubsystem:
         # Odometry class for tracking robot pose
 
         self.odometry = SwerveDrive3Odometry(
-            Constants.DriveConstants.kDriveKinematics,
+            constants.DriveConstants.kDriveKinematics,
             self.gyro.getRotation2d(),
             [
                 self.frontLeft.getPosition(),
@@ -110,7 +110,7 @@ class DriveSubsystem:
         Method to drive the robot using joystick info.
         """
         swerveModuleStates = (
-            Constants.DriveConstants.kDriveKinematics.toSwerveModuleStates(
+            constants.DriveConstants.kDriveKinematics.toSwerveModuleStates(
                 ChassisSpeeds.discretize(
                     (
                         ChassisSpeeds.fromFieldRelativeSpeeds(
@@ -119,12 +119,12 @@ class DriveSubsystem:
                         if fieldRelative
                         else ChassisSpeeds(xSpeed, ySpeed, rot)
                     ),
-                    Constants.DriveConstants.kDrivePeriod,
+                    constants.DriveConstants.kDrivePeriod,
                 )
             )
         )
         SwerveDrive3Kinematics.desaturateWheelSpeeds(
-            swerveModuleStates, Constants.DriveConstants.kMaxSpeedMetersPerSecond
+            swerveModuleStates, constants.DriveConstants.kMaxSpeedMetersPerSecond
         )
         self.frontLeft.setDesiredState(swerveModuleStates[0])
         self.frontRight.setDesiredState(swerveModuleStates[1])
@@ -136,7 +136,7 @@ class DriveSubsystem:
         Sets the swerve ModuleStates.
         """
         SwerveDrive3Kinematics.desaturateWheelSpeeds(
-            desiredStates, Constants.DriveConstants.kMaxSpeedMetersPerSecond
+            desiredStates, constants.DriveConstants.kMaxSpeedMetersPerSecond
         )
         self.frontLeft.setDesiredState(desiredStates[0])
         self.frontRight.setDesiredState(desiredStates[1])
@@ -173,5 +173,5 @@ def getTurnRate(self):
     Returns the turn rate of the robot.
     """
     return self.gyro.getRate() * (
-        -1.0 if Constants.DriveConstants.kGyroReversed else 1.0
+        -1.0 if constants.DriveConstants.kGyroReversed else 1.0
     )

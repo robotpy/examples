@@ -6,7 +6,7 @@
 
 from wpilib import XboxController
 import commands2
-import constants as Constants
+import constants
 from subsystems.drivesubsystems import DriveSubsystem
 from wpimath.trajectory import Trajectory, TrajectoryConfig, TrajectoryGenerator
 from wpimath.geometry import Translation2d, Pose2d, Rotation2d
@@ -23,7 +23,7 @@ class RobotContainer:
 
         # Driver Controller
         self.driverController = XboxController(
-            Constants.OIConstants.kDriverControllerPort
+            constants.OIConstants.kDriverControllerPort
         )
 
         """
@@ -38,11 +38,11 @@ class RobotContainer:
                     # This will map the [-1, 1] to [max speed backwards, max speed forwards],
                     # converting them to actual units.
                     self.driverController.getYChannel()
-                    * Constants.DriveConstants.kMaxSpeedMetersPerSecond,
+                    * constants.DriveConstants.kMaxSpeedMetersPerSecond,
                     self.driverController.getXChannel()
-                    * Constants.DriveConstants.kMaxSpeedMetersPerSecond,
-                    self.driverController.getX(Constants.Hand.kRight)
-                    * Constants.ModuleConstants.kMaxModuleAngularSpeedRadiansPerSecond,
+                    * constants.DriveConstants.kMaxSpeedMetersPerSecond,
+                    self.driverController.getX(constants.Hand.kRight)
+                    * constants.ModuleConstants.kMaxModuleAngularSpeedRadiansPerSecond,
                     False,
                 ),
                 self.robotDrive,
@@ -57,9 +57,9 @@ class RobotContainer:
         Create config for trajectory
         """
         config = TrajectoryConfig(
-            Constants.AutoConstants.kMaxSpeedMetersPerSecond,
-            Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-        ).setKinematics(Constants.DriveConstants.kDriveKinematics)
+            constants.AutoConstants.kMaxSpeedMetersPerSecond,
+            constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared,
+        ).setKinematics(constants.DriveConstants.kDriveKinematics)
 
         # An example trajectory to follow. All units in meters.
 
@@ -74,10 +74,10 @@ class RobotContainer:
         )
 
         theta_controller = ProfiledPIDController(
-            Constants.AutoConstants.kPThetaController,
+            constants.AutoConstants.kPThetaController,
             0,
             0,
-            Constants.AutoConstants.kThetaControllerConstraints,
+            constants.AutoConstants.kThetaControllerConstraints,
         )
         theta_controller.enableContinuousInput(-math.pi, math.pi)
 
@@ -85,10 +85,10 @@ class RobotContainer:
             example_trajectory,
             self.robotDrive.getPose,
             # Functional interface to feed supplier
-            Constants.DriveConstants.kDriveKinematics,
+            constants.DriveConstants.kDriveKinematics,
             # Position controllers
-            PIDController(Constants.AutoConstants.kPXController, 0, 0),
-            PIDController(Constants.AutoConstants.kPYController, 0, 0),
+            PIDController(constants.AutoConstants.kPXController, 0, 0),
+            PIDController(constants.AutoConstants.kPYController, 0, 0),
             theta_controller,
             self.robotDrive.setModuleStates,
             self.robotDrive,
