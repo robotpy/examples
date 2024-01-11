@@ -7,7 +7,7 @@
 from wpilib import ADXRS450_Gyro
 from subsystems.swervemodule import SwerveModule
 from wpimath.kinematics import ChassisSpeeds
-from wpimath.kinematics import SwerveDrive4Kinematics, SwerveDrive3Odometry
+from wpimath.kinematics import SwerveDrive4Kinematics, SwerveDrive4Odometry
 from wpimath.geometry import Pose2d, Rotation2d
 import constants
 
@@ -59,7 +59,7 @@ class DriveSubsystem:
 
         # Odometry class for tracking robot pose
 
-        self.odometry = SwerveDrive3Odometry(
+        self.odometry = SwerveDrive4Odometry(
             constants.DriveConstants.kDriveKinematics,
             self.gyro.getRotation2d(),
             [
@@ -123,7 +123,7 @@ class DriveSubsystem:
                 )
             )
         )
-        SwerveDrive3Kinematics.desaturateWheelSpeeds(
+        SwerveDrive4Kinematics.desaturateWheelSpeeds(
             swerveModuleStates, constants.DriveConstants.kMaxSpeedMetersPerSecond
         )
         self.frontLeft.setDesiredState(swerveModuleStates[0])
@@ -135,7 +135,7 @@ class DriveSubsystem:
         """
         Sets the swerve ModuleStates.
         """
-        SwerveDrive3Kinematics.desaturateWheelSpeeds(
+        SwerveDrive4Kinematics.desaturateWheelSpeeds(
             desiredStates, constants.DriveConstants.kMaxSpeedMetersPerSecond
         )
         self.frontLeft.setDesiredState(desiredStates[0])
