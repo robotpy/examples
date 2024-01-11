@@ -6,7 +6,7 @@
 
 from wpilib import TimedRobot
 from wpimath.geometry import Translation2d
-from wpimath.kinematics import SwerveDrive3Kinematics
+from wpimath.kinematics import SwerveDrive4Kinematics
 from wpimath.trajectory import TrapezoidProfile
 import math
 
