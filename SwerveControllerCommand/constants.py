@@ -6,7 +6,7 @@
 
 from wpilib import TimedRobot
 from wpimath.geometry import Translation2d
-from wpimath.kinematics import SwerveDrive4Kinematics
+from wpimath.kinematics import SwerveDrive3Kinematics
 from wpimath.trajectory import TrapezoidProfile
 import math
 
@@ -46,7 +46,7 @@ class DriveConstants:
 
     kTrackWidth = 0.5
     kWheelBase = 0.7
-    kDriveKinematics = SwerveDrive4Kinematics(
+    kDriveKinematics = SwerveDrive3Kinematics(
         Translation2d(kWheelBase / 2, kTrackWidth / 2),
         Translation2d(kWheelBase / 2, -kTrackWidth / 2),
         Translation2d(-kWheelBase / 2, kTrackWidth / 2),
