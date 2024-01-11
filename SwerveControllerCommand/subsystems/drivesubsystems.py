@@ -5,7 +5,7 @@
 #
 
 from wpilib import ADXRS450_Gyro
-from swervemodule import SwerveModule
+from subsystems.swervemodule import SwerveModule
 from wpimath.kinematics import ChassisSpeeds
 from wpimath.kinematics import SwerveDrive3Kinematics, SwerveDrive3Odometry
 from wpimath.geometry import Pose2d, Rotation2d
