@@ -46,7 +46,7 @@ class DriveConstants:
 
     kTrackWidth = 0.5
     kWheelBase = 0.7
-    kDriveKinematics = SwerveDrive3Kinematics(
+    kDriveKinematics = SwerveDrive4Kinematics(
         Translation2d(kWheelBase / 2, kTrackWidth / 2),
         Translation2d(kWheelBase / 2, -kTrackWidth / 2),
         Translation2d(-kWheelBase / 2, kTrackWidth / 2),
