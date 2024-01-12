@@ -9,7 +9,7 @@ import commands2
 import constants
 from subsystems.drivesubsystems import DriveSubsystem
 from wpimath.trajectory import Trajectory, TrajectoryConfig, TrajectoryGenerator
-from wpimath.geometry import Translation2d, Pose2d, Rotation2d
+from wpimath.geometry._geometry import Translation2d, Pose2d, Rotation2d
 from wpimath.controller import ProfiledPIDController, PIDController
 import math
 
