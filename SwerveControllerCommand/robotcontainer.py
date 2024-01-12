@@ -11,7 +11,7 @@ from subsystems.drivesubsystems import DriveSubsystem
 from wpimath.trajectory import Trajectory, TrajectoryConfig, TrajectoryGenerator
 from wpimath.geometry import Translation2d, Pose2d, Rotation2d
 from wpimath.trajectory.constraint import DifferentialDriveVoltageConstraint
-from wpimath.controller import ProfiledPIDController, PIDController
+from wpimath.controller import ProfiledPIDController, PIDController, SimpleMotorFeedforwardMeters
 import math
 
 
