@@ -9,10 +9,11 @@ from subsystems.swervemodule import SwerveModule
 from wpimath.kinematics import ChassisSpeeds
 from wpimath.kinematics import SwerveDrive4Kinematics, SwerveDrive4Odometry
 from wpimath.geometry import Pose2d, Rotation2d
+from commands2 import Subsystem
 import constants
 
 
-class DriveSubsystem:
+class DriveSubsystem(Subsystem):
     def __init__(self):
         """
         Robot swerve modules
