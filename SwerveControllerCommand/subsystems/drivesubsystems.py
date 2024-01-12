@@ -104,6 +104,8 @@ class DriveSubsystem:
             ],
             pose,
         )
+    def setDefaultCommand(self, command):
+        pass
 
     def drive(self, xSpeed, ySpeed, rot, fieldRelative):
         """
