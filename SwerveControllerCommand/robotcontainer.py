@@ -77,7 +77,7 @@ class RobotContainer:
             TrajectoryConfig(
             constants.AutoConstants.kMaxSpeedMetersPerSecond,
             constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-            ).setKinematics(constants.DriveConstants.kDriveKinematic)s,
+            ).setKinematics(constants.DriveConstants.kDriveKinematics),
         )
 
         theta_controller = ProfiledPIDController(
