@@ -56,10 +56,22 @@ class RobotContainer:
         """
         Create config for trajectory
         """
+
+        autoVoltageConstraint = DifferentialDriveVoltageConstraint(
+            SimpleMotorFeedforwardMeters(
+                constants.DriveConstants.ksVolts,
+                constants.DriveConstants.kvVoltSecondsPerMeter,
+                constants.DriveConstants.kaVoltSecondsSquaredPerMeter,
+            ),
+            constants.DriveConstants.kDriveKinematics,
+            maxVoltage=10,  # 10 volts max.
+        )
         config = TrajectoryConfig(
             constants.AutoConstants.kMaxSpeedMetersPerSecond,
             constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-        ).setKinematics(constants.DriveConstants.kDriveKinematics)
+        )
+        config.setKinematics(constants.DriveConstants.kDriveKinematics)
+        config.addConstrait(autoVoltageConstrait)
 
         # An example trajectory to follow. All units in meters.
 
@@ -70,7 +82,7 @@ class RobotContainer:
             [Translation2d(1, 1), Translation2d(2, -1)],
             # End 3 meters straight ahead of where we started, facing forward
             Pose2d(3, 0, Rotation2d(0)),
-            "test",
+            config,
         )
 
         theta_controller = ProfiledPIDController(
