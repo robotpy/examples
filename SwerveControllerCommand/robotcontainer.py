@@ -64,6 +64,9 @@ class RobotContainer:
             constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared,
         )
         config.setKinematics(constants.DriveConstants.kDriveKinematics)
+        print("HIIII)
+        print(config)
+        print(type(config))
 
         # An example trajectory to follow. All units in meters.
 
