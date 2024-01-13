@@ -64,7 +64,7 @@ class RobotContainer:
             constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared,
         )
         config.setKinematics(constants.DriveConstants.kDriveKinematics)
-        print("HIIII)
+        print("HIIII")
         print(config)
         print(type(config))
 
