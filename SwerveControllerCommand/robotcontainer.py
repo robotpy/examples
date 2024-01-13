@@ -46,7 +46,7 @@ class RobotContainer:
                     * constants.ModuleConstants.kMaxModuleAngularSpeedRadiansPerSecond,
                     False,
                 ),
-                self.robotDrive,
+                self.robotDrive
             )
         )
 
@@ -85,7 +85,7 @@ class RobotContainer:
             constants.AutoConstants.kPThetaController,
             0,
             0,
-            constants.AutoConstants.kThetaControllerConstraints,
+            constants.AutoConstants.kThetaControllerConstraints
         )
         theta_controller.enableContinuousInput(-math.pi, math.pi)
 
@@ -99,7 +99,7 @@ class RobotContainer:
             PIDController(constants.AutoConstants.kPYController, 0, 0),
             theta_controller,
             self.robotDrive.setModuleStates,
-            self.robotDrive,
+            self.robotDrive
         )
 
         """
@@ -113,5 +113,5 @@ class RobotContainer:
                 )
             ),
             swerve_controller_command,
-            commands2.InstantCommand(lambda: self.robotDrive.drive(0, 0, 0, False)),
+            commands2.InstantCommand(lambda: self.robotDrive.drive(0, 0, 0, False))
         )
