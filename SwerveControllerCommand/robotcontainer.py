@@ -78,8 +78,7 @@ class RobotContainer:
             [Translation2d(1, 1), Translation2d(2, -1)],
             # End 3 meters straight ahead of where we started, facing forward
             Pose2d(3, 0, Rotation2d(0)),
-            config,
-            "hey"
+            config
         )
 
         theta_controller = ProfiledPIDController(
