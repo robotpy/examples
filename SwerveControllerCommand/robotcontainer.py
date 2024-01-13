@@ -5,6 +5,8 @@
 #
 
 from wpilib import XboxController
+
+from commands2 import Swerve4ControllerCommand
 import commands2
 import constants
 from subsystems.drivesubsystems import DriveSubsystem
@@ -89,7 +91,7 @@ class RobotContainer:
         )
         theta_controller.enableContinuousInput(-math.pi, math.pi)
 
-        swerve_controller_command = commands2.Swerve4ControllerCommand(
+        swerve_controller_command = Swerve4ControllerCommand(
             example_trajectory,
             self.robotDrive.getPose,
             # Functional interface to feed supplier
@@ -112,6 +114,6 @@ class RobotContainer:
                     example_trajectory.getInitialPose()
                 )
             ),
-            #swerve_controller_command,
+            swerve_controller_command,
             commands2.InstantCommand(lambda: self.robotDrive.drive(0, 0, 0, False))
         )
