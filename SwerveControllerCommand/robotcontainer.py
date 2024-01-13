@@ -66,6 +66,7 @@ class RobotContainer:
         config.setKinematics(constants.DriveConstants.kDriveKinematics)
         print("HIIII")
         print(config)
+        print(config == None)
         print(type(config))
 
         # An example trajectory to follow. All units in meters.
