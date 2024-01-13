@@ -43,6 +43,9 @@ class Robot(TimedCommandRobot):
     def autonomousPeriodic(self):
         pass
 
+    def autonomousCommand(self):
+        pass
+
     def teleopInit(self):
         """
         This makes sure that the autonomous stops running when
