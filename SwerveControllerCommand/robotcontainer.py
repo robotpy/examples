@@ -112,6 +112,6 @@ class RobotContainer:
                     example_trajectory.getInitialPose()
                 )
             ),
-            swerve_controller_command,
+            #swerve_controller_command,
             commands2.InstantCommand(lambda: self.robotDrive.drive(0, 0, 0, False))
         )
