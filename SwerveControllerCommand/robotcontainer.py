@@ -78,10 +78,8 @@ class RobotContainer:
             [Translation2d(1, 1), Translation2d(2, -1)],
             # End 3 meters straight ahead of where we started, facing forward
             Pose2d(3, 0, Rotation2d(0)),
-            TrajectoryConfig(
-            constants.AutoConstants.kMaxSpeedMetersPerSecond,
-            constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-            ).setKinematics(constants.DriveConstants.kDriveKinematics),
+            config,
+            "hey"
         )
 
         theta_controller = ProfiledPIDController(
