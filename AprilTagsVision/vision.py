@@ -23,8 +23,8 @@ import numpy as np
 def main():
     detector = robotpy_apriltag.AprilTagDetector()
 
-    # Look for tag36h11, correct 7 error bits
-    detector.addFamily("tag36h11", 7)
+    # Look for tag36h11, correct 3 error bits
+    detector.addFamily("tag36h11", 3)
 
     # Set up Pose Estimator - parameters are for a Microsoft Lifecam HD-3000
     # (https://www.chiefdelphi.com/t/wpilib-apriltagdetector-sample-code/421411/21)
