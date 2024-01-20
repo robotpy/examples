@@ -5,9 +5,9 @@
 #
 
 from wpilib import ADXRS450_Gyro
-from swervemodule import SwerveModule
+from subsystems import SwerveModule
 from wpimath.kinematics import ChassisSpeeds
-from wpimath.kinematics import SwerveDrive3Kinematics, SwerveDrive3Odometry
+from wpimath.kinematics import SwerveDrive4Kinematics, SwerveDrive4Odometry
 from wpimath.geometry import Pose2d, Rotation2d
 import constants
 
@@ -59,7 +59,7 @@ class DriveSubsystem:
 
         # Odometry class for tracking robot pose
 
-        self.odometry = SwerveDrive3Odometry(
+        self.odometry = SwerveDrive4Odometry(
             constants.DriveConstants.kDriveKinematics,
             self.gyro.getRotation2d(),
             [
@@ -123,7 +123,7 @@ class DriveSubsystem:
                 )
             )
         )
-        SwerveDrive3Kinematics.desaturateWheelSpeeds(
+        SwerveDrive4Kinematics.desaturateWheelSpeeds(
             swerveModuleStates, constants.DriveConstants.kMaxSpeedMetersPerSecond
         )
         self.frontLeft.setDesiredState(swerveModuleStates[0])
@@ -135,7 +135,7 @@ class DriveSubsystem:
         """
         Sets the swerve ModuleStates.
         """
-        SwerveDrive3Kinematics.desaturateWheelSpeeds(
+        SwerveDrive4Kinematics.desaturateWheelSpeeds(
             desiredStates, constants.DriveConstants.kMaxSpeedMetersPerSecond
         )
         self.frontLeft.setDesiredState(desiredStates[0])
@@ -144,34 +144,34 @@ class DriveSubsystem:
         self.rearRight.setDesiredState(desiredStates[3])
 
 
-def resetEncoders(self):
-    """
-    Resets the drive encoders to currently read a position of 0.
-    """
-    self.frontLeft.resetEncoders()
-    self.rearLeft.resetEncoders()
-    self.frontRight.resetEncoders()
-    self.rearRight.resetEncoders()
+    def resetEncoders(self):
+        """
+        Resets the drive encoders to currently read a position of 0.
+        """
+        self.frontLeft.resetEncoders()
+        self.rearLeft.resetEncoders()
+        self.frontRight.resetEncoders()
+        self.rearRight.resetEncoders()
 
 
-def zeroHeading(self):
-    """
-    Zeroes the heading of the robot.
-    """
-    self.gyro.reset()
+    def zeroHeading(self):
+        """
+        Zeroes the heading of the robot.
+        """
+        self.gyro.reset()
 
 
-def getHeading(self):
-    """
-    Returns the heading of the robot.
-    """
-    return self.gyro.getRotation2d().getDegrees()
+    def getHeading(self):
+        """
+        Returns the heading of the robot.
+        """
+        return self.gyro.getRotation2d().getDegrees()
 
 
-def getTurnRate(self):
-    """
-    Returns the turn rate of the robot.
-    """
-    return self.gyro.getRate() * (
-        -1.0 if constants.DriveConstants.kGyroReversed else 1.0
-    )
+    def getTurnRate(self):
+        """
+        Returns the turn rate of the robot.
+        """
+        return self.gyro.getRate() * (
+            -1.0 if constants.DriveConstants.kGyroReversed else 1.0
+        )
