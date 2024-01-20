@@ -53,28 +53,28 @@ class Drive(Subsystem):
             self.left_motor.setVoltage(voltage)
             self.right_motor.setVoltage(voltage)
 
-        # Tell SysId how to record a frame of data for each motor on the mechanism being
-        # characterized.
-        def log():
-            # Record a frame for the left motors.  Since these share an encoder, we consider
-            # the entire group to be one motor.
-            log.motor("drive-left").voltage(
-                self.left_motor.get() * RobotController.getBatteryVoltage()
-            ).distance(self.left_encoder.getDistance()).velocity(
-                self.left_encoder.getRate()
-            )
-            # Record a frame for the right motors.  Since these share an encoder, we consider
-            # the entire group to be one motor.
-            log.motor("drive-right").voltage(
-                self.right_motor.get() * RobotController.getBatteryVoltage()
-            ).distance(self.right_encoder.getDistance()).velocity(
-                self.right_encoder.getRate()
-            )
-
         # Tell SysId to make generated commands require this subsystem, suffix test state in
         # WPILog with this subsystem's name ("drive")
         self.sys_id_routine = SysIdRoutine(
-            SysIdRoutine.Config(), SysIdRoutine.Mechanism(drive, log, self)
+            SysIdRoutine.Config(), SysIdRoutine.Mechanism(drive, self.log, self)
+        )
+
+    # Tell SysId how to record a frame of data for each motor on the mechanism being
+    # characterized.
+    def log(self) -> None:
+        # Record a frame for the left motors.  Since these share an encoder, we consider
+        # the entire group to be one motor.
+        self.sys_id_routine.motor("drive-left").voltage(
+            self.left_motor.get() * RobotController.getBatteryVoltage()
+        ).distance(self.left_encoder.getDistance()).velocity(
+            self.left_encoder.getRate()
+        )
+        # Record a frame for the right motors.  Since these share an encoder, we consider
+        # the entire group to be one motor.
+        self.sys_id_routine.motor("drive-right").voltage(
+            self.right_motor.get() * RobotController.getBatteryVoltage()
+        ).distance(self.right_encoder.getDistance()).velocity(
+            self.right_encoder.getRate()
         )
 
     def arcadeDriveCommand(self, fwd: float, rot: float) -> Command:
