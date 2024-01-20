@@ -87,7 +87,7 @@ class Drive(Subsystem):
 
         # A split-stick arcade command, with forward/backward controlled by the left
         # hand, and turning controlled by the right.
-        return self.run(self.drive.arcadeDrive(fwd, rot))
+        return self.run(lambda: self.drive.arcadeDrive(fwd, rot))
 
     def sysIdQuasistatic(self, direction: SysIdRoutine.Direction) -> Command:
         return self.sys_id_routine.quasistatic(direction)
