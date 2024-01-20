@@ -9,6 +9,7 @@ from wpimath.geometry import Rotation2d
 from wpimath.kinematics import SwerveModulePosition, SwerveModuleState
 from wpimath.trajectory import TrapezoidProfile
 from wpimath.controller import PIDController, ProfiledPIDController
+import math
 import constants
 
 
@@ -63,7 +64,7 @@ class SwerveModule:
         # Limit the PID Controller's input range between -pi and pi and set the input
         # to be continuous.
 
-        self.turningPIDController.enableContinuousInput(-3.14159, 3.14159)
+        self.turningPIDController.enableContinuousInput(-math.pi, math.pi)
 
     def getState(self):
         """
