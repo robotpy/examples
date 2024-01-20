@@ -49,7 +49,7 @@ class Drive(Subsystem):
         self.right_encoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse)
 
         # Tell SysId how to plumb the driving voltage to the motors.
-        def drive(voltage: volts):
+        def drive(voltage: volts) -> None:
             self.left_motor.setVoltage(voltage)
             self.right_motor.setVoltage(voltage)
 
