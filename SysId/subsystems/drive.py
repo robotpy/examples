@@ -57,7 +57,8 @@ class Drive(Subsystem):
         # Tell SysId to make generated commands require this subsystem, suffix test state in
         # WPILog with this subsystem's name ("drive")
         self.sys_id_routine = SysIdRoutine(
-            SysIdRoutine.Config(), SysIdRoutine.Mechanism(drive, self.log, self)
+            SysIdRoutine.Config(),
+            SysIdRoutine.Mechanism(drive, self.log, self),
         )
 
     # Tell SysId how to record a frame of data for each motor on the mechanism being
