@@ -18,7 +18,7 @@ import math
 class RobotContainer:
     def __init__(self):
         """
-        The robot's subsystems
+        The container for the robot. Contains subsystems, OI devices, and commands.
         """
         self.robotDrive = DriveSubsystem()
 
