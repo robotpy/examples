@@ -5,15 +5,13 @@
 #
 
 from wpilib import XboxController
-
-from commands2 import Swerve4ControllerCommand
 import commands2
 import constants
 from subsystems.drivesubsystems import DriveSubsystem
 from wpimath.trajectory import Trajectory, TrajectoryConfig, TrajectoryGenerator
 from wpimath.geometry import Translation2d, Pose2d, Rotation2d
 from wpimath.trajectory.constraint import DifferentialDriveVoltageConstraint
-from wpimath.controller import ProfiledPIDController, PIDController, SimpleMotorFeedforwardMeters
+from wpimath.controller import ProfiledPIDController, PIDController, HolonomicDriveController
 import math
 
 
@@ -48,7 +46,7 @@ class RobotContainer:
                     * constants.ModuleConstants.kMaxModuleAngularSpeedRadiansPerSecond,
                     False,
                 ),
-                self.robotDrive
+                self.robotDrive,
             )
         )
 
@@ -66,10 +64,6 @@ class RobotContainer:
             constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared,
         )
         config.setKinematics(constants.DriveConstants.kDriveKinematics)
-        print("HIIII")
-        print(config)
-        print(config == None)
-        print(type(config))
 
         # An example trajectory to follow. All units in meters.
 
@@ -87,19 +81,22 @@ class RobotContainer:
             constants.AutoConstants.kPThetaController,
             0,
             0,
-            constants.AutoConstants.kThetaControllerConstraints
+            constants.AutoConstants.kThetaControllerConstraints,
         )
         theta_controller.enableContinuousInput(-math.pi, math.pi)
 
-        swerve_controller_command = Swerve4ControllerCommand(
+        swerve_controller_command = commands2.Swerve4ControllerCommand(
             example_trajectory,
             self.robotDrive.getPose,
             # Functional interface to feed supplier
             constants.DriveConstants.kDriveKinematics,
             # Position controllers
-            PIDController(constants.AutoConstants.kPXController, 0, 0),
-            PIDController(constants.AutoConstants.kPYController, 0, 0),
-            theta_controller,
+            HolonomicDriveController(
+                PIDController(constants.AutoConstants.kPXController, 0, 0),
+                PIDController(constants.AutoConstants.kPYController, 0, 0),
+                theta_controller
+            ),
+            Rotation2d(units.degrees_to_radians(0)),
             self.robotDrive.setModuleStates,
             self.robotDrive
         )
@@ -115,5 +112,5 @@ class RobotContainer:
                 )
             ),
             swerve_controller_command,
-            commands2.InstantCommand(lambda: self.robotDrive.drive(0, 0, 0, False))
+            commands2.InstantCommand(lambda: self.robotDrive.drive(0, 0, 0, False)),
         )
