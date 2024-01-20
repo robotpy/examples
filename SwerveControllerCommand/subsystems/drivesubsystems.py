@@ -5,15 +5,14 @@
 #
 
 from wpilib import ADXRS450_Gyro
-from subsystems.swervemodule import SwerveModule
+from swervemodule import SwerveModule
 from wpimath.kinematics import ChassisSpeeds
 from wpimath.kinematics import SwerveDrive4Kinematics, SwerveDrive4Odometry
 from wpimath.geometry import Pose2d, Rotation2d
-from commands2 import Subsystem
 import constants
 
 
-class DriveSubsystem(Subsystem):
+class DriveSubsystem:
     def __init__(self):
         """
         Robot swerve modules
@@ -145,34 +144,34 @@ class DriveSubsystem(Subsystem):
         self.rearRight.setDesiredState(desiredStates[3])
 
 
-def resetEncoders(self):
-    """
-    Resets the drive encoders to currently read a position of 0.
-    """
-    self.frontLeft.resetEncoders()
-    self.rearLeft.resetEncoders()
-    self.frontRight.resetEncoders()
-    self.rearRight.resetEncoders()
+    def resetEncoders(self):
+        """
+        Resets the drive encoders to currently read a position of 0.
+        """
+        self.frontLeft.resetEncoders()
+        self.rearLeft.resetEncoders()
+        self.frontRight.resetEncoders()
+        self.rearRight.resetEncoders()
 
 
-def zeroHeading(self):
-    """
-    Zeroes the heading of the robot.
-    """
-    self.gyro.reset()
+    def zeroHeading(self):
+        """
+        Zeroes the heading of the robot.
+        """
+        self.gyro.reset()
 
 
-def getHeading(self):
-    """
-    Returns the heading of the robot.
-    """
-    return self.gyro.getRotation2d().getDegrees()
+    def getHeading(self):
+        """
+        Returns the heading of the robot.
+        """
+        return self.gyro.getRotation2d().getDegrees()
 
 
-def getTurnRate(self):
-    """
-    Returns the turn rate of the robot.
-    """
-    return self.gyro.getRate() * (
-        -1.0 if constants.DriveConstants.kGyroReversed else 1.0
-    )
+    def getTurnRate(self):
+        """
+        Returns the turn rate of the robot.
+        """
+        return self.gyro.getRate() * (
+            -1.0 if constants.DriveConstants.kGyroReversed else 1.0
+        )
