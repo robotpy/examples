@@ -10,7 +10,8 @@ import constants
 from subsystems.drivesubsystems import DriveSubsystem
 from wpimath.trajectory import Trajectory, TrajectoryConfig, TrajectoryGenerator
 from wpimath.geometry import Translation2d, Pose2d, Rotation2d
-from wpimath.controller import ProfiledPIDController, PIDController
+from wpimath.trajectory.constraint import DifferentialDriveVoltageConstraint
+from wpimath.controller import ProfiledPIDController, PIDController, HolonomicDriveController
 import math
 
 
@@ -56,10 +57,13 @@ class RobotContainer:
         """
         Create config for trajectory
         """
+
+
         config = TrajectoryConfig(
             constants.AutoConstants.kMaxSpeedMetersPerSecond,
             constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-        ).setKinematics(constants.DriveConstants.kDriveKinematics)
+        )
+        config.setKinematics(constants.DriveConstants.kDriveKinematics)
 
         # An example trajectory to follow. All units in meters.
 
@@ -70,7 +74,7 @@ class RobotContainer:
             [Translation2d(1, 1), Translation2d(2, -1)],
             # End 3 meters straight ahead of where we started, facing forward
             Pose2d(3, 0, Rotation2d(0)),
-            config,
+            config
         )
 
         theta_controller = ProfiledPIDController(
@@ -87,11 +91,14 @@ class RobotContainer:
             # Functional interface to feed supplier
             constants.DriveConstants.kDriveKinematics,
             # Position controllers
-            PIDController(constants.AutoConstants.kPXController, 0, 0),
-            PIDController(constants.AutoConstants.kPYController, 0, 0),
-            theta_controller,
+            HolonomicDriveController(
+                PIDController(constants.AutoConstants.kPXController, 0, 0),
+                PIDController(constants.AutoConstants.kPYController, 0, 0),
+                theta_controller
+            ),
+            Rotation2d(units.degrees_to_radians(0)),
             self.robotDrive.setModuleStates,
-            self.robotDrive,
+            self.robotDrive
         )
 
         """
