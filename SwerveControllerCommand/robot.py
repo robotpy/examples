@@ -5,16 +5,11 @@
 # the WPILib BSD license file in the root directory of this project.
 #
 
-from commands2 import TimedCommandRobot, CommandScheduler, Command
-import typing
-
+from commands2 import TimedCommandRobot, CommandScheduler
 from robotcontainer import RobotContainer
 
 
 class Robot(TimedCommandRobot):
-
-
-    autonomousCommand: typing.Optional[Command] = None
     def robotInit(self):
         """
         Instantiate our RobotContainer. This will perform all our button bindings, and put our
