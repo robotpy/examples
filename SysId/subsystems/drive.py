@@ -5,6 +5,7 @@
 
 from commands2 import Command, Subsystem
 from commands2.sysid import SysIdRoutine
+from wpilib.sysid import SysIdRoutineLog
 
 from wpilib import Encoder, PWMSparkMax, RobotController
 from wpilib.drive import DifferentialDrive
@@ -61,17 +62,17 @@ class Drive(Subsystem):
 
     # Tell SysId how to record a frame of data for each motor on the mechanism being
     # characterized.
-    def log(self) -> None:
+    def log(self, sys_id_routine: SysIdRoutineLog) -> None:
         # Record a frame for the left motors.  Since these share an encoder, we consider
         # the entire group to be one motor.
-        self.sys_id_routine.motor("drive-left").voltage(
+        sys_id_routine.motor("drive-left").voltage(
             self.left_motor.get() * RobotController.getBatteryVoltage()
         ).position(self.left_encoder.getDistance()).velocity(
             self.left_encoder.getRate()
         )
         # Record a frame for the right motors.  Since these share an encoder, we consider
         # the entire group to be one motor.
-        self.sys_id_routine.motor("drive-right").voltage(
+        sys_id_routine.motor("drive-right").voltage(
             self.right_motor.get() * RobotController.getBatteryVoltage()
         ).position(self.right_encoder.getDistance()).velocity(
             self.right_encoder.getRate()
