@@ -66,14 +66,14 @@ class Drive(Subsystem):
         # the entire group to be one motor.
         self.sys_id_routine.motor("drive-left").voltage(
             self.left_motor.get() * RobotController.getBatteryVoltage()
-        ).distance(self.left_encoder.getDistance()).velocity(
+        ).position(self.left_encoder.getDistance()).velocity(
             self.left_encoder.getRate()
         )
         # Record a frame for the right motors.  Since these share an encoder, we consider
         # the entire group to be one motor.
         self.sys_id_routine.motor("drive-right").voltage(
             self.right_motor.get() * RobotController.getBatteryVoltage()
-        ).distance(self.right_encoder.getDistance()).velocity(
+        ).position(self.right_encoder.getDistance()).velocity(
             self.right_encoder.getRate()
         )
 
