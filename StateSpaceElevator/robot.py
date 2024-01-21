@@ -135,9 +135,9 @@ class MyRobot(wpilib.TimedRobot):
         self.lastProfiledReference = self.profile.calculate(
             0.020, self.lastProfiledReference, goal
         )
-        self.loop.setNextR(
-            self.lastProfiledReference.position, self.lastProfiledReference.velocity
-        )
+        self.loop.setNextR([
+			self.lastProfiledReference.position, self.lastProfiledReference.velocity
+        ])
 
         # Correct our Kalman filter's state vector estimate with encoder data.
         self.loop.correct([self.encoder.getDistance()])
