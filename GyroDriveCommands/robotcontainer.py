@@ -32,7 +32,7 @@ class RobotContainer:
         self.robotDrive = subsystems.drivesubsystem.DriveSubsystem()
 
         # The driver's controller
-        self.driverController = commands2.button.CommandPS4Controller(
+        self.driverController = wpilib.PS4Controller(
             constants.OIConstants.kDriverControllerPort
         )
 
@@ -49,7 +49,7 @@ class RobotContainer:
                     -self.driverController.getLeftY(),
                     -self.driverController.getRightX(),
                 ),
-                [self.robotDrive],
+                self.robotDrive,
             )
         )
 
@@ -64,11 +64,11 @@ class RobotContainer:
             self.driverController, wpilib.PS4Controller.Button.kR1
         ).onTrue(
             commands2.InstantCommand(
-                (lambda: self.robotDrive.setMaxOutput(0.5)), [self.robotDrive]
+                (lambda: self.robotDrive.setMaxOutput(0.5)), self.robotDrive
             )
         ).onFalse(
             commands2.InstantCommand(
-                (lambda: self.robotDrive.setMaxOutput(1)), [self.robotDrive]
+                (lambda: self.robotDrive.setMaxOutput(1)), self.robotDrive
             )
         )
 
@@ -91,7 +91,7 @@ class RobotContainer:
                     -self.driverController.getLeftY(), output
                 ),
                 # Require the robot drive
-                [self.robotDrive],
+                self.robotDrive,
             )
         )
 

@@ -8,11 +8,14 @@ BASE_TESTS="
   AprilTagsVision
   ArcadeDrive
   ArcadeDriveXboxController
+  ArmBot
+  ArmBotOffboard
   ArmSimulation
   AxisCamera
   CANPDP
   DifferentialDriveBot
   DigitalCommunication
+  DriveDistanceOffboard
   DutyCycleEncoder
   DutyCycleInput
   ElevatorProfiledPID
@@ -20,9 +23,11 @@ BASE_TESTS="
   ElevatorTrapezoidProfile
   Encoder
   FlywheelBangBangController
+  FrisbeeBot
   GameData
   GettingStarted
   Gyro
+  GyroDriveCommands
   GyroMecanum
   HatchbotInlined
   HatchbotTraditional
@@ -43,6 +48,8 @@ BASE_TESTS="
   QuickVision
   RamseteController
   Relay
+  SchedulerEventLogging
+  SelectCommand
   ShuffleBoard
   Solenoid
   StatefulAutonomous
@@ -57,14 +64,7 @@ BASE_TESTS="
 "
 
 IGNORED_TESTS="
-  ArmBot
-  ArmBotOffboard
-  DriveDistanceOffboard
-  FrisbeeBot
-  GyroDriveCommands
   RamseteCommand
-  SchedulerEventLogging
-  SelectCommand
   RomiReference
   PhysicsCamSim/src
 "
