@@ -24,7 +24,7 @@ class RobotContainer:
 
     def __init__(self) -> None:
         # The driver's controller
-        self.driverController = commands2.button.CommandXboxController(
+        self.driverController = wpilib.XboxController(
             constants.OIConstants.kDriverControllerPort
         )
 

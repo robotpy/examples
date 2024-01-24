@@ -42,7 +42,7 @@ class TurnToAngleProfiled(commands2.ProfiledPIDCommand):
             # Pipe output to turn robot
             lambda output, setpoint: drive.arcadeDrive(0, output),
             # Require the drive
-            [drive],
+            drive,
         )
 
         # Set the controller to be continuous (because it is an angle controller)

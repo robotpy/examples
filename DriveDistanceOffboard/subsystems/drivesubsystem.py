@@ -96,7 +96,7 @@ class DriveSubsystem(commands2.Subsystem):
             self.feedforward.calculate(right.velocity),
         )
 
-    def getLeftEncoderDistance(self) -> wpilib.Encoder:
+    def getLeftEncoderDistance(self) -> float:
         """
         Returns the left drive encoder distance.
 
@@ -104,7 +104,7 @@ class DriveSubsystem(commands2.Subsystem):
         """
         return self.leftLeader.getEncoderDistance()
 
-    def getRightEncoderDistance(self) -> wpilib.Encoder:
+    def getRightEncoderDistance(self) -> float:
         """
         Returns the right drive encoder distance.
 

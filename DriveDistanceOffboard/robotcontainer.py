@@ -29,10 +29,10 @@ class RobotContainer:
 
         # Retained command references
         self.driveFullSpeed = commands2.cmd.runOnce(
-            lambda: self.robotDrive.setMaxOutput(1), [self.robotDrive]
+            lambda: self.robotDrive.setMaxOutput(1), self.robotDrive
         )
         self.driveHalfSpeed = commands2.cmd.runOnce(
-            lambda: self.robotDrive.setMaxOutput(0.5), [self.robotDrive]
+            lambda: self.robotDrive.setMaxOutput(0.5), self.robotDrive
         )
 
         # The driver's controller
@@ -53,7 +53,7 @@ class RobotContainer:
                     -self.driverController.getLeftY(),
                     -self.driverController.getRightX(),
                 ),
-                [self.robotDrive],
+                self.robotDrive,
             )
         )
 
@@ -74,14 +74,14 @@ class RobotContainer:
         )
 
         # Drive forward by 3 meters when the 'A' button is pressed, with a timeout of 10 seconds
-        self.driverController.A().onTrue(
+        self.driverController.a().onTrue(
             commands.drivedistanceprofiled.DriveDistanceProfiled(
                 3, self.robotDrive
             ).withTimeout(10)
         )
 
         # Do the same thing as above when the 'B' button is pressed, but defined inline
-        self.driverController.B().onTrue(
+        self.driverController.b().onTrue(
             commands2.TrapezoidProfileCommand(
                 wpimath.trajectory.TrapezoidProfile(
                     # Limit the max acceleration and velocity
@@ -89,16 +89,17 @@ class RobotContainer:
                         constants.DriveConstants.kMaxSpeedMetersPerSecond,
                         constants.DriveConstants.kMaxAccelerationMetersPerSecondSquared,
                     ),
-                    # End at desired position in meters; implicitly starts at 0
-                    wpimath.trajectory.TrapezoidProfile.State(3, 0),
                 ),
                 # Pipe the profile state to the drive
                 lambda setpointState: self.robotDrive.setDriveStates(
                     setpointState, setpointState
                 ),
-                [self.robotDrive],
+                # End at desired position in meters; implicitly starts at 0
+                lambda: wpimath.trajectory.TrapezoidProfile.State(3, 0),
+                wpimath.trajectory.TrapezoidProfile.State,
+                self.robotDrive,
             )
-            .beforeStarting(self.robotDrive.resetEncoders())
+            .beforeStarting(self.robotDrive.resetEncoders)
             .withTimeout(10)
         )
 
@@ -108,4 +109,4 @@ class RobotContainer:
 
         :returns: the command to run in autonomous
         """
-        return commands2.cmd.nothing()
+        return commands2.cmd.none()
