@@ -9,8 +9,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-import robotpy.main
-
 
 def main():
     BASE_TESTS = [
@@ -83,7 +81,6 @@ def main():
     for x in current_directory.glob("./**/robot.py"):
         manipulatedPath = os.path.relpath(x.parent, "examples")[3:].replace("\\", r"/")
         print(manipulatedPath)
-        print(BASE_TESTS)
         if manipulatedPath in BASE_TESTS:
             os.chdir(x.parent)
             os.system(f"{sys.executable} -m robotpy sync")
