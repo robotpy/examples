@@ -10,7 +10,6 @@ deploy.json
 .project
 .pydevproject
 
-pyproject.toml
 wpilib_preferences.json
 
 imgui.ini
