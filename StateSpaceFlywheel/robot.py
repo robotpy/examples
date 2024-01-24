@@ -5,18 +5,24 @@
 # the WPILib BSD license file in the root directory of this project.
 #
 
+import math
 import wpilib
-import wpimath
+import wpimath.units
 import wpimath.controller
 import wpimath.system
 import wpimath.system.plant
 import wpimath.estimator
 
-import math
-import numpy
+kMotorPort = 0
+kEncoderAChannel = 0
+kEncoderBChannel = 1
+kJoystickPort = 0
 
-# A simple utility class for converting rpm to radians, as robotPY does not currently have a wpimath.util class.
-import util.units
+kFlywheelMomentOfInertia = 0.00032  # kg/m^2
+
+# Reduction between motors and encoder, as output over input. If the flywheel spins slower than
+# the motors, this number should be greater than one.
+kFlywheelGearing = 1
 
 
 class MyRobot(wpilib.TimedRobot):
@@ -25,21 +31,8 @@ class MyRobot(wpilib.TimedRobot):
     flywheel.
     """
 
-    kMotorPort = 0
-    kEncoderAChannel = 0
-    kEncoderBChannel = 1
-    kJoystickPort = 0
-
-    kFlywheelMomentOfInertia = 0.00032  # kg/m^2
-
-    # Reduction between motors and encoder, as output over input. If the flywheel spins slower than
-    # the motors, this number should be greater than one.
-    kFlywheelGearing = 1
-
     def robotInit(self) -> None:
-        self.kSpinUpRadPerSec = util.units.Units.rotationsPerMinuteToRadiansPerSecond(
-            500
-        )
+        self.kSpinUpRadPerSec = wpimath.units.rotationsPerMinuteToRadiansPerSecond(500)
 
         # The plant holds a state-space model of our flywheel. This system has the following properties:
         #
@@ -48,8 +41,8 @@ class MyRobot(wpilib.TimedRobot):
         # Outputs (what we can measure): [velocity], in radians per second.
         self.flywheelPlant = wpimath.system.plant.LinearSystemId.flywheelSystem(
             wpimath.system.plant.DCMotor.NEO(2),
-            self.kFlywheelMomentOfInertia,
-            self.kFlywheelGearing,
+            kFlywheelMomentOfInertia,
+            kFlywheelGearing,
         )
 
         # The observer fuses our encoder data and voltage inputs to reject noise.
@@ -78,15 +71,15 @@ class MyRobot(wpilib.TimedRobot):
         )
 
         # An encoder set up to measure flywheel velocity in radians per second.
-        self.encoder = wpilib.Encoder(self.kEncoderAChannel, self.kEncoderBChannel)
+        self.encoder = wpilib.Encoder(kEncoderAChannel, kEncoderBChannel)
 
-        self.motor = wpilib.PWMSparkMax(self.kMotorPort)
+        self.motor = wpilib.PWMSparkMax(kMotorPort)
 
         # A joystick to read the trigger from.
-        self.joystick = wpilib.Joystick(self.kJoystickPort)
+        self.joystick = wpilib.Joystick(kJoystickPort)
 
         # We go 2 pi radians per 4096 clicks.
-        self.encoder.setDistancePerPulse(2 * math.pi / 4096)
+        self.encoder.setDistancePerPulse(math.tau / 4096)
 
     def teleopInit(self) -> None:
         self.loop.reset([self.encoder.getRate()])
@@ -96,11 +89,11 @@ class MyRobot(wpilib.TimedRobot):
         # PID controller.
         if self.joystick.getTriggerPressed():
             # We just pressed the trigger, so let's set our next reference
-            self.loop.setNextR(numpy.array([self.kSpinUpRadPerSec]))
+            self.loop.setNextR([kSpinUpRadPerSec])
 
         elif self.joystick.getTriggerReleased():
             # We just released the trigger, so let's spin down
-            self.loop.setNextR(numpy.array([self.kSpinUpRadPerSec]))
+            self.loop.setNextR([0.0])
 
         # Correct our Kalman filter's state vector estimate with encoder data.
         self.loop.correct([self.encoder.getRate()])
