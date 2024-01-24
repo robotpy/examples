@@ -26,36 +26,30 @@ class RobotContainer:
         self.robotDrive = subsystems.drivesubsystem.DriveSubsystem()
         self.shooter = subsystems.shootersubsystem.ShooterSubsystem()
 
-        self.spinUpShooter = commands2.cmd.runOnce(self.shooter.enable, [self.shooter])
-        self.stopShooter = commands2.cmd.runOnce(self.shooter.disable, [self.shooter])
+        self.spinUpShooter = commands2.cmd.runOnce(self.shooter.enable, self.shooter)
+        self.stopShooter = commands2.cmd.runOnce(self.shooter.disable, self.shooter)
 
         # An autonomous routine that shoots the loaded frisbees
         self.autonomousCommand = commands2.cmd.sequence(
-            [
-                # Start the command by spinning up the shooter...
-                commands2.cmd.runOnce(self.shooter.enable, [self.shooter]),
-                # Wait until the shooter is at speed before feeding the frisbees
-                commands2.cmd.waitUntil(
-                    lambda: self.shooter.getController().atSetpoint()
-                ),
-                # Start running the feeder
-                commands2.cmd.runOnce(self.shooter.runFeeder, [self.shooter]),
-                # Shoot for the specified time
-                commands2.cmd.wait(constants.AutoConstants.kAutoShootTimeSeconds)
-                # Add a timeout (will end the command if, for instance, the shooter
-                # never gets up to speed)
-                .withTimeout(constants.AutoConstants.kAutoTimeoutSeconds)
-                # When the command ends, turn off the shooter and the feeder
-                .andThen(
-                    commands2.cmd.runOnce(
-                        lambda: self.shooter.disable, [self.shooter]
-                    ).andThen(
-                        commands2.cmd.runOnce(
-                            lambda: self.shooter.stopFeeder, [self.shooter]
-                        )
-                    )
-                ),
-            ]
+            # Start the command by spinning up the shooter...
+            commands2.cmd.runOnce(self.shooter.enable, self.shooter),
+            # Wait until the shooter is at speed before feeding the frisbees
+            commands2.cmd.waitUntil(lambda: self.shooter.getController().atSetpoint()),
+            # Start running the feeder
+            commands2.cmd.runOnce(self.shooter.runFeeder, self.shooter),
+            # Shoot for the specified time
+            commands2.cmd.waitSeconds(constants.AutoConstants.kAutoShootTimeSeconds)
+            # Add a timeout (will end the command if, for instance, the shooter
+            # never gets up to speed)
+            .withTimeout(constants.AutoConstants.kAutoTimeoutSeconds)
+            # When the command ends, turn off the shooter and the feeder
+            .andThen(
+                commands2.cmd.runOnce(
+                    lambda: self.shooter.disable, self.shooter
+                ).andThen(
+                    commands2.cmd.runOnce(lambda: self.shooter.stopFeeder, self.shooter)
+                )
+            ),
         )
 
         # The driver's controller
@@ -76,7 +70,7 @@ class RobotContainer:
                     -self.driverController.getLeftY(),
                     -self.driverController.getRightX(),
                 ),
-                [self.robotDrive],
+                self.robotDrive,
             )
         )
 
@@ -92,39 +86,39 @@ class RobotContainer:
         # We can bind commands while retaining references to them in RobotContainer
 
         # Spin up the shooter when the 'A' button is pressed
-        self.driverController.A().onTrue(self.spinUpShooter)
+        self.driverController.a().onTrue(self.spinUpShooter)
 
         # Turn off the shooter when the 'B' button is pressed
-        self.driverController.B().onTrue(self.stopShooter)
+        self.driverController.b().onTrue(self.stopShooter)
 
         # We can also write them as temporary variables outside the bindings
 
         # Shoots if the shooter wheel has reached the target speed
         shoot = commands2.cmd.either(
             # Run the feeder
-            commands2.cmd.runOnce(self.shooter.runFeeder, [self.shooter]),
+            commands2.cmd.runOnce(self.shooter.runFeeder, self.shooter),
             # Do nothing
-            commands2.cmd.nothing(),
+            commands2.cmd.none(),
             # Determine which of the above to do based on whether the shooter has reached the
             # desired speed
             lambda: self.shooter.getController().atSetpoint(),
         )
 
-        stopFeeder = commands2.cmd.runOnce(self.shooter.stopFeeder, [self.shooter])
+        stopFeeder = commands2.cmd.runOnce(self.shooter.stopFeeder, self.shooter)
 
         # Shoot when the 'X' button is pressed
-        self.driverController.X().onTrue(shoot).onFalse(stopFeeder)
+        self.driverController.x().onTrue(shoot).onFalse(stopFeeder)
 
         # We can also define commands inline at the binding!
 
         # While holding the shoulder button, drive at half speed
         self.driverController.rightBumper().onTrue(
             commands2.cmd.runOnce(
-                lambda: self.robotDrive.setMaxOutput(0.5), [self.robotDrive]
+                lambda: self.robotDrive.setMaxOutput(0.5), self.robotDrive
             )
         ).onFalse(
             commands2.cmd.runOnce(
-                lambda: self.robotDrive.setMaxOutput(1), [self.robotDrive]
+                lambda: self.robotDrive.setMaxOutput(1), self.robotDrive
             )
         )
 

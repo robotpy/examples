@@ -37,7 +37,7 @@ class TurnToAngle(commands2.PIDCommand):
             # Pipe output to turn robot
             lambda output: drive.arcadeDrive(0, output),
             # Require the drive
-            [drive],
+            drive,
         )
 
         # Set the controller to be continuous (because it is an angle controller)

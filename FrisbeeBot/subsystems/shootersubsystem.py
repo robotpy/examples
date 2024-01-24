@@ -43,12 +43,12 @@ class ShooterSubsystem(commands2.PIDSubsystem):
         self.shooterEncoder.setDistancePerPulse(constants.ShooterConstants.kEncoderCPR)
         self.setSetpoint(constants.ShooterConstants.kShooterTargetRPS)
 
-    def _useOutput(self, output: float, setpoint: float):
+    def useOutput(self, output: float, setpoint: float):
         self.shooterMotor.setVoltage(
             output + self.shooterFeedForward.calculate(setpoint)
         )
 
-    def _getMeasurement(self) -> float:
+    def getMeasurement(self) -> float:
         return self.shooterEncoder.getRate()
 
     def runFeeder(self):

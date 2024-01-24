@@ -49,7 +49,7 @@ class ArmSubsystem(commands2.ProfiledPIDSubsystem):
         # Start arm at rest in neutral position
         self.setGoal(constants.ArmConstants.kArmOffsetRads)
 
-    def _useOutput(
+    def useOutput(
         self, output: float, setpoint: wpimath.trajectory.TrapezoidProfile.State
     ) -> None:
         # Calculate the feedforward from the setpoint
@@ -58,5 +58,5 @@ class ArmSubsystem(commands2.ProfiledPIDSubsystem):
         # Add the feedforward to the PID output to get the motor output
         self.motor.setVoltage(output + feedforward)
 
-    def _getMeasurement(self) -> float:
+    def getMeasurement(self) -> float:
         return self.encoder.getDistance() + constants.ArmConstants.kArmOffsetRads

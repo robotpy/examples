@@ -29,14 +29,16 @@ class DriveDistanceProfiled(commands2.TrapezoidProfileCommand):
                 wpimath.trajectory.TrapezoidProfile.Constraints(
                     constants.DriveConstants.kMaxSpeedMetersPerSecond,
                     constants.DriveConstants.kMaxAccelerationMetersPerSecondSquared,
-                ),
-                # End at desired position in meters; implicitly starts at 0
-                wpimath.trajectory.TrapezoidProfile.State(meters, 0),
+                )
             ),
             # Pipe the profile state to the drive
             lambda setpointState: drive.setDriveStates(setpointState, setpointState),
+            # End at desired position in meters; implicitly starts at 0
+            lambda: wpimath.trajectory.TrapezoidProfile.State(meters, 0),
+            # Current position
+            lambda: wpimath.trajectory.TrapezoidProfile.State(0, 0),
             # Require the drive
-            [drive],
+            drive,
         )
         # Reset drive encoders since we're starting at 0
         drive.resetEncoders()

@@ -50,10 +50,10 @@ class RobotContainer:
         """
 
         # Move the arm to 2 radians above horizontal when the 'A' button is pressed.
-        self.driverController.A().onTrue(self.robotArm.setArmGoalCommand(2))
+        self.driverController.a().onTrue(self.robotArm.setArmGoalCommand(2))
 
         # Move the arm to neutral position when the 'B' button is pressed.
-        self.driverController.B().onTrue(
+        self.driverController.b().onTrue(
             self.robotArm.setArmGoalCommand(constants.kArmOffsetRads)
         )
 
@@ -66,4 +66,4 @@ class RobotContainer:
         )
 
     def getAutonomousCommand(self) -> commands2.Command:
-        return commands2.cmd.nothing()
+        return commands2.cmd.none()
