@@ -7,6 +7,7 @@
 import os
 import subprocess
 import sys
+import venv
 from pathlib import Path
 
 
@@ -77,18 +78,30 @@ def main():
         "PhysicsCamSim/src"
     ]
 
+    enviromentBuilder = venv.EnvBuilder(
+        system_site_packages=True,
+        clear=False,
+        symlinks=False,
+        upgrade=True,
+        with_pip=True,
+        upgrade_deps=True
+    )
+
     current_directory = Path(__file__).parent
+
     for x in current_directory.glob("./**/robot.py"):
-        manipulatedPath = os.path.relpath(x.parent, "examples")[3:].replace("\\", r"/")
+        manipulatedPath = os.path.relpath(x.parent, "examples").replace("..\\", "").replace("\\", r"/")
+        print(os.path.relpath(x.parent, "examples"))
         print(manipulatedPath)
         if manipulatedPath in BASE_TESTS:
             os.chdir(x.parent)
-            os.system(f"{sys.executable} -m robotpy sync")
-            os.system(f"{sys.executable} -m robotpy test --builtin")
+            enviromentBuilder.create("/venv")
+            subprocess.run([f"{sys.executable} -m robotpy sync", "{sys.executable} -m robotpy test --builtin"], shell=True)
             print(f"File Passed - {x.parent}")
         elif manipulatedPath in ignoredTests:
             os.chdir(x.parent)
-            os.system(f"{sys.executable} -m robotpy sync")
+            enviromentBuilder.create("/venv")
+            subprocess.run(f"{sys.executable} -m robotpy sync", shell=True)
             print(f"File Passed - {x.parent}")
         else:
             print("ERROR: Not every robot.py file is in the list of tests!")
