@@ -8,10 +8,10 @@ import wpilib
 import wpilib.drive
 import wpiutil
 import commands2
-import ..constants
-import ..robot
+import constants
+import robot
 
-class Drivetrain(commands2.Subsystem):
+class Drivetrain(commands2.SubsystemBase):
     """The Drivetrain subsystem incorporates the sensors and actuators
     attached to the robots chassis. These include four drive motors, 
     a left and right encoder and a gyro."""
@@ -25,7 +25,10 @@ class Drivetrain(commands2.Subsystem):
         self.rightLeader = wpilib.PWMSparkMax(constants.DriveConstants.kRightMotor1Port)
         self.rightFollower = wpilib.PWMSparkMax(constants.DriveConstants.kRightMotor2Port)
         
-        self.drive = wpilib.drive.DifferentialDrive(self.leftLeader, self.rightLeader)
+        self.drive = wpilib.drive.DifferentialDrive(
+            lambda s : self.leftLeader.set(s), 
+            lambda s : self.rightLeader.set(s)
+        )
 
         self.leftEncoder = wpilib.Encoder(
             constants.DriveConstants.kLeftEncoderPorts[0],

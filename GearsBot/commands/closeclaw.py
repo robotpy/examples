@@ -6,7 +6,7 @@
 
 import commands2
 from subsystems.claw import Claw
-import ..robot
+import robot
 
 class CloseClaw(commands2.Command):
     """Closes the claw until the limit switch is tripped."""
@@ -30,5 +30,5 @@ class CloseClaw(commands2.Command):
         # can to fall out + there is no need to worry about stalling the motor 
         # or crushing the can.
 
-        if !robot.MyRobot.isSimulation():
+        if not robot.MyRobot.isSimulation():
             self.claw.stop()

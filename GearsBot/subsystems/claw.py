@@ -6,7 +6,7 @@
 
 import wpilib
 import commands2
-import ..constants
+import constants
 
 class Claw(commands2.Subsystem):
     """The claw subsystem is a simple system with a motor for opening and closing. 

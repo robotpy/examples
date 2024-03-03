@@ -7,8 +7,8 @@
 import commands2
 import wpilib
 import wpimath.controller
-import ..constants
-import ..robot
+import constants
+import robot
 
 class Wrist(commands2.PIDSubsystem):
     """The wrist subsystem is like the elevator, but with a rotational

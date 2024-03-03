@@ -6,12 +6,12 @@
 
 import commands2
 import commands2.cmd
-import setwristsetpoint
-import setelevatorsetpoint
-import openclaw
+from . import setwristsetpoint
+from . import setelevatorsetpoint
+from . import openclaw
 from subsystems.elevator import Elevator
 from subsystems.wrist import Wrist
-from subsystem.claw import Claw
+from subsystems.claw import Claw
 
 class PrepareToPickup(commands2.SequentialCommandGroup):
     def __init__(self, claw: Claw, wrist: Wrist, elevator: Elevator) -> None:

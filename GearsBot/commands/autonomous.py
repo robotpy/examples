@@ -6,8 +6,8 @@
 
 import commands2
 import commands2.cmd
-import preparetopickup
-import ..constants
+from . import preparetopickup
+import constants
 from subsystems.drivetrain import Drivetrain
 from subsystems.claw import Claw
 from subsystems.elevator import Elevator

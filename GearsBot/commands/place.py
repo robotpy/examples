@@ -5,10 +5,10 @@
 #
 
 import commands2
-import setelevatorsetpoint
-import setwristsetpoint
-import openclaw
-import ..constants
+import constants
+from . import openclaw
+from . import setelevatorsetpoint
+from . import setwristsetpoint
 from subsystems.claw import Claw
 from subsystems.elevator import Elevator
 from subsystems.wrist import Wrist

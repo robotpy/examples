@@ -7,8 +7,8 @@
 import wpilib
 import wpimath.controller
 import commands2
-import ..constants
-import ..robot
+import constants
+import robot
 
 class Elevator(commands2.PIDSubsystem):
     def __init__(self) -> None:

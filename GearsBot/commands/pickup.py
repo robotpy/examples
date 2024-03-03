@@ -6,10 +6,10 @@
 
 import commands2
 import commands2.cmd
-import closeclaw
-import setwristsetpoint
-import setelevatorsetpoint
-import ..constants
+import constants
+from . import closeclaw
+from . import setwristsetpoint
+from . import setelevatorsetpoint
 from subsystems.claw import Claw
 from subsystems.elevator import Elevator
 from subsystems.wrist import Wrist
