@@ -24,6 +24,9 @@ class DriveConstants:
     kLeftEncoderReversed = False
     kRightEncoderReversed = True
 
+    kRangeFinderPort = 6
+    kAnalogGyroPort = 1
+
     # Encoder counts per revolution/rotation.
     kEncoderCPR = 1024
     kWheelDiameterInches = 6
