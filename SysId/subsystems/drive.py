@@ -22,13 +22,11 @@ class Drive(Subsystem):
     def __init__(self) -> None:
         # The motors on the left side of the drive
         self.left_motor = PWMSparkMax(DriveConstants.kLeftMotor1Port)
-        # TODO this has been disabled because the method is broken. see https://github.com/robotpy/mostrobotpy/issues/64
-        # self.left_motor.addFollower(PWMSparkMax(DriveConstants.kLeftMotor2Port))
+        self.left_motor.addFollower(PWMSparkMax(DriveConstants.kLeftMotor2Port))
 
         # The motors on the right side of the drive
         self.right_motor = PWMSparkMax(DriveConstants.kRightMotor1Port)
-        # TODO this has been disabled because the method is broken. see https://github.com/robotpy/mostrobotpy/issues/64
-        # self.right_motor.addFollower(PWMSparkMax(DriveConstants.kRightMotor2Port))
+        self.right_motor.addFollower(PWMSparkMax(DriveConstants.kRightMotor2Port))
 
         # At least one side of the drive train needs to be inverted. This ensures that positive voltages sent to each motor group result in forward motion.
         self.right_motor.setInverted(True)
