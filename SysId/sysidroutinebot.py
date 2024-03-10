@@ -39,7 +39,8 @@ class SysIdRoutineBot:
         # Control the drive with split-stick arcade controls
         self.drive.setDefaultCommand(
             self.drive.arcadeDriveCommand(
-                lambda: -self.controller.getLeftY(), lambda: -self.controller.getRightX()
+                lambda: -self.controller.getLeftY(),
+                lambda: -self.controller.getRightX(),
             )
         )
 
