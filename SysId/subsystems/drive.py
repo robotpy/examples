@@ -82,7 +82,9 @@ class Drive(Subsystem):
             self.right_encoder.getRate()
         )
 
-    def arcadeDriveCommand(self, fwd: Callable[[], float], rot: Callable[[], float]) -> Command:
+    def arcadeDriveCommand(
+        self, fwd: Callable[[], float], rot: Callable[[], float]
+    ) -> Command:
         """Returns a command that drives the robot with arcade controls.
 
         :param fwd: the commanded forward movement
