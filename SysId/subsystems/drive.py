@@ -15,6 +15,8 @@ from wpimath.units import volts
 
 from constants import DriveConstants
 
+from typing import Callable
+
 
 class Drive(Subsystem):
     def __init__(self) -> None:
@@ -82,7 +84,7 @@ class Drive(Subsystem):
             self.right_encoder.getRate()
         )
 
-    def arcadeDriveCommand(self, fwd: float, rot: float) -> Command:
+    def arcadeDriveCommand(self, fwd: Callable[[], float], rot: Callable[[], float]) -> Command:
         """Returns a command that drives the robot with arcade controls.
 
         :param fwd: the commanded forward movement
@@ -91,7 +93,7 @@ class Drive(Subsystem):
 
         # A split-stick arcade command, with forward/backward controlled by the left
         # hand, and turning controlled by the right.
-        return self.run(lambda: self.drive.arcadeDrive(fwd, rot))
+        return self.run(lambda: self.drive.arcadeDrive(fwd(), rot()))
 
     def sysIdQuasistatic(self, direction: SysIdRoutine.Direction) -> Command:
         return self.sys_id_routine.quasistatic(direction)
