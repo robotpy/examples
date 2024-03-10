@@ -59,6 +59,7 @@ BASE_TESTS="
   StateSpaceFlywheel
   StateSpaceFlywheelSysId
   SwerveBot
+  SysId
   TankDrive
   TankDriveXboxController
   Timed/src
