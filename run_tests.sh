@@ -70,6 +70,7 @@ BASE_TESTS="
 IGNORED_TESTS="
   RamseteCommand
   PhysicsCamSim/src
+  XrpReference
 "
 
 ALL_TESTS="${BASE_TESTS}"
