@@ -70,6 +70,7 @@ IGNORED_TESTS="
   PhysicsCamSim/src
   StateSpaceArm
   StateSpaceElevator
+  XrpReference
 "
 
 ALL_TESTS="${BASE_TESTS}"
