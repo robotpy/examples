@@ -44,11 +44,6 @@ jobs:
     - uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python_version }}
-        architecture: ${{ matrix.architecture }}
-    - name: Install deps
-      run: |
-        pip install -U pip
-        pip install 'robotpy[commands2,romi]<2025.0.0,>=2024.2.1.1' numpy pytest
     - name: Run tests
-      run: bash run_tests.sh
+      run: python ./run_tests.py
       shell: bash
