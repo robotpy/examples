@@ -48,6 +48,7 @@ BASE_TESTS="
   QuickVision
   RamseteController
   Relay
+  RomiReference
   SchedulerEventLogging
   SelectCommand
   ShuffleBoard
@@ -58,6 +59,7 @@ BASE_TESTS="
   StateSpaceFlywheel
   StateSpaceFlywheelSysId
   SwerveBot
+  SysId
   TankDrive
   TankDriveXboxController
   Timed/src
@@ -67,7 +69,6 @@ BASE_TESTS="
 
 IGNORED_TESTS="
   RamseteCommand
-  RomiReference
   PhysicsCamSim/src
 "
 

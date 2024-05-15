@@ -63,10 +63,10 @@ class RobotContainer:
         self.drivetrain.setDefaultCommand(self.getArcadeDriveCommand())
 
         # Example of how to use the onboard IO
-        onboardButtonA = commands2.button.Button(self.onboardIO.getButtonAPressed)
-        onboardButtonA.whenActive(
-            commands2.PrintCommand("Button A Pressed")
-        ).whenInactive(commands2.PrintCommand("Button A Released"))
+        onboardButtonA = commands2.button.Trigger(self.onboardIO.getButtonAPressed)
+        onboardButtonA.onTrue(commands2.PrintCommand("Button A Pressed")).onFalse(
+            commands2.PrintCommand("Button A Released")
+        )
 
         # Setup SmartDashboard options
         self.chooser.setDefaultOption(
