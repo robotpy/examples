@@ -94,7 +94,7 @@ class SwerveModule:
         :returns: The current position of the module.
         """
         return wpimath.kinematics.SwerveModulePosition(
-            self.driveEncoder.getRate(),
+            self.driveEncoder.getDistance(),
             wpimath.geometry.Rotation2d(self.turningEncoder.getDistance()),
         )
 
