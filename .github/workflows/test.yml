@@ -48,7 +48,7 @@ jobs:
     - name: Install deps
       run: |
         pip install -U pip
-        pip install 'robotpy[commands2,romi]<2025.0.0,>=2024.2.1.1' numpy pytest
+        pip install 'robotpy[commands2,romi]<2025.0.0,>=2024.2.1.1' 'numpy<2' pytest
     - name: Run tests
       run: bash run_tests.sh
       shell: bash
