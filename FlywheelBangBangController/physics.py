@@ -4,12 +4,12 @@
 # the WPILib BSD license file in the root directory of this project.
 #
 
+import typing
+
 import wpilib.simulation
-from wpimath.system.plant import DCMotor
+from wpimath.system import plant
 
 from pyfrc.physics.core import PhysicsInterface
-
-import typing
 
 if typing.TYPE_CHECKING:
     from robot import MyRobot
@@ -35,9 +35,11 @@ class PhysicsEngine:
         self.encoder = wpilib.simulation.EncoderSim(robot.encoder)
 
         # Flywheel
-        self.flywheel = wpilib.simulation.FlywheelSim(
-            DCMotor.NEO(1), robot.kFlywheelGearing, robot.kFlywheelMomentOfInertia
+        self.gearbox = plant.DCMotor.NEO(1)
+        self.plant = plant.LinearSystemId.flywheelSystem(
+            self.gearbox, robot.kFlywheelGearing, robot.kFlywheelMomentOfInertia
         )
+        self.flywheel = wpilib.simulation.FlywheelSim(self.plant, self.gearbox)
 
     def update_sim(self, now: float, tm_diff: float) -> None:
         """
@@ -54,5 +56,5 @@ class PhysicsEngine:
         self.flywheel.setInputVoltage(
             self.flywheelMotor.getSpeed() * wpilib.RobotController.getInputVoltage()
         )
-        self.flywheel.update(0.02)
+        self.flywheel.update(tm_diff)
         self.encoder.setRate(self.flywheel.getAngularVelocity())

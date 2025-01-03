@@ -53,7 +53,7 @@ class PhysicsEngine:
             robot.kMaxElevatorHeight,
             True,
             0,
-            [0.01],
+            [0.01, 0.0],
         )
         self.encoderSim = wpilib.simulation.EncoderSim(robot.encoder)
         self.motorSim = wpilib.simulation.PWMSim(robot.motor.getChannel())
