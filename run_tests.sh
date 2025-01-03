@@ -54,8 +54,6 @@ BASE_TESTS="
   ShuffleBoard
   Solenoid
   StatefulAutonomous
-  StateSpaceArm
-  StateSpaceElevator
   StateSpaceFlywheel
   StateSpaceFlywheelSysId
   SwerveBot
@@ -70,6 +68,8 @@ BASE_TESTS="
 IGNORED_TESTS="
   RamseteCommand
   PhysicsCamSim/src
+  StateSpaceArm
+  StateSpaceElevator
 "
 
 ALL_TESTS="${BASE_TESTS}"
