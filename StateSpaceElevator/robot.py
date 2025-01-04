@@ -64,13 +64,13 @@ class MyRobot(wpilib.TimedRobot):
         # The observer fuses our encoder data and voltage inputs to reject noise.
         self.observer = wpimath.estimator.KalmanFilter_2_1_1(
             self.elevatorPlant,
-            [
+            (
                 wpimath.units.inchesToMeters(2),
                 wpimath.units.inchesToMeters(40),
-            ],  # How accurate we think our model is, in meters and meters/second.
-            [
-                0.001
-            ],  # How accurate we think our encoder position data is. In this case we very highly trust our encoder position reading.
+            ),  # How accurate we think our model is, in meters and meters/second.
+            (
+                0.001,
+            ),  # How accurate we think our encoder position data is. In this case we very highly trust our encoder position reading.
             0.020,
         )
 

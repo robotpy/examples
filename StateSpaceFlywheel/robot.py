@@ -6,12 +6,13 @@
 #
 
 import math
+
 import wpilib
-import wpimath.units
 import wpimath.controller
+import wpimath.estimator
 import wpimath.system
 import wpimath.system.plant
-import wpimath.estimator
+import wpimath.units
 
 kMotorPort = 0
 kEncoderAChannel = 0
@@ -48,18 +49,18 @@ class MyRobot(wpilib.TimedRobot):
         # The observer fuses our encoder data and voltage inputs to reject noise.
         self.observer = wpimath.estimator.KalmanFilter_1_1_1(
             self.flywheelPlant,
-            [3],  # How accurate we think our model is
-            [0.01],  # How accurate we think our encoder data is
+            (3,),  # How accurate we think our model is
+            (0.01,),  # How accurate we think our encoder data is
             0.020,
         )
 
         # A LQR uses feedback to create voltage commands.
         self.controller = wpimath.controller.LinearQuadraticRegulator_1_1(
             self.flywheelPlant,
-            [8],  # qelms. Velocity error tolerance, in radians per second. Decrease
+            (8,),  # qelms. Velocity error tolerance, in radians per second. Decrease
             # this to more heavily penalize state excursion, or make the controller behave more
             # aggressively.
-            [12],  # relms. Control effort (voltage) tolerance. Decrease this to more
+            (12,),  # relms. Control effort (voltage) tolerance. Decrease this to more
             # heavily penalize control effort, or make the controller less aggressive. 12 is a good
             # starting point because that is the (approximate) maximum voltage of a battery.
             0.020,  # Nominal time between loops. 0.020 for TimedRobot, but can be lower if using notifiers.
@@ -105,5 +106,5 @@ class MyRobot(wpilib.TimedRobot):
         # Send the new calculated voltage to the motors.
         # voltage = duty cycle * battery voltage, so
         # duty cycle = voltage / battery voltage
-        nextVoltage = self.loop.U()
+        nextVoltage = self.loop.U(0)
         self.motor.setVoltage(nextVoltage)
