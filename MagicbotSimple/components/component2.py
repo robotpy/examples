@@ -7,7 +7,7 @@
 import wpilib
 from .component1 import Component1
 
-from magicbot import will_reset_to
+from magicbot import feedback, will_reset_to
 
 
 class Component2:
@@ -28,6 +28,12 @@ class Component2:
 
     def do_something(self):
         self.did_something = True
+
+    # Use @feedback to send state external to the robot code to NetworkTables.
+    # This will be called after execute().
+    @feedback
+    def get_motor_voltage(self) -> float:
+        return self.some_motor.getVoltage()
 
     def execute(self):
         if self.did_something:
