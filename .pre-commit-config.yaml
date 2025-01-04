@@ -1,0 +1,15 @@
+---
+repos:
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 24.10.0
+    hooks:
+      - id: black
+  - repo: local
+    hooks:
+      - id: check-headers
+        name: check headers
+        language: script
+        entry: check_header.py
+        pass_filenames: false
+        require_serial: true
+        types: [python]

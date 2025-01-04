@@ -14,18 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: psf/black@stable
-
-  check-file-headers:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v4
-      with:
-        python-version: 3.12
-    - name: Check header
-      run: python ./check_header.py
-      shell: bash
+    - uses: pre-commit/action@v3.0.1
 
   test:
     runs-on: ${{ matrix.os }}
