@@ -11,7 +11,6 @@ BASE_TESTS="
   ArmBot
   ArmBotOffboard
   ArmSimulation
-  AxisCamera
   CANPDP
   DifferentialDriveBot
   DigitalCommunication
@@ -32,6 +31,7 @@ BASE_TESTS="
   HatchbotInlined
   HatchbotTraditional
   HidRumble
+  HttpCamera
   I2CCommunication
   IntermediateVision
   MagicbotSimple

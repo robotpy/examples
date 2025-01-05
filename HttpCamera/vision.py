@@ -4,9 +4,15 @@
 # the WPILib BSD license file in the root directory of this project.
 #
 
+"""
+This is a demo program showing the use of OpenCV to do vision processing. The image is acquired
+from an HTTP camera, then a rectangle is put on the image and sent to the dashboard. OpenCV has
+many methods for different types of processing.
+"""
 
 import ntcore
 import numpy
+import cscore
 from cscore import CameraServer
 import cv2
 
@@ -19,9 +25,11 @@ import cv2
 
 
 def main():
-    # Get the Axis camera from CameraServer
-    camera = CameraServer.addAxisCamera("axis-camera.local")
-
+    # Create an HTTP camera. The address will need to be modified to have the
+    # correct team number. The exact path will depend on the source.
+    camera = cscore.HttpCamera("HTTP Camera", "http://10.x.y.11/video/stream.mjpg")
+    # Start capturing images
+    CameraServer.startAutomaticCapture(camera)
     # Set the resolution
     camera.setResolution(640, 480)
 
