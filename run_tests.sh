@@ -69,6 +69,7 @@ IGNORED_TESTS="
   PhysicsCamSim/src
   StateSpaceArm
   StateSpaceElevator
+  DeprecatedExamples
 "
 
 ALL_TESTS="${BASE_TESTS}"
