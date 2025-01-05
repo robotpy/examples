@@ -11,6 +11,7 @@ BASE_TESTS="
   ArmBot
   ArmBotOffboard
   ArmSimulation
+  AxisCamera
   CANPDP
   DifferentialDriveBot
   DigitalCommunication
