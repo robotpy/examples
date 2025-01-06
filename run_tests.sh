@@ -31,6 +31,7 @@ BASE_TESTS="
   HatchbotInlined
   HatchbotTraditional
   HidRumble
+  HttpCamera
   I2CCommunication
   IntermediateVision
   MagicbotSimple
