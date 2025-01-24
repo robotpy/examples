@@ -1,7 +1,7 @@
 RobotPy Example Code
 ====================
 
-**NOTE**: The `main` branch contains examples that work with the 2023 version
+**NOTE**: The `main` branch contains examples that work with the latest version
 of RobotPy. While we don't change all that much every year, if you're looking
 specifically for examples for older years, there are branches for different
 years. If you are looking for examples that work with the current beta, there
