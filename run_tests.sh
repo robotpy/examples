@@ -24,6 +24,7 @@ BASE_TESTS="
   FlywheelBangBangController
   FrisbeeBot
   GameData
+  GearsBot
   GettingStarted
   Gyro
   GyroDriveCommands
