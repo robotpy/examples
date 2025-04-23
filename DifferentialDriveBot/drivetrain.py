@@ -54,10 +54,6 @@ class Drivetrain:
 
         self.gyro.reset()
 
-        # We need to invert one side of the drivetrain so that positive voltages
-        # result in both sides moving forward. Depending on how your robot's
-        # gearbox is constructed, you might have to invert the left side instead.
-
         # Set the distance per pulse for the drive encoders. We can simply use the
         # distance traveled for one rotation of the wheel divided by the encoder
         # resolution.
@@ -92,7 +88,6 @@ class Drivetrain:
         # Controls the left and right sides of the robot using the calculated outputs
         self.leftLeader.setVoltage(leftOutput + leftFeedforward)
         self.rightLeader.setVoltage(rightOutput + rightFeedforward)
-
 
     def drive(self, xSpeed, rot):
         """Drives the robot with the given linear velocity and angular velocity."""
