@@ -54,8 +54,6 @@ class DriveSubsystem(Subsystem):
         # The gyro sensor
         self.gyro = ADXRS450_Gyro()
 
-        
-
         # Sets the distance per pulse for the encoders
         self.leftEncoder.setDistancePerPulse(constants.kEncoderDistancePerPulse)
         self.rightEncoder.setDistancePerPulse(constants.kEncoderDistancePerPulse)
