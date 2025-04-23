@@ -18,7 +18,7 @@ class DriveSubsystem(commands2.Subsystem):
         super().__init__()
 
       
-       # The motors on the left side of the drive.
+        # The motors on the left side of the drive.
         self.left1 = PWMSparkMax(constants.DriveConstants.kLeftMotor1Port)
         self.left2 = PWMSparkMax(constants.DriveConstants.kLeftMotor2Port)
 
