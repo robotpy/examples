@@ -28,7 +28,6 @@ class Drivetrain:
         self.rightLeader = wpilib.PWMSparkMax(3)
         self.rightFollower = wpilib.PWMSparkMax(4)
 
-        
         # Make sure both motors for each side are in the same group
         self.leftLeader.addFollower(self.leftFollower)
         self.rightLeader.addFollower(self.rightFollower)
@@ -38,10 +37,8 @@ class Drivetrain:
         # gearbox is constructed, you might have to invert the left side instead.
         self.rightLeader.setInverted(True)
 
-
         self.leftEncoder = wpilib.Encoder(0, 1)
         self.rightEncoder = wpilib.Encoder(2, 3)
-
 
         self.gyro = wpilib.AnalogGyro(0)
 
