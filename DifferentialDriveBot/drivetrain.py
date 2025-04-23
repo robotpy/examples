@@ -38,9 +38,6 @@ class Drivetrain:
         # gearbox is constructed, you might have to invert the left side instead.
         self.rightLeader.setInverted(True)
 
-        # turns the motors into a group so that we can set voltage to both at once
-        self.robotDrive = wpilib.drive.DifferentialDrive(self.leftLeader, self.rightLeader)
-
 
         self.leftEncoder = wpilib.Encoder(0, 1)
         self.rightEncoder = wpilib.Encoder(2, 3)
@@ -96,8 +93,9 @@ class Drivetrain:
         )
 
         # Controls the left and right sides of the robot using the calculated outputs
-        self.robotDrive.tankDrive(leftOutput + leftFeedforward, rightOutput + rightFeedforward)
-        
+        self.leftLeader.setVoltage(leftOutput + leftFeedforward)
+        self.rightLeader.setVoltage(rightOutput + rightFeedforward)
+
 
     def drive(self, xSpeed, rot):
         """Drives the robot with the given linear velocity and angular velocity."""
