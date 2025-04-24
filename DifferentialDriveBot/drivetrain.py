@@ -23,16 +23,22 @@ class Drivetrain:
     ENCODER_RESOLUTION = 4096  # counts per revolution
 
     def __init__(self):
-        leftLeader = wpilib.PWMSparkMax(1)
-        leftFollower = wpilib.PWMSparkMax(2)
-        rightLeader = wpilib.PWMSparkMax(3)
-        rightFollower = wpilib.PWMSparkMax(4)
+        self.leftLeader = wpilib.PWMSparkMax(1)
+        self.leftFollower = wpilib.PWMSparkMax(2)
+        self.rightLeader = wpilib.PWMSparkMax(3)
+        self.rightFollower = wpilib.PWMSparkMax(4)
+
+        # Make sure both motors for each side are in the same group
+        self.leftLeader.addFollower(self.leftFollower)
+        self.rightLeader.addFollower(self.rightFollower)
+
+        # We need to invert one side of the drivetrain so that positive voltages
+        # result in both sides moving forward. Depending on how your robot's
+        # gearbox is constructed, you might have to invert the left side instead.
+        self.rightLeader.setInverted(True)
 
         self.leftEncoder = wpilib.Encoder(0, 1)
         self.rightEncoder = wpilib.Encoder(2, 3)
-
-        self.leftGroup = wpilib.MotorControllerGroup(leftLeader, leftFollower)
-        self.rightGroup = wpilib.MotorControllerGroup(rightLeader, rightFollower)
 
         self.gyro = wpilib.AnalogGyro(0)
 
@@ -47,11 +53,6 @@ class Drivetrain:
         self.feedforward = wpimath.controller.SimpleMotorFeedforwardMeters(1, 3)
 
         self.gyro.reset()
-
-        # We need to invert one side of the drivetrain so that positive voltages
-        # result in both sides moving forward. Depending on how your robot's
-        # gearbox is constructed, you might have to invert the left side instead.
-        self.rightGroup.setInverted(True)
 
         # Set the distance per pulse for the drive encoders. We can simply use the
         # distance traveled for one rotation of the wheel divided by the encoder
@@ -84,8 +85,9 @@ class Drivetrain:
             self.rightEncoder.getRate(), speeds.right
         )
 
-        self.leftGroup.setVoltage(leftOutput + leftFeedforward)
-        self.rightGroup.setVoltage(rightOutput + rightFeedforward)
+        # Controls the left and right sides of the robot using the calculated outputs
+        self.leftLeader.setVoltage(leftOutput + leftFeedforward)
+        self.rightLeader.setVoltage(rightOutput + rightFeedforward)
 
     def drive(self, xSpeed, rot):
         """Drives the robot with the given linear velocity and angular velocity."""

@@ -6,7 +6,7 @@
 
 from commands2 import Subsystem
 
-from wpilib import MotorControllerGroup, PWMSparkMax, Encoder, ADXRS450_Gyro
+from wpilib import PWMSparkMax, Encoder, ADXRS450_Gyro
 from wpilib.drive import DifferentialDrive
 
 from wpimath.kinematics import DifferentialDriveOdometry, DifferentialDriveWheelSpeeds
@@ -19,19 +19,23 @@ class DriveSubsystem(Subsystem):
         super().__init__()
 
         # The motors on the left side of the drive.
-        self.leftMotors = MotorControllerGroup(
-            PWMSparkMax(constants.kLeftMotor1Port),
-            PWMSparkMax(constants.kLeftMotor2Port),
-        )
+        self.left1 = PWMSparkMax(constants.kLeftMotor1Port)
+        self.left2 = PWMSparkMax(constants.kLeftMotor2Port)
 
         # The motors on the right side of the drive.
-        self.rightMotors = MotorControllerGroup(
-            PWMSparkMax(constants.kRightMotor1Port),
-            PWMSparkMax(constants.kRightMotor2Port),
-        )
+        self.right1 = PWMSparkMax(constants.kRightMotor1Port)
+        self.right2 = PWMSparkMax(constants.kRightMotor2Port)
+
+        self.left1.addFollower(self.left2)
+        self.right1.addFollower(self.right2)
 
         # The robot's drive
-        self.drive = DifferentialDrive(self.leftMotors, self.rightMotors)
+        self.drive = DifferentialDrive(self.left1, self.right1)
+
+        # We need to invert one side of the drivetrain so that positive voltages
+        # result in both sides moving forward. Depending on how your robot's
+        # gearbox is constructed, you might have to invert the left side instead.
+        self.right1.setInverted(True)
 
         # The left-side drive encoder
         self.leftEncoder = Encoder(
@@ -49,11 +53,6 @@ class DriveSubsystem(Subsystem):
 
         # The gyro sensor
         self.gyro = ADXRS450_Gyro()
-
-        # We need to invert one side of the drivetrain so that positive voltages
-        # result in both sides moving forward. Depending on how your robot's
-        # gearbox is constructed, you might have to invert the left side instead.
-        self.rightMotors.setInverted(True)
 
         # Sets the distance per pulse for the encoders
         self.leftEncoder.setDistancePerPulse(constants.kEncoderDistancePerPulse)
@@ -101,8 +100,8 @@ class DriveSubsystem(Subsystem):
 
     def tankDriveVolts(self, leftVolts, rightVolts):
         """Controls the left and right sides of the drive directly with voltages."""
-        self.leftMotors.setVoltage(leftVolts)
-        self.rightMotors.setVoltage(rightVolts)
+        self.left1.setVoltage(leftVolts)
+        self.right1.setVoltage(rightVolts)
         self.drive.feed()
 
     def resetEncoders(self):
