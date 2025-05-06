@@ -18,15 +18,20 @@ class MyRobot(wpilib.TimedRobot):
         self.lstick = wpilib.Joystick(0)
         self.rstick = wpilib.Joystick(1)
 
+        # Define front and rear motors
         self.lf_motor = wpilib.Jaguar(1)
         self.lr_motor = wpilib.Jaguar(2)
         self.rf_motor = wpilib.Jaguar(3)
         self.rr_motor = wpilib.Jaguar(4)
 
-        l_motor = wpilib.MotorControllerGroup(self.lf_motor, self.lr_motor)
-        r_motor = wpilib.MotorControllerGroup(self.rf_motor, self.rr_motor)
+        # add the followers to the left and right motors
+        self.lf_motor.addFollower(self.lr_motor)
+        self.rf_motor.addFollower(self.rr_motor)
 
-        self.drive = wpilib.drive.DifferentialDrive(l_motor, r_motor)
+        # Set the right side motors to be inverted
+        self.lf_motor.setInverted(True)
+
+        self.drive = wpilib.drive.DifferentialDrive(self.lf_motor, self.lr_motor)
 
         # Position gets automatically updated as robot moves
         self.gyro = wpilib.AnalogGyro(1)
