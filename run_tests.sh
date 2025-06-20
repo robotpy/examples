@@ -12,6 +12,7 @@ BASE_TESTS="
   ArmBotOffboard
   ArmSimulation
   CANPDP
+  CSCoreAnnotation
   DifferentialDriveBot
   DigitalCommunication
   DriveDistanceOffboard
