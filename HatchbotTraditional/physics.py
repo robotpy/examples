@@ -40,10 +40,10 @@ class PhysicsEngine:
         self.physics_controller = physics_controller
 
         # Motors
-        self.l_motor = wpilib.simulation.PWMSim(
+        self.l_motor = wpilib.simulation.PWMMotorControllerSim(
             robot.container.drive.left1.getChannel()
         )
-        self.r_motor = wpilib.simulation.PWMSim(
+        self.r_motor = wpilib.simulation.PWMMotorControllerSim(
             robot.container.drive.right1.getChannel()
         )
 
