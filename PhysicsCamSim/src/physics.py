@@ -16,7 +16,7 @@
 #
 
 from wpilib.simulation import (
-    PWMSim,
+    PWMMotorControllerSim,
     DifferentialDrivetrainSim,
     EncoderSim,
     AnalogGyroSim,
@@ -79,8 +79,8 @@ class PhysicsEngine:
         )
 
         # Create the motors.
-        self.l_motor = PWMSim(robot.leftMotor.getChannel())
-        self.r_motor = PWMSim(robot.rightMotor.getChannel())
+        self.l_motor = PWMMotorControllerSim(robot.leftMotor.getChannel())
+        self.r_motor = PWMMotorControllerSim(robot.rightMotor.getChannel())
 
         self.gyroSim = AnalogGyroSim(robot.gyro)
 

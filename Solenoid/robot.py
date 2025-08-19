@@ -28,19 +28,20 @@ class MyRobot(wpilib.TimedRobot):
         # Solenoid corresponds to a single solenoid.
         # In this case, it's connected to channel 0 of a PH with the default CAN ID.
         self.solenoid = wpilib.Solenoid(
-            moduleType=wpilib.PneumaticsModuleType.REVPH, channel=0
+            busId=0, moduleType=wpilib.PneumaticsModuleType.REVPH, channel=0
         )
 
         # DoubleSolenoid corresponds to a double solenoid.
         # In this case, it's connected to channels 1 and 2 of a PH with the default CAN ID.
         self.doubleSolenoid = wpilib.DoubleSolenoid(
+            busId=0,
             moduleType=wpilib.PneumaticsModuleType.REVPH,
             forwardChannel=1,
             reverseChannel=2,
         )
 
         # Compressor connected to a PH with a default CAN ID (1)
-        self.compressor = wpilib.Compressor(wpilib.PneumaticsModuleType.REVPH)
+        self.compressor = wpilib.Compressor(0, wpilib.PneumaticsModuleType.REVPH)
 
         self.kSolenoidButton = 1
         self.kDoubleSolenoidForwardButton = 2
