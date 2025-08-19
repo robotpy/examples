@@ -66,7 +66,6 @@ BASE_TESTS="
 "
 
 IGNORED_TESTS="
-  RamseteCommand
   PhysicsCamSim/src
   StateSpaceArm
   StateSpaceElevator
@@ -99,7 +98,7 @@ fi
 for t in ${TESTS}; do
   pushd $t > /dev/null
   pwd
-  if ! python3 -m robotpy test --builtin "${@:2}"; then
+  if ! robotpy test --builtin "${@:2}"; then
     EC=$?
     echo "Test in $(pwd) failed"
     exit 1
