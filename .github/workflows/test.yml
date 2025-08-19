@@ -6,6 +6,7 @@ on:
   push:
     branches:
     - main
+    - '2027'
     tags:
     - '*'
   workflow_dispatch:
