@@ -37,6 +37,7 @@ jobs:
         python-version: ${{ matrix.python_version }}
     - name: Install deps
       run: |
+        pip install git+https://github.com/robotpy/pyfrc.git@separate-process
         pip install 'robotpy[commands2,romi]<2026.0.0,>=2025.0.0b3' numpy pytest
     - name: Run tests
       run: bash run_tests.sh
