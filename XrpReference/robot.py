@@ -22,29 +22,28 @@
 # Run the program
 # ---------------
 #
-# To run the program you will need to explicitly use the XRP option:
+# Use the dedicated XRP command:
 #
 #    # Windows
-#    py -3 robotpy sim --xrp
+#    py -3 -m robotpy run-xrp
 #
 #    # Linux/macOS
-#    python robotpy sim --xrp
+#    python -m robotpy run-xrp
+#
+# If your XRP isn't at the default address, use --host/--port:
+#
+#    python -m robotpy run-xrp --host 192.168.42.1 --port 3540
 #
 # By default the WPILib simulation GUI will be displayed. To disable the display
-# you can add the --nogui option
+# you can add the --nogui option.
 #
 
-import os
 import typing
 
 import wpilib
 import commands2
 
 from robotcontainer import RobotContainer
-
-# If your XRP isn't at the default address, set that here
-os.environ["HALSIMXRP_HOST"] = "192.168.42.1"
-os.environ["HALSIMXRP_PORT"] = "3540"
 
 
 class MyRobot(commands2.TimedCommandRobot):

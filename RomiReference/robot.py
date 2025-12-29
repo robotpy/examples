@@ -22,29 +22,28 @@
 # Run the program
 # ---------------
 #
-# To run the program you will need to explicitly use the ws-client option:
+# Use the dedicated ROMI command:
 #
 #    # Windows
-#    py -3 robotpy sim --ws-client
+#    py -3 -m robotpy run-romi
 #
 #    # Linux/macOS
-#    python robotpy sim --ws-client
+#    python -m robotpy run-romi
+#
+# If your ROMI isn't at the default address, use --host/--port:
+#
+#    python -m robotpy run-romi --host 10.0.0.2 --port 3300
 #
 # By default the WPILib simulation GUI will be displayed. To disable the display
-# you can add the --nogui option
+# you can add the --nogui option.
 #
 
-import os
 import typing
 
 import wpilib
 import commands2
 
 from robotcontainer import RobotContainer
-
-# If your ROMI isn't at the default address, set that here
-os.environ["HALSIMWS_HOST"] = "10.0.0.2"
-os.environ["HALSIMWS_PORT"] = "3300"
 
 
 class MyRobot(commands2.TimedCommandRobot):
