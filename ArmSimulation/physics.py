@@ -67,7 +67,7 @@ class PhysicsEngine:
             Constants.kArmEncoderDistPerPulse,
         )
         self.encoderSim = wpilib.simulation.EncoderSim(robot.arm.encoder)
-        self.motorSim = wpilib.simulation.PWMSim(robot.arm.motor.getChannel())
+        self.motorSim = wpilib.simulation.PWMMotorControllerSim(robot.arm.motor)
 
         # Create a Mechanism2d display of an Arm with a fixed ArmTower and moving Arm.
         self.mech2d = wpilib.Mechanism2d(60, 60)

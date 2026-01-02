@@ -8,6 +8,7 @@
 import wpilib
 import ntcore
 
+CAN_BUS = 0
 PNUE_MOD_TYPE = wpilib.PneumaticsModuleType.CTREPCM
 
 
@@ -18,10 +19,10 @@ class MyRobot(wpilib.TimedRobot):
 
     def robotInit(self):
         # A way of demonstrating the difference between the game data strings
-        self.blue = wpilib.Solenoid(PNUE_MOD_TYPE, 0)
-        self.red = wpilib.Solenoid(PNUE_MOD_TYPE, 1)
-        self.green = wpilib.Solenoid(PNUE_MOD_TYPE, 2)
-        self.yellow = wpilib.Solenoid(PNUE_MOD_TYPE, 3)
+        self.blue = wpilib.Solenoid(CAN_BUS, PNUE_MOD_TYPE, 0)
+        self.red = wpilib.Solenoid(CAN_BUS, PNUE_MOD_TYPE, 1)
+        self.green = wpilib.Solenoid(CAN_BUS, PNUE_MOD_TYPE, 2)
+        self.yellow = wpilib.Solenoid(CAN_BUS, PNUE_MOD_TYPE, 3)
         # Set game data to empty string by default
         self.gameData = ""
         # Get the SmartDashboard table from networktables

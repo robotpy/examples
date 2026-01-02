@@ -29,7 +29,9 @@ class PhysicsEngine:
         self.physics_controller = physics_controller
 
         # Motors
-        self.flywheelMotor = wpilib.simulation.PWMSim(robot.flywheelMotor.getChannel())
+        self.flywheelMotor = wpilib.simulation.PWMMotorControllerSim(
+            robot.flywheelMotor.getChannel()
+        )
 
         # Sensors
         self.encoder = wpilib.simulation.EncoderSim(robot.encoder)

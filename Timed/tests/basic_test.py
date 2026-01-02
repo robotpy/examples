@@ -34,7 +34,7 @@ def test_operator_control(control, robot):
 
     # run_robot will cause the robot to be initialized and robotInit to be called
     with control.run_robot():
-        motorsim = wpilib.simulation.PWMSim(robot.motor.getChannel())
+        motorsim = wpilib.simulation.PWMMotorControllerSim(robot.motor.getChannel())
         joysim = wpilib.simulation.JoystickSim(robot.lstick)
 
         # Set the joystick value to something

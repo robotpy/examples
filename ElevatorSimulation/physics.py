@@ -56,7 +56,7 @@ class PhysicsEngine:
             [0.01, 0.0],
         )
         self.encoderSim = wpilib.simulation.EncoderSim(robot.encoder)
-        self.motorSim = wpilib.simulation.PWMSim(robot.motor.getChannel())
+        self.motorSim = wpilib.simulation.PWMMotorControllerSim(robot.motor)
 
         # Create a Mechanism2d display of an elevator
         self.mech2d = wpilib.Mechanism2d(20, 50)

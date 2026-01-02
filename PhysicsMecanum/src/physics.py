@@ -33,10 +33,10 @@ class PhysicsEngine:
         self.physics_controller = physics_controller
 
         # Motors
-        self.lf_motor = wpilib.simulation.PWMSim(robot.frontLeftMotor.getChannel())
-        self.lr_motor = wpilib.simulation.PWMSim(robot.rearLeftMotor.getChannel())
-        self.rf_motor = wpilib.simulation.PWMSim(robot.frontRightMotor.getChannel())
-        self.rr_motor = wpilib.simulation.PWMSim(robot.rearRightMotor.getChannel())
+        self.lf_motor = wpilib.simulation.PWMMotorControllerSim(robot.frontLeftMotor)
+        self.lr_motor = wpilib.simulation.PWMMotorControllerSim(robot.rearLeftMotor)
+        self.rf_motor = wpilib.simulation.PWMMotorControllerSim(robot.frontRightMotor)
+        self.rr_motor = wpilib.simulation.PWMMotorControllerSim(robot.rearRightMotor)
 
         # Gyro
         self.gyro = wpilib.simulation.AnalogGyroSim(robot.gyro)

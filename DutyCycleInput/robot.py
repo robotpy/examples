@@ -12,7 +12,7 @@ class MyRobot(wpilib.TimedRobot):
     def robotInit(self):
         """Robot initialization function"""
 
-        self.dutyCycle = wpilib.DutyCycle(wpilib.DigitalInput(0))
+        self.dutyCycle = wpilib.DutyCycle(0)
 
     def robotPeriodic(self):
         # Duty Cycle Frequency in Hz
