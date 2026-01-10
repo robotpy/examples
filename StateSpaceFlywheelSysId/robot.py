@@ -103,5 +103,5 @@ class MyRobot(wpilib.TimedRobot):
         # Send the new calculated voltage to the motors.
         # voltage = duty cycle * battery voltage, so
         # duty cycle = voltage / battery voltage
-        nextVoltage = self.loop.U()
+        nextVoltage = self.loop.U()[0]
         self.motor.setVoltage(nextVoltage)
