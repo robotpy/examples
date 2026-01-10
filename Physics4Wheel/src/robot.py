@@ -19,10 +19,10 @@ class MyRobot(wpilib.TimedRobot):
         self.rstick = wpilib.Joystick(1)
 
         # Define front and rear motors
-        self.lf_motor = wpilib.Jaguar(1)
-        self.lr_motor = wpilib.Jaguar(2)
-        self.rf_motor = wpilib.Jaguar(3)
-        self.rr_motor = wpilib.Jaguar(4)
+        self.lf_motor = wpilib.PWMSparkMax(1)
+        self.lr_motor = wpilib.PWMSparkMax(2)
+        self.rf_motor = wpilib.PWMSparkMax(3)
+        self.rr_motor = wpilib.PWMSparkMax(4)
 
         # add the followers to the left and right motors
         self.lf_motor.addFollower(self.lr_motor)

@@ -18,15 +18,15 @@ class MyRobot(wpilib.TimedRobot):
         self.lstick = wpilib.Joystick(0)
         self.rstick = wpilib.Joystick(1)
 
-        self.l_motor = wpilib.Jaguar(1)
-        self.r_motor = wpilib.Jaguar(2)
+        self.l_motor = wpilib.PWMSparkMax(1)
+        self.r_motor = wpilib.PWMSparkMax(2)
 
         # Position gets automatically updated as robot moves
         self.gyro = wpilib.AnalogGyro(1)
 
         self.drive = wpilib.drive.DifferentialDrive(self.l_motor, self.r_motor)
 
-        self.motor = wpilib.Jaguar(4)
+        self.motor = wpilib.PWMSparkMax(4)
 
         self.limit1 = wpilib.DigitalInput(1)
         self.limit2 = wpilib.DigitalInput(2)
