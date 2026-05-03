@@ -1,3 +1,8 @@
+**NOTE**: starting in 2027, RobotPy examples can be found in the following locations:
+
+* [mostrobotpy](https://github.com/robotpy/mostrobotpy/tree/main/examples)
+* [allwpilib](https://github.com/wpilibsuite/allwpilib)
+
 RobotPy Example Code
 ====================
 
